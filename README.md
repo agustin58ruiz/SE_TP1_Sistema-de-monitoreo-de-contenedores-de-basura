@@ -1,6 +1,5 @@
 # SiMBa (Sistama de Monitoreo de Basura)
 
-
 ## Alumno: Agustín Ruiz
 ## Descripción
 La recolección de basura en la Ciudad de Buenos Aires es compleja y requiere de una inversión en recursos elevada. 
