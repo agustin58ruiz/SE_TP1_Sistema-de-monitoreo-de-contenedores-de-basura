@@ -28,4 +28,4 @@ El actuador de la tapa es en este caso el LED1 y el sensor de nivel es el puerto
 
 Se adjunta una imagen de las conecciones de esta entrega. 
 
-![Diagrama de conexiones](./Images/Conecciones.png "Un push button como sensor de nivel, el LED1 como el actuador de la traba de la tapa")
+![Diagrama de conexiones]( ./Images/Conecciones.png "Un push button como sensor de nivel, el LED1 como el actuador de la traba de la tapa" )
