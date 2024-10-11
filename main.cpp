@@ -1,17 +1,41 @@
+#include "arm_book_lib.h"
 #include "mbed.h"
-#include "actuadorTapa.h"
-#include "sensorDeNivel.h"
-#include "sensorDeGas.h"
-#include "maquinaDeEstados.h"
+//#include "actuadorTapa.h"
+//#include "sensorDeNivel.h"
+//#include "sensorDeGas.h"
+//#include "maquinaDeEstados.h"
+//#include "display.h"
 
-    ActuadorTapa tapa ;
-    SensorDeNivel capacidad;
-    SensorDeGas sensorDeGas;
+    //ActuadorTapa tapa ;
+    //SensorDeNivel capacidad;
+    //SensorDeGas sensorDeGas;
 // main() runs in its own thread in the OS
 
 int main()
 {
-    
+
+    //Display display;
+    //
+    //display.IniciarDisplay();
+    //
+    //display.CharPositionWrite(0,0);
+    //
+    //display.StringWrite("HOLA MUNDO");
+
+    DigitalOut sensorLed(LED1);
+
+    //sensorLed.mode(PullDown);
+    sensorLed = OFF;
+    while(true){
+        sensorLed = OFF;
+        delay(1000);
+        sensorLed = ON;
+        //display.CharPositionWrite(0,0);
+//
+        //display.StringWrite("HOLA MUNDO");
+    }
+
+    /*
 
     // ------------- DEFINICION DE ESTADOS --------------
     Estado TapaTrabada = Estado((char *)"TAPA_TRABADA");
@@ -65,19 +89,8 @@ int main()
         maquina.Evaluar();
         maquina.ObtenerInformacion();
 
-        /*
-        sensorDeGas.ActualizarEstado();
-        tapa.ActualizarEstado();
-        capacidad.ActualizarEstado();
-
-        if(capacidad.Estado() == EstadoContenedor::CONTENEDOR_LLENO || sensorDeGas.Estado() == EstadoSensorDeGas::SATURADO){
-            tapa.TrabarTapa();
-        }else if( capacidad.Estado() == EstadoContenedor::CONTENEDOR_CON_ESPACIO){
-            tapa.DestrabarTapa();
-        }
-
-*/
-    }
+ 
+    }*/
 }
 /*
 void definirTransiciones(void){

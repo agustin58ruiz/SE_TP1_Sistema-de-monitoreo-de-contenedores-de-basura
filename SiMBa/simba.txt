@@ -1,0 +1,17 @@
+#include "mbed.h"
+#include "actuadorTapa.h"
+#include "sensorDeNivel.h"
+#include "sensorDeGas.h"
+#include "maquinaDeEstados.h"
+#include "simba.h"
+
+
+
+MaquinaDeEstados * obtenerUnaMaquinaDeEstados(){
+
+
+
+
+
+    
+}
