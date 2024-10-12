@@ -20,6 +20,7 @@ Display();
 void IniciarDisplay();
 void CharPositionWrite( uint8_t charPositionX, uint8_t charPositionY );
 void StringWrite( const char * );
+void Flush();
 
 
 

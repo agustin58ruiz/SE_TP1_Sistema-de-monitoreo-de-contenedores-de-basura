@@ -33,11 +33,11 @@ typedef Transicion **TransicionesPtr_t;
 class Estado {
 public:
 
-char * Nombre;
+const char * Nombre;
 TransicionesPtr_t Transiciones;
 
-Estado(char*, TransicionesPtr_t );
-Estado(char* );
+Estado(const char *, TransicionesPtr_t );
+Estado(const char *);
 
 void Evaluar(MaquinaDeEstados *);
 void EstablecerTransiciones(TransicionesPtr_t);

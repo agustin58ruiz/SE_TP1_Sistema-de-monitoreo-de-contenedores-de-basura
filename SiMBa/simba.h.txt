@@ -1,9 +1,0 @@
-#ifndef SIMBA_H
-#define SIMBA_H
-
-
-#include "maquinaDeEstados.h"
-
-MaquinaDeEstados* obtenerUnaMaquinaDeEstados();
-
-#endif

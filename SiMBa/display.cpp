@@ -293,3 +293,10 @@ void Display::pinWrite( uint8_t pinName, int value )
             break;    
     }
 }
+
+void Display::Flush(){
+    this->CharPositionWrite(0,0);
+    this->StringWrite("                ");
+    this->CharPositionWrite(0,1);
+    this->StringWrite("                ");
+}

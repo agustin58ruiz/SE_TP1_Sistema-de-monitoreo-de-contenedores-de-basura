@@ -33,14 +33,14 @@ bool Transicion::Evaluar(MaquinaDeEstados* maquina){
 
 // Estados
 
-Estado::Estado(char *nombre , TransicionesPtr_t transiciones): Transiciones(transiciones) {
+Estado::Estado(const char *nombre , TransicionesPtr_t transiciones): Transiciones(transiciones) {
     
     Nombre = nombre;
     this->Transiciones = transiciones;
 
 }
 
-Estado::Estado(char * nombre):Nombre(nombre), Transiciones(nullptr){
+Estado::Estado(const char *nombre):Nombre(nombre), Transiciones(nullptr){
 
 }
 
@@ -60,7 +60,7 @@ void Estado::Evaluar(MaquinaDeEstados * maquina){
     }
 }
 void Estado::ObtenerInformacion(){
-    printf("El estado actual es: %s", Nombre);
+    printf("El estado actual es: %s\n", Nombre);
 }
 
 // Maquina De estados
