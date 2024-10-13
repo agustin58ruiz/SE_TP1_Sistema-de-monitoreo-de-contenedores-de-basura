@@ -67,6 +67,10 @@ El sistema define los siguientes estados:
 - TAPA_TRABADA: Estado en el que la tapa está bloqueada.
 - TAPA_DESTRABADA: Estado en el que la tapa está desbloqueada.
 - PRESENCIA_DE_GAS: Estado en el que se ha detectado la presencia de gas.
+
+A continuación, una imagen con el diagrama de estados que explica cualitativamente el funcionamiento del programa: 
+
+![Diagrama de estados TP2 ](Images/TP2_DiagramaDeEstados.png "Cuatro estados: INICIO, TAPA_TRABADA, TAPA_DESTRABADA y PRESENCIA_DE_GAS.")
 ### Transiciones entre estados
 Las transiciones determinan cómo moverse de un estado a otro en función de las condiciones detectadas por los sensores. Por ejemplo:
 
