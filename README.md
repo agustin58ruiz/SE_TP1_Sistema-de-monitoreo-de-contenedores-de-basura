@@ -47,3 +47,5 @@ Se incluyó el sensor de temperatura junto con un amplificador operacional en mo
 También se incluyó un display para mostrar el estado actual. Y por último, se incluyó una entrada analógica simulando el sensor de gas. 
 
 A continuación un enlace a un video con una demostración del funcionamiento del mismo. 
+
+[![Campo Alt](https://www.youtube.com/watch?v=mLgRoVI1Ru0/0.jpg)](https://www.youtube.com/watch?v=mLgRoVI1Ru0)
