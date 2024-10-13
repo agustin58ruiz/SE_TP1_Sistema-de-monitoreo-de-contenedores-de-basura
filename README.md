@@ -48,4 +48,5 @@ También se incluyó un display para mostrar el estado actual. Y por último, se
 
 A continuación un enlace a un video con una demostración del funcionamiento del mismo. 
 
-[![Campo Alt](https://www.youtube.com/watch?v=mLgRoVI1Ru0)](https://www.youtube.com/watch?v=mLgRoVI1Ru0)
+[![Parte 1 - TP2 - Explicación Conexiones](https://img.youtube.com/vi/mLgRoVI1Ru0/0.jpg)](https://www.youtube.com/watch?v=mLgRoVI1Ru0)
+[![Parte 2 - TP2 - Demostración](https://img.youtube.com/vi/mLgRoVI1Ru0/0.jpg)](https://www.youtube.com/watch?v=mLgRoVI1Ru0)
