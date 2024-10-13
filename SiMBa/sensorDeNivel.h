@@ -6,7 +6,7 @@
 
 enum class EstadoContenedor{CONTENEDOR_LLENO, CONTENEDOR_CON_ESPACIO} ;
 
-class SensorDeNivel{
+class SensorDeNivel {
     
 private:
     DigitalIn Desborde;
