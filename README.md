@@ -26,7 +26,7 @@ En esta entrega se realizó la programación de un código que maneja: el sensor
 
 El actuador de la tapa es en este caso el LED1 y el sensor de nivel es el puerto D1. 
 
-Se adjunta una imagen de las conecciones de esta entrega. 
+Se adjunta una imagen de las conexiones de esta entrega. 
 
 <<<<<<< HEAD
 ![Diagrama de conexiones]( ./Images/Conecciones.png "Un push button como sensor de nivel, el LED1 como el actuador de la traba de la tapa" )
