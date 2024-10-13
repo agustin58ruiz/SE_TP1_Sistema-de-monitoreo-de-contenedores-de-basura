@@ -20,3 +20,16 @@ De esta forma se puede dar un mejor seguimiento al problema ambiental de la reco
   - Actuador Tapa Ventilación (Salida Digital): Si está en alto se abre la tapa de ventilación.
   - Alarma (Salida Digital): Señal auditiva indicadora de posible incendio. 
   - UART: Comunicación con la computadora. Para enviar y recibir comandos. 
+
+## Primera Entrega
+En esta entrega se realizó la programación de un código que maneja: el sensor de nivel y el actuador de la tapa. 
+
+El actuador de la tapa es en este caso el LED1 y el sensor de nivel es el puerto D1. 
+
+Se adjunta una imagen de las conexiones de esta entrega. 
+
+<<<<<<< HEAD
+![Diagrama de conexiones]( ./Images/Conecciones.png "Un push button como sensor de nivel, el LED1 como el actuador de la traba de la tapa" )
+=======
+![Diagrama de conexiones]( /Images/Conecciones.png "Un push button como sensor de nivel, el LED1 como el actuador de la traba de la tapa")
+>>>>>>> 7a3c46bbed1e097539a7d5ec2b5eb40fbdad45d0
