@@ -5,8 +5,7 @@
 
 enum class EstadoTapa {TAPA_TRABADA, TAPA_DESTRABADA} ;
 
-class ActuadorTapa
-{
+class ActuadorTapa{
     private:
         EstadoTapa EstadoDeTapa;
         DigitalOut TrabaTapa;
