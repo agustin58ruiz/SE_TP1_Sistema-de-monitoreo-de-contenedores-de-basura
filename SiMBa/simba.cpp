@@ -4,6 +4,7 @@
 #include "sensorDeNivel.h"
 #include "sensorDeGas.h"
 #include "sensorDeTemperatura.h"
+#include "sensorDeProximidad.h"
 
 #include "actuadorTapa.h"
 #include "actuadorAlarma.h"
@@ -20,6 +21,9 @@ static SensorDeGas sensorDeGas;
 static SensorDeTemperatura sensorDeTemperatura(33);
 static Display display;
 static ActuadorAlarma alarma;
+static SensorDeProximidad sensorPir;
+
+
 
 Simba::Simba(){
 
@@ -28,20 +32,34 @@ Simba::Simba(){
 }
 
 void Simba::IniciarMaquinaDeEstados(){
+
     // ------------- DEFINICION DE ESTADOS --------------
     Estado* TapaTrabada = new Estado("TAPA_TRABADA");
     Estado* TapaDestrabada = new Estado("TAPA_DESTRABADA");
     Estado* Inicio = new Estado("INICIO");
     Estado* PresenciaDeGas = new Estado("PRESENCIA_DE_GAS");
+    
 
+    // ------------- DEFINICION DE SUBESTADOS --------------
+    
+    Estado* PirInicio = new Estado("PIR_INICIO");
+    Estado* PirPersonaDetectada = new Estado("PIR_PERSONA_DETECTADA");
+    Estado* PirPersonaNoDetectada = new Estado("PIR_PERSONA_NO_DETECTADA");
+  
     // ---------- CREACION MAQUINA DE ESTADOS -----------
 
     MaquinaDeEstados* maquina = new MaquinaDeEstados(Inicio);
+    // ------ CREACION MAQUINAS DE ESTADOS INTERNA -------
+
+    MaquinaDeEstados* pirMaquina = new MaquinaDeEstados(PirInicio);
+
+
 
     // ---------------- TRANSICIONES---------------------
-    Transicion* InicioActualizaciones = new Transicion( nullptr ); // Esto se va a cambiar a su clase Actualizacion
-    Transicion* Inicio2TapaDestrabada = new Transicion( TapaDestrabada );
-    Transicion* Inicio2PresenciaDeGas = new Transicion( PresenciaDeGas );
+
+    Transicion* InicioActualizaciones      = new Transicion( nullptr ); // Esto se va a cambiar a su clase Actualizacion
+    Transicion* Inicio2TapaDestrabada      = new Transicion( TapaDestrabada );
+    Transicion* Inicio2PresenciaDeGas      = new Transicion( PresenciaDeGas );
 
     Transicion* TapaTrabadaActualizaciones = new Transicion( nullptr ); // Esto se va a cambiar a su clase Actualizacion
     Transicion* TapaTrabada2TapaDestrabada = new Transicion( TapaDestrabada );
@@ -51,12 +69,19 @@ void Simba::IniciarMaquinaDeEstados(){
     Transicion* TapaDestrabada2TapaTrabada = new Transicion( TapaTrabada );
     Transicion* TapaDestrabada2PresenciaDeGas = new Transicion( PresenciaDeGas );
 
-
     Transicion* PresenciaDeGasActualizaciones = new Transicion ( nullptr );
     Transicion* PresenciaDeGas2TapaDestrabada = new Transicion( TapaDestrabada );
     Transicion* PresenciaDeGas2TapaTrabada = new Transicion( TapaTrabada );
 
+    // ----------- TRANSICIONES DE SUBESTADOS -----------
+
+    // Sensor PIR
+    Transicion* PirInicio2PirPersonaDetectada = new Transicion( PirPersonaDetectada );
+    Transicion* PirInicio2PirPersonaNoDetectada = new Transicion( PirPersonaNoDetectada );
+    Transicion* PirPersonaDetectada2PirPersonaNoDetectada =  new Transicion( PirPersonaNoDetectada );
+    Transicion* PirPersonaNoDetectada2PirPersonaDetectada = new Transicion( PirPersonaDetectada );
     
+
     // TRANSICIONES INICIO **********************************************************
     TransicionesPtr_t transicionesInicio = new Transicion*[]{InicioActualizaciones ,Inicio2PresenciaDeGas, Inicio2TapaDestrabada,nullptr};
     
@@ -64,8 +89,7 @@ void Simba::IniciarMaquinaDeEstados(){
     InicioActualizaciones->EstablecerCondicion([](){
         // Esta actualizacion ocurre solo una vez, por eso esta el display aca. 
         // Mas adelante se puede incluir un atriburto que contenga una accion que ocurra una sola vez. 
-        
-        display.IniciarDisplay();   
+       
         sensorDeGas.ActualizarEstado();
         sensorDeTemperatura.ActualizarEstado();
         tapa.ActualizarEstado();
@@ -76,7 +100,8 @@ void Simba::IniciarMaquinaDeEstados(){
         display.StringWrite("SiMBA!");
         display.CharPositionWrite(0,1);
         display.StringWrite("Iniciando...");
-
+        display.EstablecerCountdown((std::chrono::microseconds)3000);
+        display.ActivarCountdownBacklight();
         return false; // La actualizacion siempre devuelve false
     }).EstablecerAccion([](){
 
@@ -112,6 +137,7 @@ void Simba::IniciarMaquinaDeEstados(){
         sensorDeTemperatura.ActualizarEstado();
         capacidad.ActualizarEstado();
         tapa.ActualizarEstado();
+        sensorPir.ActualizarEstado();
 
         display.CharPositionWrite(0,0);
         display.StringWrite("Estado Normal");
@@ -154,6 +180,7 @@ void Simba::IniciarMaquinaDeEstados(){
         tapa.ActualizarEstado();
         capacidad.ActualizarEstado();
         sensorDeTemperatura.ActualizarEstado();
+        sensorPir.ActualizarEstado();
 
         display.CharPositionWrite(0,0);
         display.StringWrite("Estado Bloqueado");
@@ -222,12 +249,66 @@ void Simba::IniciarMaquinaDeEstados(){
         display.Flush();
 
     });
+    // ------------- TRANSICIONES SUBESTADOS ------------------
+    
+    // TRANSICIONES PIR INICIO
+    TransicionesPtr_t transicionesPirInicio = new Transicion*[]{PirInicio2PirPersonaDetectada, PirInicio2PirPersonaNoDetectada, nullptr};
+    // PirInicio -> PersonaDetectada
+    PirInicio2PirPersonaDetectada->EstablecerCondicion([](){
+        return sensorPir.Estado() == EstadoPresencia::USUARIO_DETECTADO;
+    }).EstablecerAccion([](){
+        //display.Backlight();
+        display.ActivarCountdownBacklight();
+    });
+
+    // PirInicio -> PersonaNoDetectada
+    PirInicio2PirPersonaNoDetectada->EstablecerCondicion([](){
+        return sensorPir.Estado() == EstadoPresencia::USUARIO_NO_DETECTADO;
+    }).EstablecerAccion([](){
+        //display.NoBacklight();
+    });
+    
+
+    // TRANSICIONES PIR PERSONA DETECTADA
+    TransicionesPtr_t transicionesPirPersonaDetectada = new Transicion*[]{PirPersonaDetectada2PirPersonaNoDetectada, nullptr};
+    // PirPersonaDetectada -> PirPersonaNoDetectada
+    PirPersonaDetectada2PirPersonaNoDetectada->EstablecerCondicion([](){
+        return sensorPir.Estado() == EstadoPresencia::USUARIO_NO_DETECTADO;
+    }).EstablecerAccion([](){
+        //display.NoBacklight();
+    });
+
+    // TRANSICIONES PIR PERSONA NO DETECTADA
+    TransicionesPtr_t transicionesPirPersonaNoDetectada = new Transicion*[]{ PirPersonaNoDetectada2PirPersonaDetectada, nullptr};
+    // PirPersonaNoDetectada -> PirPersonaDetectada
+    PirPersonaNoDetectada2PirPersonaDetectada->EstablecerCondicion([](){
+
+
+        return sensorPir.Estado() == EstadoPresencia::USUARIO_DETECTADO;
+    }).EstablecerAccion([](){
+        //display.Backlight();
+        display.ActivarCountdownBacklight();
+    });
+
+
 
     // ------- Establecer Tranciciones ----------
     Inicio->EstablecerTransiciones( transicionesInicio );
     TapaTrabada->EstablecerTransiciones( transicionesTapaTrabada );
     TapaDestrabada->EstablecerTransiciones( transicionesTapaDestrabada );
     PresenciaDeGas->EstablecerTransiciones( transicionesPresenciaDeGas );
+
+    // ------ Establecer Transiciones de subestados ------
+    
+    // Subestados: TapaDestrabada
+    PirInicio->EstablecerTransiciones( transicionesPirInicio );
+    PirPersonaDetectada->EstablecerTransiciones( transicionesPirPersonaDetectada );
+    PirPersonaNoDetectada->EstablecerTransiciones( transicionesPirPersonaNoDetectada );
+
+    // Asignar maquina interna
+
+    TapaDestrabada->AsignarMaquinaInterna( pirMaquina );
+    TapaTrabada->AsignarMaquinaInterna( pirMaquina );
 
     this->maquina = maquina; 
 

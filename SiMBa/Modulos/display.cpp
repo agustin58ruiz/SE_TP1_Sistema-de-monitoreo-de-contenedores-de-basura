@@ -8,6 +8,9 @@
 #define DISPLAY_IR_FUNCTION_SET    0b00100000
 #define DISPLAY_IR_SET_DDRAM_ADDR  0b10000000
 
+//#define DISPLAY_BACKLIGHT 0x08
+//#define DISPLAY_NOBACKLIGHT 0x00
+
 #define DISPLAY_IR_ENTRY_MODE_SET_INCREMENT 0b00000010
 #define DISPLAY_IR_ENTRY_MODE_SET_DECREMENT 0b00000000
 #define DISPLAY_IR_ENTRY_MODE_SET_SHIFT     0b00000001
@@ -75,14 +78,14 @@ typedef struct{
 
 
 
-
 static pcf8574_t pcf8574;
 static bool initial8BitCommunicationIsCompleted;
 
 Display::Display(){
  
   Conexion = conexionDisplay_t::DISPLAY_CONNECTION_I2C_PCF8574_IO_EXPANDER;
-
+  _backlight = true;
+  _tickerActivated = false;
   //this->IniciarDisplay();
 
 }
@@ -197,6 +200,14 @@ void Display::CharPositionWrite( uint8_t charPositionX, uint8_t charPositionY )
     }
 }
 
+void Display::EstablecerCountdown(std::chrono::microseconds usecs){
+    if (_backlightTicker == nullptr){
+        _backlightTicker = new Ticker();
+    }
+
+    _countdown = usecs;
+
+}
 
 void Display::StringWrite( const char * str )
 {
@@ -238,7 +249,44 @@ void Display::dataBusWrite( uint8_t dataBus )
     delay( 1 );                   
 }
 
+void Display::Backlight(){
 
+    pinWrite( DISPLAY_PIN_A_PCF8574,  ON );
+    _backlight = true;
+}
+
+void Display::NoBacklight(){
+
+    pinWrite( DISPLAY_PIN_A_PCF8574,  OFF );
+    _backlight = false;
+
+}
+
+void Display::CountdownBacklightCallback(){
+ 
+    this->NoBacklight();
+    this->DesactivarCountdownBacklight();    
+
+}
+
+void Display::DesactivarCountdownBacklight(){
+   
+    NoBacklight();
+    _backlightTicker->detach();
+    _tickerActivated = false;
+
+}
+
+void Display::ActivarCountdownBacklight(){
+    
+    if (_tickerActivated == false){
+
+        this->Backlight();
+        _backlightTicker->attach(callback(this, &Display::CountdownBacklightCallback), 2);
+        _tickerActivated = true; 
+    }
+    
+}
 void Display::codeWrite( bool type, uint8_t dataBus )
 {
     if ( type == DISPLAY_RS_INSTRUCTION )

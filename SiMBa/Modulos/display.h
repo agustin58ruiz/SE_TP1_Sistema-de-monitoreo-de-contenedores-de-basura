@@ -2,6 +2,7 @@
 #define DISPLAY_H
 
 #include "mbed.h"
+#include "chrono"
 
 enum class  conexionDisplay_t{DISPLAY_CONNECTION_I2C_PCF8574_IO_EXPANDER};
 
@@ -12,7 +13,10 @@ conexionDisplay_t Conexion;
 void pinWrite( uint8_t pinName, int value );
 void codeWrite( bool type, uint8_t dataBus );
 void dataBusWrite( uint8_t dataBus );
-
+bool _tickerActivated;
+bool _backlight;
+Ticker * _backlightTicker;
+std::chrono::microseconds _countdown;
 
 public:
 
@@ -21,6 +25,12 @@ void IniciarDisplay();
 void CharPositionWrite( uint8_t charPositionX, uint8_t charPositionY );
 void StringWrite( const char * );
 void Flush();
+void Backlight();
+void EstablecerCountdown(std::chrono::microseconds usecs);
+void ActivarCountdownBacklight();
+void CountdownBacklightCallback();
+void DesactivarCountdownBacklight();
+void NoBacklight();
 
 
 

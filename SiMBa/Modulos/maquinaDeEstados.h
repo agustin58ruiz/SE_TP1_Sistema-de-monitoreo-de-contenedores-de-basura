@@ -34,6 +34,7 @@ class Estado {
 public:
 
 const char * Nombre;
+MaquinaDeEstados * MaquinaInterna;
 TransicionesPtr_t Transiciones;
 
 Estado(const char *, TransicionesPtr_t );
@@ -42,10 +43,14 @@ Estado(const char *);
 void Evaluar(MaquinaDeEstados *);
 void EstablecerTransiciones(TransicionesPtr_t);
 void ObtenerInformacion();
+void AsignarMaquinaInterna(MaquinaDeEstados *);
 
 };
 
 class MaquinaDeEstados {
+
+private:
+Estado * EstadoInicial;
 public:
 Estado * EstadoActual;
 
@@ -53,6 +58,7 @@ MaquinaDeEstados(Estado *);
 void Evaluar(void);
 void ActualizarEstado(Estado *);
 void ObtenerInformacion();
+void Reiniciar();
 
 };
 #endif

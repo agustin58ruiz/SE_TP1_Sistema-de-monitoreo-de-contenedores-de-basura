@@ -30,7 +30,7 @@ En esta entrega se realizó la programación de un código que maneja: el sensor
 
 El actuador de la tapa es en este caso el LED1 y el sensor de nivel es el puerto D1. 
 
-Se adjunta una imagen de las conecciones de esta entrega. 
+Se adjunta una imagen de las conexiones de esta entrega. 
 
 ![Diagrama de conexiones](Images/Conecciones.png "Un push button como sensor de nivel, el LED1 como el actuador de la traba de la tapa")
 
@@ -47,3 +47,43 @@ Se incluyó el sensor de temperatura junto con un amplificador operacional en mo
 También se incluyó un display para mostrar el estado actual. Y por último, se incluyó una entrada analógica simulando el sensor de gas. 
 
 A continuación un enlace a un video con una demostración del funcionamiento del mismo. 
+
+### Explicación de las conexiones
+[![Parte 1 - TP2 - Explicación Conexiones](https://img.youtube.com/vi/mLgRoVI1Ru0/0.jpg)](https://www.youtube.com/watch?v=mLgRoVI1Ru0)
+### Demostración
+[![Parte 2 - TP2 - Demostración](https://img.youtube.com/vi/movsi7g4hgY/0.jpg)](https://www.youtube.com/watch?v=movsi7g4hgY)
+
+
+### Sobre la maquina de estados (maquinaDeEstados.cpp)
+La maquina de estados se encuentra definida en el archivo maquinaDeEstados.cpp. Básicamente define tres clases: 
+-  MaquinaDeEstados: Se encarga de gestionar la maquina de estados. Funciona solamente como un contenedor y tiene un puntero hacia el estado actual. Al inicializarse se debe colocar el primer estado de donde debe realizarse el procesamiento. Con procesamiento se entiende como la evaluación de si el estado debe avanzar hacia otro estado o continuar en el mismo. 
+-  Transicion: Este objeto permite la transición entre estados, y es la representación de una arista dirigida si se considera a la máquina de estados como un grafo. Tiene una condición y una acción. La condición permite saber si la máquina debe transicionar a otro estado o no. De ser satisfactoria la condición, se realiza una acción cuyo proposíto puede ser accionar sobre variables del sistema. También se incorpora una Actualización, que es una transición cuya condición es siempre falsa y sirve para ejecutar actualizaciones en las variables del sistema. 
+-  Estado:  Este objeto define un estado en el sistema y contiene un arreglo de transiciones que se utilizan para conectarlo con otros estados. El estado en esta implementación es simplemente un contenedor de las transiciones.
+  
+### Estados definidos
+El sistema define los siguientes estados:
+
+- INICIO: El estado inicial del sistema donde se realiza la configuración inicial y las actualizaciones.
+- TAPA_TRABADA: Estado en el que la tapa está bloqueada.
+- TAPA_DESTRABADA: Estado en el que la tapa está desbloqueada.
+- PRESENCIA_DE_GAS: Estado en el que se ha detectado la presencia de gas.
+
+A continuación, una imagen con el diagrama de estados que explica cualitativamente el funcionamiento del programa: 
+
+![Diagrama de estados TP2 ](Images/TP2_DiagramaDeEstados.png "Cuatro estados: INICIO, TAPA_TRABADA, TAPA_DESTRABADA y PRESENCIA_DE_GAS.")
+### Transiciones entre estados
+Las transiciones determinan cómo moverse de un estado a otro en función de las condiciones detectadas por los sensores. Por ejemplo:
+
+- Inicio a TAPA_DESTRABADA: Esta transición se produce si el sistema se inicializa correctamente.
+- Inicio a PRESENCIA_DE_GAS: Si se detecta gas al inicio, el sistema cambia a este estado y activa la alarma.
+- TAPA_DESTRABADA a TAPA_TRABADA: Cuando el contenedor está lleno y no hay presencia de gas, la tapa se bloquea.
+- TAPA_TRABADA a TAPA_DESTRABADA: Se produce cuando hay espacio en el contenedor y no hay presencia de gas.
+- PRESENCIA_DE_GAS a TAPA_TRABADA: Se activa si el contenedor está lleno pero no hay presencia de gas.
+### Lógica de transiciones y acciones
+Cada transición está definida con una condición y una acción:
+
+- Condición: Una función que devuelve true o false dependiendo del estado de los sensores. Si devuelve true, se activa la transición.
+- Acción: Una función que se ejecuta cuando se realiza la transición. Por ejemplo, activar una alarma, mostrar mensajes en el display, o bloquear la tapa.
+### Funcionamiento
+- Inicialización: Al iniciar el sistema, se configuran los estados y se realizan las actualizaciones iniciales. Esto incluye mostrar un mensaje en el display y actualizar el estado de los sensores.
+- Evaluación del estado: El método Evaluar se ejecuta periódicamente para revisar el estado actual y determinar si debe cambiar a otro estado según las condiciones.
