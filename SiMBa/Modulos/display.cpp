@@ -86,6 +86,7 @@ Display::Display(){
   Conexion = conexionDisplay_t::DISPLAY_CONNECTION_I2C_PCF8574_IO_EXPANDER;
   _backlight = true;
   _tickerActivated = false;
+  _countdownSecs = 0;
   //this->IniciarDisplay();
 
 }
@@ -200,14 +201,7 @@ void Display::CharPositionWrite( uint8_t charPositionX, uint8_t charPositionY )
     }
 }
 
-void Display::EstablecerCountdown(std::chrono::microseconds usecs){
-    if (_backlightTicker == nullptr){
-        _backlightTicker = new Ticker();
-    }
 
-    _countdown = usecs;
-
-}
 
 void Display::StringWrite( const char * str )
 {
@@ -259,6 +253,11 @@ void Display::NoBacklight(){
 
     pinWrite( DISPLAY_PIN_A_PCF8574,  OFF );
     _backlight = false;
+
+}
+
+void Display::EstablecerCountdown(float secs){
+    _countdownSecs = secs;
 
 }
 

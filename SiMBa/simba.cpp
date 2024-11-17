@@ -9,6 +9,7 @@
 #include "actuadorTapa.h"
 #include "actuadorAlarma.h"
 #include "display.h"
+#include "motor.h"
 
 #include "maquinaDeEstados.h"
 #include "simba.h"
@@ -22,6 +23,7 @@ static SensorDeTemperatura sensorDeTemperatura(33);
 static Display display;
 static ActuadorAlarma alarma;
 static SensorDeProximidad sensorPir;
+static Motor motor(D4,D5,D6,D7);
 
 
 
@@ -100,7 +102,12 @@ void Simba::IniciarMaquinaDeEstados(){
         display.StringWrite("SiMBA!");
         display.CharPositionWrite(0,1);
         display.StringWrite("Iniciando...");
-        display.EstablecerCountdown((std::chrono::microseconds)3000);
+        display.EstablecerCountdown(5.0);
+        for(int i=0;i<100000; i++ ){
+        motor.Avanzar();
+        wait_us(800);
+    }
+       
         display.ActivarCountdownBacklight();
         return false; // La actualizacion siempre devuelve false
     }).EstablecerAccion([](){
@@ -287,6 +294,7 @@ void Simba::IniciarMaquinaDeEstados(){
         return sensorPir.Estado() == EstadoPresencia::USUARIO_DETECTADO;
     }).EstablecerAccion([](){
         //display.Backlight();
+        motor.Avanzar();
         display.ActivarCountdownBacklight();
     });
 

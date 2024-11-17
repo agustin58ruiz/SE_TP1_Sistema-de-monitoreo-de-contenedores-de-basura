@@ -16,7 +16,7 @@ void dataBusWrite( uint8_t dataBus );
 bool _tickerActivated;
 bool _backlight;
 Ticker * _backlightTicker;
-std::chrono::microseconds _countdown;
+float _countdownSecs;
 
 public:
 
@@ -26,7 +26,7 @@ void CharPositionWrite( uint8_t charPositionX, uint8_t charPositionY );
 void StringWrite( const char * );
 void Flush();
 void Backlight();
-void EstablecerCountdown(std::chrono::microseconds usecs);
+void EstablecerCountdown(float secs);
 void ActivarCountdownBacklight();
 void CountdownBacklightCallback();
 void DesactivarCountdownBacklight();
