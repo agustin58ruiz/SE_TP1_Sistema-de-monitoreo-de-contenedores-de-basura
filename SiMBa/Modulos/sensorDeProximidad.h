@@ -15,7 +15,6 @@ private:
 public:
 
     SensorDeProximidad(PinName pin, PinMode mode);
-    SensorDeProximidad();
     bool HayUsuario();
     void ActualizarEstado();
     EstadoPresencia Estado();

@@ -87,6 +87,7 @@ Display::Display(){
   _backlight = true;
   _tickerActivated = false;
   _countdownSecs = 0;
+  _backlightTicker = nullptr;
   //this->IniciarDisplay();
 
 }
@@ -99,7 +100,7 @@ void Display::IniciarDisplay(){
         i2cPcf8574.frequency(100000);
         pinWrite( DISPLAY_PIN_A_PCF8574,  ON );
     } 
-     initial8BitCommunicationIsCompleted = false;    
+    initial8BitCommunicationIsCompleted = false;    
 
     delay( 50 );
     
@@ -257,6 +258,9 @@ void Display::NoBacklight(){
 }
 
 void Display::EstablecerCountdown(float secs){
+    if (_backlightTicker == nullptr){
+        _backlightTicker = new Ticker();
+    }
     _countdownSecs = secs;
 
 }
@@ -281,11 +285,12 @@ void Display::ActivarCountdownBacklight(){
     if (_tickerActivated == false){
 
         this->Backlight();
-        _backlightTicker->attach(callback(this, &Display::CountdownBacklightCallback), 2);
+        _backlightTicker->attach(callback(this, &Display::CountdownBacklightCallback), _countdownSecs);
         _tickerActivated = true; 
     }
     
 }
+
 void Display::codeWrite( bool type, uint8_t dataBus )
 {
     if ( type == DISPLAY_RS_INSTRUCTION )

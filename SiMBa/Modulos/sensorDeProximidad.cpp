@@ -6,9 +6,7 @@
 SensorDeProximidad::SensorDeProximidad(PinName pin, PinMode mode) : Pir(pin, mode), EstadoPresenciaUsuario(EstadoPresencia::USUARIO_NO_DETECTADO)
 {  
 }
-SensorDeProximidad::SensorDeProximidad(): Pir(D3, PullDown), EstadoPresenciaUsuario(EstadoPresencia::USUARIO_NO_DETECTADO)
-{
-}
+
 
 
 

@@ -14,6 +14,8 @@
 #include "maquinaDeEstados.h"
 #include "simba.h"
 
+#define MOTOR_VUELTAS 4096
+
 // Definicion de sensores usados por el programa
 
 static ActuadorTapa tapa;
@@ -22,10 +24,8 @@ static SensorDeGas sensorDeGas;
 static SensorDeTemperatura sensorDeTemperatura(33);
 static Display display;
 static ActuadorAlarma alarma;
-static SensorDeProximidad sensorPir;
+static SensorDeProximidad sensorPir(D3, PullDown);
 static Motor motor(D4,D5,D6,D7);
-
-
 
 Simba::Simba(){
 
@@ -103,11 +103,9 @@ void Simba::IniciarMaquinaDeEstados(){
         display.CharPositionWrite(0,1);
         display.StringWrite("Iniciando...");
         display.EstablecerCountdown(5.0);
-        for(int i=0;i<100000; i++ ){
-        motor.Avanzar();
-        wait_us(800);
-    }
-       
+        motor.EstablecerRPMPorPaso(5000);
+        motor.EstablecerInterrupcionRevertir(D3, PullDown);
+        motor.Pasos(MOTOR_VUELTAS);
         display.ActivarCountdownBacklight();
         return false; // La actualizacion siempre devuelve false
     }).EstablecerAccion([](){
@@ -283,6 +281,7 @@ void Simba::IniciarMaquinaDeEstados(){
         return sensorPir.Estado() == EstadoPresencia::USUARIO_NO_DETECTADO;
     }).EstablecerAccion([](){
         //display.NoBacklight();
+        motor.Pasos(-MOTOR_VUELTAS);
     });
 
     // TRANSICIONES PIR PERSONA NO DETECTADA
@@ -294,8 +293,9 @@ void Simba::IniciarMaquinaDeEstados(){
         return sensorPir.Estado() == EstadoPresencia::USUARIO_DETECTADO;
     }).EstablecerAccion([](){
         //display.Backlight();
-        motor.Avanzar();
         display.ActivarCountdownBacklight();
+        motor.Pasos(MOTOR_VUELTAS);
+        
     });
 
 
