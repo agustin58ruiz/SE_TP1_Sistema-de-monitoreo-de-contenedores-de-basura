@@ -265,7 +265,7 @@ void Display::EstablecerCountdown(float secs){
 
 }
 
-void Display::CountdownBacklightCallback(){
+void Display::_countdownBacklightCallback(){
  
     this->NoBacklight();
     this->DesactivarCountdownBacklight();    
@@ -285,7 +285,7 @@ void Display::ActivarCountdownBacklight(){
     if (_tickerActivated == false){
 
         this->Backlight();
-        _backlightTicker->attach(callback(this, &Display::CountdownBacklightCallback), _countdownSecs);
+        _backlightTicker->attach(callback(this, &Display::_countdownBacklightCallback), _countdownSecs);
         _tickerActivated = true; 
     }
     

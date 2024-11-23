@@ -12,6 +12,9 @@ class SensorDeProximidad{
 private:
     DigitalIn Pir;
     EstadoPresencia EstadoPresenciaUsuario; 
+    InterruptIn * _pir;
+    void _usuarioDetectadoCallback();
+    void _usuarioNoDetectadoCallback();
 public:
 
     SensorDeProximidad(PinName pin, PinMode mode);

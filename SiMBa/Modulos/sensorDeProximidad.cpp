@@ -4,7 +4,10 @@
 
 
 SensorDeProximidad::SensorDeProximidad(PinName pin, PinMode mode) : Pir(pin, mode), EstadoPresenciaUsuario(EstadoPresencia::USUARIO_NO_DETECTADO)
-{  
+{
+    _pir = new InterruptIn(pin, mode);
+    _pir->fall(callback(this, &SensorDeProximidad::_usuarioNoDetectadoCallback)); 
+    _pir->rise(callback(this, &SensorDeProximidad::_usuarioDetectadoCallback));
 }
 
 
@@ -34,4 +37,11 @@ void SensorDeProximidad::ActualizarEstado(){
         printf("NO Hay persona\n");
         EstadoPresenciaUsuario = EstadoPresencia::USUARIO_NO_DETECTADO;
     }
+}
+
+void SensorDeProximidad::_usuarioDetectadoCallback(){
+    EstadoPresenciaUsuario = EstadoPresencia::USUARIO_DETECTADO;
+}
+void SensorDeProximidad::_usuarioNoDetectadoCallback(){
+    EstadoPresenciaUsuario = EstadoPresencia::USUARIO_NO_DETECTADO;
 }

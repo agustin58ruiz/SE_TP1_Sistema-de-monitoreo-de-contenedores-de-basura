@@ -13,6 +13,7 @@ conexionDisplay_t Conexion;
 void pinWrite( uint8_t pinName, int value );
 void codeWrite( bool type, uint8_t dataBus );
 void dataBusWrite( uint8_t dataBus );
+void _countdownBacklightCallback();
 bool _tickerActivated;
 bool _backlight;
 Ticker * _backlightTicker;
@@ -28,7 +29,6 @@ void Flush();
 void Backlight();
 void EstablecerCountdown(float secs);
 void ActivarCountdownBacklight();
-void CountdownBacklightCallback();
 void DesactivarCountdownBacklight();
 void NoBacklight();
 

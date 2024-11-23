@@ -9,7 +9,7 @@ private:
 
 BusOut* _control;
 int _indice;
-unsigned int _tiempoEntreBobina;
+float _tiempoEntreBobina;
 
 int _cantidadDePasosRestantes;
 int _cantidadDePasos;
@@ -33,11 +33,14 @@ public:
 Motor(PinName Bit0, PinName Bit1, PinName Bit2, PinName Bit3);
 
 void EstablecerRPMPorPaso(unsigned int rpm);
-void DesactivarInterrupcionRevertir();
-void ActivarInterrupcionRevertir();
-void EstablecerInterrupcionRevertir(PinName pin, PinMode mode);
+
+void Pausar();
+void Empezar();
+void Parar();
 //void Pasos(int cantidadDePasos);
 int PasosRestantes();
+
+
 void Pasos(int cantidadDePasos);
 };
 

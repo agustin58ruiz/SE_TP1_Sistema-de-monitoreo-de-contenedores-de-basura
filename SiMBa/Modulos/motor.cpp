@@ -3,7 +3,7 @@
 
 #define MAX_INDICE 7
 #define INDEX_MOD 8 //This is MAX_INDEX + 1
-#define MINUTO_A_US 60000000
+#define MINUTO_A_SEG 60
 
 
 static int steps[MAX_INDICE+1] = {
@@ -57,7 +57,7 @@ void Motor::_retrocederUnPaso(){
 
 void Motor::EstablecerRPMPorPaso(unsigned int rpm){
 
-    _tiempoEntreBobina = (unsigned int)((1.0/(rpm*MAX_INDICE))*MINUTO_A_US);
+    _tiempoEntreBobina = ((1.0/(rpm*MAX_INDICE))*MINUTO_A_SEG);
 
 }
 
@@ -95,91 +95,47 @@ void Motor::Pasos( int cantidadDePasos ) {
     _cantidadDePasosRestantes = cantidadDePasos;
     _pasos = cantidadDePasos;
 
-    if ( _tickerMotor != nullptr ){
+    if ( _tickerMotor == nullptr ){
         _tickerMotor = new Ticker();
     }
+
     if(_cantidadDePasosRestantes > 0){
         _indice = 0;
-        _tickerMotor->attach(callback(this,&Motor::_pasosCallbackAvanzar), _tiempoEntreBobina*1e-6);
     }else{
         _indice = MAX_INDICE;
-        _tickerMotor->attach(callback(this,&Motor::_pasosCallbackRetroceder), _tiempoEntreBobina*1e-6);
     }
-}
-
-/*
-void Motor::Pasos(int cantidadDePasos){
-
-    _cantidadDePasosRestantes = cantidadDePasos;
-    _cantidadDePasos = cantidadDePasos;
-    if (_cantidadDePasosRestantes != 0) {
-      if (_cantidadDePasosRestantes > 0) {
-        while (_cantidadDePasosRestantes != 0) {
-          if (_revertir == false) {
-            _funcionando = true;
-            _avanzarUnPaso();
-            _cantidadDePasosRestantes--;
-          } else {
-            _retrocederUnPaso();
-            if (_cantidadDePasosRestantes++ == cantidadDePasos)
-              break;
-          }
-        }
-      } else {
-        while (_cantidadDePasosRestantes < 0) {
-          if (_revertir == false) {
-            
-            _funcionando = true;
-            _retrocederUnPaso();
-            _cantidadDePasosRestantes++;
-          } else {
-              _avanzarUnPaso();
-              if (_cantidadDePasosRestantes-- == cantidadDePasos)
-                break;
-          }
-        }
-      }
-      _revertir = false;
-
-    }
-    _funcionando = false;
 }
 
 int Motor::PasosRestantes(){
 
     return _cantidadDePasosRestantes;
 }
-*/
 
-void Motor::_revertirCallback(){
-            
-    if(_funcionando == true)
-        _revertir = true;
+void Motor::Pausar(){
+
+    _tickerMotor->detach();
+    *_control = 0b0000;
+
 }
 
-void Motor::DesactivarInterrupcionRevertir(){
-    if(_revertirInt != nullptr){
-        _revertirInt->disable_irq();
+void Motor::Empezar(){
+
+    if(_cantidadDePasosRestantes > 0){
+        _tickerMotor->attach(callback(this,&Motor::_pasosCallbackAvanzar), _tiempoEntreBobina);
+    }else{
+        _tickerMotor->attach(callback(this,&Motor::_pasosCallbackRetroceder), _tiempoEntreBobina);
     }
 }
 
+void Motor::Parar(){
 
-void Motor::ActivarInterrupcionRevertir(){
-    if(_revertirInt != nullptr){
-        _revertirInt->enable_irq();
+    _tickerMotor->detach();
+    _cantidadDePasosRestantes = _cantidadDePasos;
+     if(_cantidadDePasosRestantes > 0){
+        _indice = 0;
+    }else{
+        _indice = MAX_INDICE;
     }
-}
-void Motor::EstablecerInterrupcionRevertir(PinName pin, PinMode mode){
-// Este metodo busca deshacer los pasos si se detecta un evento. 
-    if (_revertirInt == nullptr){
-        _revertirInt = new InterruptIn(pin);
-        _revertirInt->mode(mode);
-        
-        _revertirInt->fall(callback(this, &Motor::_revertirCallback));    
-        
-        
-
-    }
-
+    *_control = 0b0000;
 }
 
