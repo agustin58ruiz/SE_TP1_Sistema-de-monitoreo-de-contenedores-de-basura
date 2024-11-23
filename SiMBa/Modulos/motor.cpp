@@ -2,6 +2,7 @@
 #include "arm_book_lib.h"
 
 #define MAX_INDICE 7
+#define INDEX_MOD 8 //This is MAX_INDEX + 1
 #define MINUTO_A_US 60000000
 
 
@@ -29,7 +30,7 @@ Motor::Motor(PinName Bit0, PinName Bit1, PinName Bit2,PinName Bit3)
 
     _revertir = false;
 
-    _cantidadDePasos = 0;
+    _cantidadDePasosRestantes = 0;
 
     _funcionando = false;
    
@@ -38,19 +39,20 @@ Motor::Motor(PinName Bit0, PinName Bit1, PinName Bit2,PinName Bit3)
 
 
 void Motor::_avanzarUnPaso(){
-    for(int i=0; i <= MAX_INDICE; i++){
-        *_control = steps[i];
-        wait_us(_tiempoEntreBobina);
-    }
-    *_control = 0b0000;
+    
+    *_control = steps[_indice++];
+    _cantidadDePasosRestantes--;
+    if(_indice > MAX_INDICE) _indice=0;
+    
+    
 }
 
 void Motor::_retrocederUnPaso(){
-    for(int i = MAX_INDICE; i >= 0; i--){
-        *_control = steps[i];
-        wait_us(_tiempoEntreBobina);
-    }
-    *_control = 0b0000;
+
+    *_control = steps[_indice--];
+    _cantidadDePasosRestantes++;
+    if(_indice < 0) _indice=MAX_INDICE;
+
 }
 
 void Motor::EstablecerRPMPorPaso(unsigned int rpm){
@@ -59,76 +61,80 @@ void Motor::EstablecerRPMPorPaso(unsigned int rpm){
 
 }
 
-void Motor::_pasosCallback(){
+void Motor::_pasosCallbackAvanzar(){
 
-    if(_cantidadDePasos != 0){
-        if (_cantidadDePasos > 0) {
+    if(_cantidadDePasosRestantes != 0){
         
-          if (_revertir == false) {
-            _funcionando = true;
-            _avanzarUnPaso();
-            _cantidadDePasos--;
-          } else {
-            _retrocederUnPaso();
-          }
+        _avanzarUnPaso();
         
-      } else {
-        
-          if (_revertir == false) {
-            
-            _funcionando = true;
-            _retrocederUnPaso();
-            _cantidadDePasos++;
-          } else {
-              _avanzarUnPaso();
-          }
-        
-      }
     } else {
+
+        *_control = 0b0000;
+        _tickerMotor->detach();
+
+    }
+
+}
+void Motor::_pasosCallbackRetroceder(){
+
+    if(_cantidadDePasosRestantes != 0){
+        
+        _retrocederUnPaso();
+        
+    } else {
+        
+        *_control = 0b0000;
         _tickerMotor->detach();
 
     }
 
 }
 
-void Motor::PasosNew(int cantidadDePasos){
+void Motor::Pasos( int cantidadDePasos ) {
 
-    _cantidadDePasos = cantidadDePasos;
-    _pasos= cantidadDePasos;
+    _cantidadDePasosRestantes = cantidadDePasos;
+    _pasos = cantidadDePasos;
 
     if ( _tickerMotor != nullptr ){
         _tickerMotor = new Ticker();
     }
-    _tickerMotor->attach(callback(this,&Motor::_pasosCallback), _tiempoEntreBobina*1e-6);
+    if(_cantidadDePasosRestantes > 0){
+        _indice = 0;
+        _tickerMotor->attach(callback(this,&Motor::_pasosCallbackAvanzar), _tiempoEntreBobina*1e-6);
+    }else{
+        _indice = MAX_INDICE;
+        _tickerMotor->attach(callback(this,&Motor::_pasosCallbackRetroceder), _tiempoEntreBobina*1e-6);
+    }
 }
 
+/*
 void Motor::Pasos(int cantidadDePasos){
 
+    _cantidadDePasosRestantes = cantidadDePasos;
     _cantidadDePasos = cantidadDePasos;
-
-    if (_cantidadDePasos != 0) {
-      if (_cantidadDePasos > 0) {
-        while (_cantidadDePasos != 0) {
+    if (_cantidadDePasosRestantes != 0) {
+      if (_cantidadDePasosRestantes > 0) {
+        while (_cantidadDePasosRestantes != 0) {
           if (_revertir == false) {
             _funcionando = true;
             _avanzarUnPaso();
-            _cantidadDePasos--;
+            _cantidadDePasosRestantes--;
           } else {
             _retrocederUnPaso();
-            if (_cantidadDePasos++ == cantidadDePasos)
+            if (_cantidadDePasosRestantes++ == cantidadDePasos)
               break;
           }
         }
       } else {
-        while (_cantidadDePasos < 0) {
+        while (_cantidadDePasosRestantes < 0) {
           if (_revertir == false) {
             
             _funcionando = true;
             _retrocederUnPaso();
-            _cantidadDePasos++;
+            _cantidadDePasosRestantes++;
           } else {
               _avanzarUnPaso();
-              if (_cantidadDePasos-- == cantidadDePasos)
+              if (_cantidadDePasosRestantes-- == cantidadDePasos)
                 break;
           }
         }
@@ -138,6 +144,12 @@ void Motor::Pasos(int cantidadDePasos){
     }
     _funcionando = false;
 }
+
+int Motor::PasosRestantes(){
+
+    return _cantidadDePasosRestantes;
+}
+*/
 
 void Motor::_revertirCallback(){
             

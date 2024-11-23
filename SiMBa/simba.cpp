@@ -40,6 +40,12 @@ void Simba::IniciarMaquinaDeEstados(){
     Estado* TapaDestrabada = new Estado("TAPA_DESTRABADA");
     Estado* Inicio = new Estado("INICIO");
     Estado* PresenciaDeGas = new Estado("PRESENCIA_DE_GAS");
+/*
+    Estado* AbriendoTapa = new Estado("ABRIENDO_TAPA");
+    Estado* TapaAbierta = new Estado("TAPA_ABIERTA");
+    Estado* TapaCerrada = new Estado("TAPA_CERRADA");
+    Estado* CerrandoTapa = new Estado("CERRANDO_TAPA");
+*/    
     
 
     // ------------- DEFINICION DE SUBESTADOS --------------
@@ -59,21 +65,38 @@ void Simba::IniciarMaquinaDeEstados(){
 
     // ---------------- TRANSICIONES---------------------
 
-    Transicion* InicioActualizaciones      = new Transicion( nullptr ); // Esto se va a cambiar a su clase Actualizacion
+    Transicion* InicioActualizaciones      = new Transicion( nullptr ); 
     Transicion* Inicio2TapaDestrabada      = new Transicion( TapaDestrabada );
     Transicion* Inicio2PresenciaDeGas      = new Transicion( PresenciaDeGas );
 
-    Transicion* TapaTrabadaActualizaciones = new Transicion( nullptr ); // Esto se va a cambiar a su clase Actualizacion
+    Transicion* TapaTrabadaActualizaciones = new Transicion( nullptr ); 
     Transicion* TapaTrabada2TapaDestrabada = new Transicion( TapaDestrabada );
     Transicion* TapaTrabada2PresenciaDeGas = new Transicion( PresenciaDeGas );
 
-    Transicion* TapaDestrabadaActualizaciones = new Transicion( nullptr ); // Esto se va a cambiar a su clase Actualizacion
+    Transicion* TapaDestrabadaActualizaciones = new Transicion( nullptr ); 
+//  Transicion* TapaDestrabada2AbriendoTapa = new Transicion( AbriendoTapa );
     Transicion* TapaDestrabada2TapaTrabada = new Transicion( TapaTrabada );
     Transicion* TapaDestrabada2PresenciaDeGas = new Transicion( PresenciaDeGas );
 
     Transicion* PresenciaDeGasActualizaciones = new Transicion ( nullptr );
     Transicion* PresenciaDeGas2TapaDestrabada = new Transicion( TapaDestrabada );
     Transicion* PresenciaDeGas2TapaTrabada = new Transicion( TapaTrabada );
+
+    //Transicion* AbriendoTapaActualizaciones = new Transicion( nullptr );
+/*
+    Transicion* AbriendoTapa2TapaAbierta = new Transicion( TapaAbierta );
+    Transicion* AbriendoTapa2CerrandoTapa = new Transicion( CerrandoTapa );
+
+
+    Transicion* TapaAbierta2CerrandoTapa = new Transicion( CerrandoTapa );
+
+    Transicion* CerrandoTapaActualizaciones = new Transicion( nullptr );    
+    Transicion* CerrandoTapa2AbriendoTapa = new Transicion( AbriendoTapa );
+    Transicion* CerrandoTapa2TapaCerrada = new Transicion( TapaCerrada );
+
+    Transicion* TapaCerradaActualizaciones = new Transicion( nullptr );
+    Transicion* TapaCerrada2TapaDestrabada = new Transicion( TapaDestrabada );
+*/
 
     // ----------- TRANSICIONES DE SUBESTADOS -----------
 
@@ -154,6 +177,19 @@ void Simba::IniciarMaquinaDeEstados(){
         display.StringWrite(temperatura);
         return false;
     }).EstablecerAccion([](){});
+    
+    // TapaDestrabada -> AbriendoTapa
+
+    /*TapaDestrabada2AbriendoTapa->EstablecerCondicion([](){
+        return sensorPir.Estado() == EstadoPresencia::USUARIO_DETECTADO;
+    }).EstablecerAccion([](){
+        display.Flush();
+        display.CharPositionWrite(0,0);
+        display.StringWrite("Abriendo Tapa");
+        display.CharPositionWrite(0,1);
+        display.StringWrite("ESPERE!");
+        motor.Pasos(100);
+    });*/
 
     // TapaDestrabada -> TapaTrabada
     TapaDestrabada2TapaTrabada->EstablecerCondicion([](){
@@ -254,6 +290,39 @@ void Simba::IniciarMaquinaDeEstados(){
         display.Flush();
 
     });
+
+    /*
+    Transicion* AbriendoTapa2TapaAbierta = new Transicion( TapaAbierta );
+    Transicion* AbriendoTapa2CerrandoTapa = new Transicion( CerrandoTapa );
+
+
+    Transicion* TapaAbierta2CerrandoTapa = new Transicion( CerrandoTapa );
+
+    Transicion* CerrandoTapaActualizaciones = new Transicion( nullptr );    
+    Transicion* CerrandoTapa2AbriendoTapa = new Transicion( AbriendoTapa );
+    Transicion* CerrandoTapa2TapaCerrada = new Transicion( TapaCerrada );
+
+    Transicion* TapaCerradaActualizaciones = new Transicion( nullptr );
+    Transicion* TapaCerrada2TapaDestrabada = new Transicion( TapaDestrabada );
+
+    */
+
+    // TRANSICIONES ABRIENDO TAPA    *******************************************
+   /* TransicionesPtr_t transicionesAbriendoTapa = new Transicion*[]{ nullptr};
+    // AbriendoTapa -> TapaAbierta
+    AbriendoTapa2TapaAbierta->EstablecerCondicion([](){
+        Motor.PasosRestantes() == 0;
+    }).EstablecerAccion([](){});
+    // AbriendoTapa -> CerrandoTapa 
+
+
+    // TRANSICIONES TAPA ABIERTA     *******************************************
+    TransicionesPtr_t transicionesTapaAbierta = new Transicion*[]{ nullptr};
+    // TRANSICIONES TAPA CERRADA     *******************************************
+    TransicionesPtr_t transicionesTapaCerrada = new Transicion*[]{ nullptr};
+    // TRANSICIONES CERRANDO TAPA    *******************************************
+    TransicionesPtr_t transicionesCerrandoTapa = new Transicion*[]{ nullptr};
+*/
     // ------------- TRANSICIONES SUBESTADOS ------------------
     
     // TRANSICIONES PIR INICIO
@@ -276,7 +345,7 @@ void Simba::IniciarMaquinaDeEstados(){
 
     // TRANSICIONES PIR PERSONA DETECTADA
     TransicionesPtr_t transicionesPirPersonaDetectada = new Transicion*[]{PirPersonaDetectada2PirPersonaNoDetectada, nullptr};
-    // PirPersonaDetectada -> PirPersonaNoDetectada
+        // PirPersonaDetectada -> PirPersonaNoDetectada
     PirPersonaDetectada2PirPersonaNoDetectada->EstablecerCondicion([](){
         return sensorPir.Estado() == EstadoPresencia::USUARIO_NO_DETECTADO;
     }).EstablecerAccion([](){
