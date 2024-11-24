@@ -23,10 +23,6 @@ class SensorDeTemperatura {
     EstadoSensorDeTemperatura Estado();
     void ActualizarEstado();
     void ObtenerTemperatura( char* );
-
-
-
-
 };
 
 #endif
