@@ -10,17 +10,17 @@ Por otro lado, se dispondrá de una central de datos que recepcionará todas las
 De esta forma se puede dar un mejor seguimiento al problema ambiental de la recolección de basura y una mejora en la eficacia de las políticas ambientales de la ciudad. 
 ## Plataforma de desarrollo:  NUCLEO-F429ZI
 ## Periféricos a utilizar: 
-  - Sensor de nivel (Entrada Digital) (D1): Si esta encendido indica que el contenedor está lleno.
-  - Sensor de gas (Entrada Analógica) (A0): Si supera un umbral indica que se detectó gas. Posible riesgo de incendio.
-  - Sensor de temperatura (Entrada Analógica) (A1): Si la temperatura aumenta a un nivel acciona la alarma.
-  - Detector De Humedad (Entrada Analógica) (No implementado aún): Sensa el nivel de humedad en el contenedor. Variable influyente en el riesgo de incendio. 
+  - Sensor de nivel (Entrada Digital) (D1): si esta encendido indica que el contenedor está lleno.
+  - Sensor de gas (Entrada Analógica) (A0): si supera un umbral indica que se detectó gas. Posible riesgo de incendio.
+  - Sensor de temperatura (Entrada Analógica) (A1): si la temperatura aumenta a un nivel acciona la alarma.
+  - Detector De Humedad (Entrada Analógica) (No implementado aún): sensa el nivel de humedad en el contenedor. Variable influyente en el riesgo de incendio. 
   - Display (I2C): Indicador visual del estado del tacho. 
-  - Sensor Tapa (Entrada Digital) (No implementado aún): Si esta encendido indica que la tapa esta cerrada.
-  - Actuador Matafuegos (Salida Digital) (No implementado aún): Si esta en alto se abre el matafuegos.
-  - Actuador Traba de la Tapa (Salida Digital) (LED1): Con esta salida se puede bloquear la tapa.  
-  - Actuador Tapa Ventilación (Salida Digital) (No implementado Aun): Si está en alto se abre la tapa de ventilación.
-  - Alarma (Salida Digital) (D2): Señal auditiva indicadora de posible incendio. 
-  - UART: Comunicación con la computadora. Para enviar y recibir comandos. 
+  - Sensor Tapa (Entrada Digital) (No implementado aún): si esta encendido indica que la tapa esta cerrada.
+  - Actuador Matafuegos (Salida Digital) (No implementado aún): si esta en alto se abre el matafuegos.
+  - Actuador Traba de la Tapa (Salida Digital) (LED1): con esta salida se puede bloquear la tapa.  
+  - Actuador Tapa Ventilación (Salida Digital) (No implementado Aun): si está en alto se abre la tapa de ventilación.
+  - Alarma (Salida Digital) (D2): señal auditiva indicadora de posible incendio. 
+  - UART: comunicación con la computadora. Para enviar y recibir comandos. 
 
 
 
@@ -42,7 +42,7 @@ La maquina de estados dispone de cuatro estados: Inicio, TapaTrabada, TapaDestra
 
 Desde el inicio se puede ir a todos los demas estados, sin embargo, solo se puede pasar por el una sola vez porque es para iniciar sensores. 
 
-Se incluyó el sensor de temperatura junto con un amplificador operacional en modo no inversor para amplificar la pequeña señal de temperatura, y se colocó el OpAmp en 0 a 3.3V. 
+Se incluyó el sensor de temperatura junto con un amplificador operacional en modo no inversor para amplificar la pequeña señal de temperatura, y se colocó el OpAmp en 0 a 3,3 V. 
 
 También se incluyó un display para mostrar el estado actual. Y por último, se incluyó una entrada analógica simulando el sensor de gas. 
 
@@ -56,17 +56,17 @@ A continuación un enlace a un video con una demostración del funcionamiento de
 
 ### Sobre la maquina de estados (maquinaDeEstados.cpp)
 La maquina de estados se encuentra definida en el archivo maquinaDeEstados.cpp. Básicamente define tres clases: 
--  MaquinaDeEstados: Se encarga de gestionar la maquina de estados. Funciona solamente como un contenedor y tiene un puntero hacia el estado actual. Al inicializarse se debe colocar el primer estado de donde debe realizarse el procesamiento. Con procesamiento se entiende como la evaluación de si el estado debe avanzar hacia otro estado o continuar en el mismo. 
--  Transicion: Este objeto permite la transición entre estados, y es la representación de una arista dirigida si se considera a la máquina de estados como un grafo. Tiene una condición y una acción. La condición permite saber si la máquina debe transicionar a otro estado o no. De ser satisfactoria la condición, se realiza una acción cuyo proposíto puede ser accionar sobre variables del sistema. También se incorpora una Actualización, que es una transición cuya condición es siempre falsa y sirve para ejecutar actualizaciones en las variables del sistema. 
--  Estado:  Este objeto define un estado en el sistema y contiene un arreglo de transiciones que se utilizan para conectarlo con otros estados. El estado en esta implementación es simplemente un contenedor de las transiciones.
+-  MaquinaDeEstados: se encarga de gestionar la maquina de estados. Funciona solamente como un contenedor y tiene un puntero hacia el estado actual. Al inicializarse se debe colocar el primer estado de donde debe realizarse el procesamiento. Con procesamiento se entiende como la evaluación de si el estado debe avanzar hacia otro estado o continuar en el mismo. 
+-  Transicion: este objeto permite la transición entre estados, y es la representación de una arista dirigida si se considera a la máquina de estados como un grafo. Tiene una condición y una acción. La condición permite saber si la máquina debe transicionar a otro estado o no. De ser satisfactoria la condición, se realiza una acción cuyo proposíto puede ser accionar sobre variables del sistema. También se incorpora una Actualización, que es una transición cuya condición es siempre falsa y sirve para ejecutar actualizaciones en las variables del sistema. 
+-  Estado:  este objeto define un estado en el sistema y contiene un arreglo de transiciones que se utilizan para conectarlo con otros estados. El estado en esta implementación es simplemente un contenedor de las transiciones.
   
 ### Estados definidos
 El sistema define los siguientes estados:
 
-- INICIO: El estado inicial del sistema donde se realiza la configuración inicial y las actualizaciones.
-- TAPA_TRABADA: Estado en el que la tapa está bloqueada.
-- TAPA_DESTRABADA: Estado en el que la tapa está desbloqueada.
-- PRESENCIA_DE_GAS: Estado en el que se ha detectado la presencia de gas.
+- INICIO: el estado inicial del sistema donde se realiza la configuración inicial y las actualizaciones.
+- TAPA_TRABADA: estado en el que la tapa está bloqueada.
+- TAPA_DESTRABADA: estado en el que la tapa está desbloqueada.
+- PRESENCIA_DE_GAS: estado en el que se ha detectado la presencia de gas.
 
 A continuación, una imagen con el diagrama de estados que explica cualitativamente el funcionamiento del programa: 
 
@@ -74,16 +74,16 @@ A continuación, una imagen con el diagrama de estados que explica cualitativame
 ### Transiciones entre estados
 Las transiciones determinan cómo moverse de un estado a otro en función de las condiciones detectadas por los sensores. Por ejemplo:
 
-- Inicio a TAPA_DESTRABADA: Esta transición se produce si el sistema se inicializa correctamente.
-- Inicio a PRESENCIA_DE_GAS: Si se detecta gas al inicio, el sistema cambia a este estado y activa la alarma.
-- TAPA_DESTRABADA a TAPA_TRABADA: Cuando el contenedor está lleno y no hay presencia de gas, la tapa se bloquea.
-- TAPA_TRABADA a TAPA_DESTRABADA: Se produce cuando hay espacio en el contenedor y no hay presencia de gas.
-- PRESENCIA_DE_GAS a TAPA_TRABADA: Se activa si el contenedor está lleno pero no hay presencia de gas.
+- Inicio a TAPA_DESTRABADA: esta transición se produce si el sistema se inicializa correctamente.
+- Inicio a PRESENCIA_DE_GAS: si se detecta gas al inicio, el sistema cambia a este estado y activa la alarma.
+- TAPA_DESTRABADA a TAPA_TRABADA: cuando el contenedor está lleno y no hay presencia de gas, la tapa se bloquea.
+- TAPA_TRABADA a TAPA_DESTRABADA: se produce cuando hay espacio en el contenedor y no hay presencia de gas.
+- PRESENCIA_DE_GAS a TAPA_TRABADA: se activa si el contenedor está lleno pero no hay presencia de gas.
 ### Lógica de transiciones y acciones
 Cada transición está definida con una condición y una acción:
 
-- Condición: Una función que devuelve true o false dependiendo del estado de los sensores. Si devuelve true, se activa la transición.
-- Acción: Una función que se ejecuta cuando se realiza la transición. Por ejemplo, activar una alarma, mostrar mensajes en el display, o bloquear la tapa.
+- Condición: una función que devuelve true o false dependiendo del estado de los sensores. Si devuelve true, se activa la transición.
+- Acción: una función que se ejecuta cuando se realiza la transición. Por ejemplo, activar una alarma, mostrar mensajes en el display, o bloquear la tapa.
 ### Funcionamiento
-- Inicialización: Al iniciar el sistema, se configuran los estados y se realizan las actualizaciones iniciales. Esto incluye mostrar un mensaje en el display y actualizar el estado de los sensores.
-- Evaluación del estado: El método Evaluar se ejecuta periódicamente para revisar el estado actual y determinar si debe cambiar a otro estado según las condiciones.
+- Inicialización: al iniciar el sistema, se configuran los estados y se realizan las actualizaciones iniciales. Esto incluye mostrar un mensaje en el display y actualizar el estado de los sensores.
+- Evaluación del estado: el método Evaluar se ejecuta periódicamente para revisar el estado actual y determinar si debe cambiar a otro estado según las condiciones.

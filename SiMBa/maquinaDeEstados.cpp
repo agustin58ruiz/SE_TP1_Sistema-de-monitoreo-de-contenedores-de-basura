@@ -66,16 +66,13 @@ void Estado::ObtenerInformacion(){
 // Maquina De estados
 
 MaquinaDeEstados::MaquinaDeEstados(Estado * estadoActual): EstadoActual( estadoActual){
-
 }
 
 void MaquinaDeEstados::Evaluar(){
-
     EstadoActual->Evaluar(this);
 }
 
 void MaquinaDeEstados::ActualizarEstado( Estado* estadoSiguiente){
-
     EstadoActual = estadoSiguiente;
 }
 
@@ -84,9 +81,3 @@ void MaquinaDeEstados::ObtenerInformacion(){
         EstadoActual->ObtenerInformacion();
     }
 }
-
-
-
-
-
-

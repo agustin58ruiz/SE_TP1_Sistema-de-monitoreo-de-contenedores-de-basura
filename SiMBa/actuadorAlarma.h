@@ -18,8 +18,6 @@ class ActuadorAlarma
 
         void ActualizarEstado();
         EstadoAlarma Estado();
-
-
 };
 
 #endif
