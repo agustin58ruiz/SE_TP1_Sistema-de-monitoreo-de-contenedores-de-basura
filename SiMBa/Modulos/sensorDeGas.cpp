@@ -1,18 +1,18 @@
 #include "sensorDeGas.h"
+#include "mbed.h"
 
 
-SensorDeGas::SensorDeGas(PinName pin): sensor(pin),EstadoDeGas(EstadoSensorDeGas::DESCONOCIDO), Umbral(0.5){
+
+
+SensorDeGas::SensorDeGas(PinName pin, float umbral, float periodoActualizacion): sensor(pin),EstadoDeGas(EstadoSensorDeGas::DESCONOCIDO), Umbral(umbral), _periodoActualizacion(periodoActualizacion){
+
+    _actualizacionTicker = new Ticker();
+
+    _actualizacionTicker->attach(callback(this, &SensorDeGas::_actualizacionCallback),_periodoActualizacion);
+
 }
 
-SensorDeGas::SensorDeGas(): sensor(A0),EstadoDeGas(EstadoSensorDeGas::DESCONOCIDO),Umbral(0.5){}
-
-SensorDeGas::SensorDeGas(float limite): sensor(A0),EstadoDeGas(EstadoSensorDeGas::DESCONOCIDO),Umbral(limite){}
-
-
 EstadoSensorDeGas SensorDeGas::Estado(){
-    int nivelDeGas = (int)(sensor.read()*100);
-    
-    printf("%d\n", nivelDeGas);
     return EstadoDeGas;
 }
 
@@ -22,4 +22,8 @@ void SensorDeGas::ActualizarEstado(){
     }else{
         EstadoDeGas = EstadoSensorDeGas::NORMAL;
     }
+}
+
+void SensorDeGas::_actualizacionCallback(){
+    ActualizarEstado();
 }

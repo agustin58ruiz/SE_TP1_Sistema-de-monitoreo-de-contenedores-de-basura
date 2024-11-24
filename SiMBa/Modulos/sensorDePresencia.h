@@ -7,7 +7,7 @@
 
 enum class EstadoPresencia{USUARIO_DETECTADO, USUARIO_NO_DETECTADO};
 
-class SensorDeProximidad{
+class SensorDePresencia{
     
 private:
     DigitalIn Pir;
@@ -17,7 +17,7 @@ private:
     void _usuarioNoDetectadoCallback();
 public:
 
-    SensorDeProximidad(PinName pin, PinMode mode);
+    SensorDePresencia(PinName pin, PinMode mode);
     bool HayUsuario();
     void ActualizarEstado();
     EstadoPresencia Estado();

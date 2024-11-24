@@ -1,19 +1,19 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
-#include "sensorDeProximidad.h"
+#include "sensorDePresencia.h"
 
 
-SensorDeProximidad::SensorDeProximidad(PinName pin, PinMode mode) : Pir(pin, mode), EstadoPresenciaUsuario(EstadoPresencia::USUARIO_NO_DETECTADO)
+SensorDePresencia::SensorDePresencia(PinName pin, PinMode mode) : Pir(pin, mode), EstadoPresenciaUsuario(EstadoPresencia::USUARIO_NO_DETECTADO)
 {
     _pir = new InterruptIn(pin, mode);
-    _pir->fall(callback(this, &SensorDeProximidad::_usuarioNoDetectadoCallback)); 
-    _pir->rise(callback(this, &SensorDeProximidad::_usuarioDetectadoCallback));
+    _pir->fall(callback(this, &SensorDePresencia::_usuarioNoDetectadoCallback)); 
+    _pir->rise(callback(this, &SensorDePresencia::_usuarioDetectadoCallback));
 }
 
 
 
 
-bool SensorDeProximidad::HayUsuario(){
+bool SensorDePresencia::HayUsuario(){
     if( EstadoPresenciaUsuario == EstadoPresencia::USUARIO_DETECTADO ){
 
         return true;
@@ -23,12 +23,12 @@ bool SensorDeProximidad::HayUsuario(){
     }
 }
 
-EstadoPresencia SensorDeProximidad::Estado(){
+EstadoPresencia SensorDePresencia::Estado(){
     return EstadoPresenciaUsuario;
 
 }
 
-void SensorDeProximidad::ActualizarEstado(){
+void SensorDePresencia::ActualizarEstado(){
     
     if (Pir == ON){
         printf("Hay persona\n");
@@ -39,9 +39,9 @@ void SensorDeProximidad::ActualizarEstado(){
     }
 }
 
-void SensorDeProximidad::_usuarioDetectadoCallback(){
+void SensorDePresencia::_usuarioDetectadoCallback(){
     EstadoPresenciaUsuario = EstadoPresencia::USUARIO_DETECTADO;
 }
-void SensorDeProximidad::_usuarioNoDetectadoCallback(){
+void SensorDePresencia::_usuarioNoDetectadoCallback(){
     EstadoPresenciaUsuario = EstadoPresencia::USUARIO_NO_DETECTADO;
 }

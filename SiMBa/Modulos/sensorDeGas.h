@@ -13,11 +13,13 @@ class SensorDeGas {
     AnalogIn sensor;
     EstadoSensorDeGas EstadoDeGas;
     float Umbral;
+    float _periodoActualizacion; 
+    Ticker *_actualizacionTicker;
+    void _actualizacionCallback();
+
     public: 
 
-    SensorDeGas(PinName pin);
-    SensorDeGas();
-    SensorDeGas(float limite);
+    SensorDeGas(PinName pin, float umbral, float periodoActualizacion);
 
     EstadoSensorDeGas Estado();
     void ActualizarEstado();
