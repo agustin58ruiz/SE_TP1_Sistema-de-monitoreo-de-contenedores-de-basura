@@ -1,14 +1,18 @@
 #include "temporizador.h"
 #include "mbed.h"
 
-Temporizador::Temporizador(float segundos){
+Temporizador::Temporizador(float segundosTemporizador){
     _ticker = new Ticker();
     _estado = EstadoTemporizador::NO_EMPEZADO;
+    _segundosTemporizador = segundosTemporizador;
 }
 
 void Temporizador::Empezar(){
-    _ticker->attach(callback(this, &Temporizador::_callback), segundos);
-    _estado = EstadoTemporizador::EMPEZADO;
+    if(_estado != EstadoTemporizador::EMPEZADO ){
+    
+        _ticker->attach(callback(this, &Temporizador::_callback), _segundosTemporizador);
+        _estado = EstadoTemporizador::EMPEZADO;
+    }
 }
 
 void Temporizador::Parar(){
@@ -18,4 +22,8 @@ void Temporizador::Parar(){
 
 void Temporizador::_callback(){
     Parar();
+}
+
+EstadoTemporizador Temporizador::Estado(){
+    return _estado;
 }

@@ -5,7 +5,7 @@
 #include "sensorDeGas.h"
 #include "sensorDeTemperatura.h"
 #include "sensorDePresencia.h"
-
+#include "temporizador.h"
 #include "actuadorTapa.h"
 #include "actuadorAlarma.h"
 #include "display.h"
@@ -15,7 +15,8 @@
 #include "simba.h"
 
 #define MOTOR_PASOS 1024
-
+#define TIEMPO_ESPERA_SEC 3
+#define SIMBA_DESPEDIDA "SiMBa - Adios!"
 // Definicion de sensores usados por el programa
 
 static ActuadorTapa tapa;
@@ -26,6 +27,7 @@ static Display display;
 static ActuadorAlarma alarma;
 static SensorDePresencia sensorPir(D3, PullDown);
 static Motor motor(D4,D5,D6,D7);
+static Temporizador espera(TIEMPO_ESPERA_SEC);
 
 Simba::Simba(){
 
@@ -45,8 +47,6 @@ void Simba::IniciarMaquinaDeEstados(){
     Estado* TapaAbierta = new Estado("TAPA_ABIERTA");
     Estado* TapaCerrada = new Estado("TAPA_CERRADA");
     Estado* CerrandoTapa = new Estado("CERRANDO_TAPA");
-
-    
 
     // ------------- DEFINICION DE SUBESTADOS --------------
     
@@ -95,10 +95,10 @@ void Simba::IniciarMaquinaDeEstados(){
   
     Transicion* CerrandoTapa2AbriendoTapa = new Transicion( AbriendoTapa );
     Transicion* CerrandoTapa2TapaCerrada = new Transicion( TapaCerrada );
-/*
-    Transicion* TapaCerradaActualizaciones = new Transicion( nullptr );
+
+//    Transicion* TapaCerradaActualizaciones = new Transicion( nullptr );
     Transicion* TapaCerrada2TapaDestrabada = new Transicion( TapaDestrabada );
-*/
+
     Transicion* TapaCerrada2AbriendoTapa = new Transicion( AbriendoTapa );
 
     // ----------- TRANSICIONES DE SUBESTADOS -----------
@@ -345,12 +345,13 @@ void Simba::IniciarMaquinaDeEstados(){
         display.CharPositionWrite(0,1);
         display.StringWrite("Gracias!");
         motor.Pasos(-MOTOR_PASOS);
+        espera.Empezar();
         motor.Empezar();
     });
 
     
     // TRANSICIONES TAPA CERRADA     *******************************************
-    TransicionesPtr_t transicionesTapaCerrada = new Transicion*[]{ TapaCerrada2AbriendoTapa, nullptr};
+    TransicionesPtr_t transicionesTapaCerrada = new Transicion*[]{ TapaCerrada2AbriendoTapa, TapaCerrada2TapaDestrabada, nullptr};
     
     // TapaCerrada -> AbriendoTapa
     TapaCerrada2AbriendoTapa->EstablecerCondicion([](){
@@ -363,7 +364,15 @@ void Simba::IniciarMaquinaDeEstados(){
         display.StringWrite("ESPERE!");
         display.Backlight();
         motor.Pasos(MOTOR_PASOS);
+        espera.Parar();
         motor.Empezar();
+    });
+
+    // TapaCerrada -> TapaDestraba
+    TapaCerrada2TapaDestrabada->EstablecerCondicion([](){
+        return espera.Estado() == EstadoTemporizador::FINALIZADO;
+    }).EstablecerAccion([](){
+
     });
 
 
@@ -376,6 +385,11 @@ void Simba::IniciarMaquinaDeEstados(){
         return motor.PasosRestantes() == 0;
     }).EstablecerAccion([](){
         display.Flush();
+        display.CharPositionWrite(0,0);
+        display.StringWrite("Tapa Cerrada");
+        display.CharPositionWrite(0,1);
+        display.StringWrite("Gracias!");
+        espera.Empezar();
     });
     
     // CerrandoTapa -> AbriendoTapa

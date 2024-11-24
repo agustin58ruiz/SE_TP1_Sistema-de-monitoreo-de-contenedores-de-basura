@@ -3,12 +3,13 @@
 
 #include "mbed.h"
 
-class enum EstadoTemporizador{EMPEZADO, NO_EMPEZADO, FINALIZADO};
+enum class EstadoTemporizador{EMPEZADO, NO_EMPEZADO, FINALIZADO};
 class Temporizador{
 
     private:
         EstadoTemporizador _estado;
         Ticker * _ticker;
+        float _segundosTemporizador;
         void _callback();
     public:
         Temporizador(float segundos);
