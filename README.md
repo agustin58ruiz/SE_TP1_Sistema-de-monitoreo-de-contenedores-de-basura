@@ -51,14 +51,18 @@ También se incluyó una máquina de estados llamada `pirMaquina` que se asigno 
 ### Estados definidos
 El sistema define los siguientes estados:
 
-- INICIO: El estado inicial del sistema donde se realiza la configuración inicial y las actualizaciones.
-- TAPA_TRABADA: Estado en el que la tapa está bloqueada.
-- TAPA_DESTRABADA: Estado en el que la tapa está desbloqueada.
-- PRESENCIA_DE_GAS: Estado en el que se ha detectado la presencia de gas.
+- INICIO: el estado inicial del sistema donde se realiza la configuración inicial y las actualizaciones.
+- TAPA_TRABADA: estado en el que la tapa está bloqueada.
+- TAPA_DESTRABADA: estado en el que la tapa está desbloqueada.
+- PRESENCIA_DE_GAS: estado en el que se ha detectado la presencia de gas.
+- ABRIENDO_TAPA: estado en el que la tapa se está abriendo.
+- TAPA_ABIERTA: estado en el que la tapa está abierta.
+- TAPA_CERRADA: estado en el que la tapa está cerrada.
+- CERRANDO_TAPA: estado en el que la tapa está cerrandose. 
 
 A continuación, una imagen con el diagrama de estados que explica cualitativamente el funcionamiento del programa: 
 
-![Diagrama de estados TP2 ](Images/TP2_DiagramaDeEstados.png "Cuatro estados: INICIO, TAPA_TRABADA, TAPA_DESTRABADA y PRESENCIA_DE_GAS.")
+![Diagrama de estados TP2 ]( Images/Maquina\ de\ estados.png "Cuatro estados: INICIO, TAPA_TRABADA, TAPA_DESTRABADA y PRESENCIA_DE_GAS.")
 ### Transiciones entre estados
 Las transiciones determinan cómo moverse de un estado a otro en función de las condiciones detectadas por los sensores. Por ejemplo:
 
@@ -76,14 +80,5 @@ Cada transición está definida con una condición y una acción:
 - Inicialización: Al iniciar el sistema, se configuran los estados y se realizan las actualizaciones iniciales. Esto incluye mostrar un mensaje en el display y actualizar el estado de los sensores.
 - Evaluación del estado: El método Evaluar se ejecuta periódicamente para revisar el estado actual y determinar si debe cambiar a otro estado según las condiciones.
 
-## Tercera entrega
 
-En esta entrega se realizó la programación de la jerarquización de la maquina de estados que ahora incluye la posibilidad de insertar maquinas de estados dentro de un estado.
-Se incluyo un sensor PIR para detectar la presencia de un usuario y realizar acciones en consecuencia como por ejemplo abrir la tapa, o encender el backlight del display.
-Además, para apagar el backlight se utiliza un temporizador. La lógica consiste en que si el sensor PIR detecta a una persona, se enciende el backlight y se inicia un temporizador que apaga el backlight y quita el temporizador para que no vuelva a correr. 
-Por último, se incluyó un motor a pasos cuya función el abrir o cerrar la tapa del tacho de basura. Para eso se hizo uso de interrupciones para controlar el motor. 
-
-************************************
----> LINKS a videos
-************************************
 
