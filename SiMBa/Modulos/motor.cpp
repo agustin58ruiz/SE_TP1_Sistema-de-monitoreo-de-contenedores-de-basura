@@ -55,7 +55,7 @@ void Motor::_retrocederUnPaso(){
 
 }
 
-void Motor::EstablecerRPMPorPaso(unsigned int rpm){
+void Motor::EstablecerPPMPorPaso(unsigned int rpm){
 
     _tiempoEntreBobina = ((1.0/(rpm*MAX_INDICE))*MINUTO_A_SEG);
 

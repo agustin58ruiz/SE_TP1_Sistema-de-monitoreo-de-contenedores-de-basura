@@ -32,7 +32,7 @@ public:
 
 Motor(PinName Bit0, PinName Bit1, PinName Bit2, PinName Bit3);
 
-void EstablecerRPMPorPaso(unsigned int rpm);
+void EstablecerPPMPorPaso(unsigned int rpm);
 
 void Pausar();
 void Empezar();
