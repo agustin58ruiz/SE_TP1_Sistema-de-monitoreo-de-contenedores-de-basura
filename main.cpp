@@ -1,23 +1,14 @@
-#include "mbed.h"
-#include "actuadorTapa.h"
-#include "sensorDeNivel.h"
-// main() runs in its own thread in the OS
+#include "simba.h"
+
 int main()
 {
 
-    ActuadorTapa tapa ;
-    SensorDeNivel capacidad;
-    
-    while (true) {
-        tapa.ActualizarEstado();
-        capacidad.ActualizarEstado();
-
-        if(capacidad.Estado() == EstadoContenedor::CONTENEDOR_LLENO){
-            tapa.TrabarTapa();
-        }else if( capacidad.Estado() == EstadoContenedor::CONTENEDOR_CON_ESPACIO){
-            tapa.DestrabarTapa();
-        }
-
-
+    Simba simba; 
+    simba.IniciarMaquinaDeEstados();
+    while(true){
+        simba.Evaluar();
+        simba.ObtenerInformacion();
     }
+    
+
 }
