@@ -10,17 +10,19 @@ Por otro lado, se dispondrá de una central de datos que recepcionará todas las
 De esta forma se puede dar un mejor seguimiento al problema ambiental de la recolección de basura y una mejora en la eficacia de las políticas ambientales de la ciudad. 
 ## Plataforma de desarrollo:  NUCLEO-F429ZI
 ## Periféricos a utilizar: 
-  - Sensor de nivel (Entrada Digital) (D1): Si esta encendido indica que el contenedor está lleno.
-  - Sensor de gas (Entrada Analógica) (A0): Si supera un umbral indica que se detectó gas. Posible riesgo de incendio.
-  - Sensor de temperatura (Entrada Analógica) (A1): Si la temperatura aumenta a un nivel acciona la alarma.
-  - Detector De Humedad (Entrada Analógica) (No implementado aún): Sensa el nivel de humedad en el contenedor. Variable influyente en el riesgo de incendio. 
-  - Display (I2C): Indicador visual del estado del tacho. 
-  - Sensor Tapa (Entrada Digital) (No implementado aún): Si esta encendido indica que la tapa esta cerrada.
-  - Actuador Matafuegos (Salida Digital) (No implementado aún): Si esta en alto se abre el matafuegos.
-  - Actuador Traba de la Tapa (Salida Digital) (LED1): Con esta salida se puede bloquear la tapa.  
-  - Actuador Tapa Ventilación (Salida Digital) (No implementado Aun): Si está en alto se abre la tapa de ventilación.
-  - Alarma (Salida Digital) (D2): Señal auditiva indicadora de posible incendio. 
-  - UART: Comunicación con la computadora. Para enviar y recibir comandos. 
+  - Sensor de nivel (entrada digital) (D1): si esta encendido indica que el contenedor está lleno.
+  - Sensor de gas (entrada analógica) (A0): si supera un umbral indica que se detectó gas. Posible riesgo de incendio.
+  - Sensor de temperatura (entrada analógica) (A1): si la temperatura aumenta a un nivel acciona la alarma.
+  - Sensor PIR (entrada digital) (D3): sensor para detectar la presencia de una persona. Si hay una persona, la tapa se abre.  
+  - Detector De Humedad (entrada analógica) (no implementado aún): sensa el nivel de humedad en el contenedor. Variable influyente en el riesgo de incendio. 
+  - Display (I2C): indicador visual del estado del tacho. 
+  - Sensor tapa (entrada digital) (no implementado aún): si esta encendido indica que la tapa esta cerrada.
+  - Actuador matafuegos (salida digital) (no implementado aún): si esta en alto se abre el matafuegos.
+  - Actuador traba de la tapa (salida digital) (LED1): con esta salida se puede bloquear la tapa.  
+  - Actuador tapa ventilación (salida digital) (no implementado aún): si está en alto se abre la tapa de ventilación.
+  - Actuador tapa (salida bus de 4 bits) (D4, D5, D6, D7): actúa sobre el motor a pasos que abre la tapa. 
+  - Alarma (Salida Digital) (D2): señal auditiva indicadora de posible incendio. 
+  - UART: comunicación con la computadora. para enviar y recibir comandos. 
 
 ## Tercera entrega
 En esta entrega se agregaron el sensor PIR, un motor a pasos que actuara sobre la tapa, manejo de interrupciones y inclución del ticker para tener un sistema menos bloqueante. 
@@ -38,12 +40,14 @@ A continuación un enlace a un video con una demostración del funcionamiento de
 ### Explicación de las conexiones y demostración
 [![TP3](https://img.youtube.com/vi/PwA4jtDurbk/0.jpg)](https://www.youtube.com/watch?v=PwA4jtDurbk)
 
-### Sobre la maquina de estados (maquinaDeEstados.cpp)
-La maquina de estados se encuentra definida en el archivo maquinaDeEstados.cpp. Básicamente define tres clases: 
--  MaquinaDeEstados: Se encarga de gestionar la maquina de estados. Funciona solamente como un contenedor y tiene un puntero hacia el estado actual. Al inicializarse se debe colocar el primer estado de donde debe realizarse el procesamiento. Con procesamiento se entiende como la evaluación de si el estado debe avanzar hacia otro estado o continuar en el mismo. 
--  Transicion: Este objeto permite la transición entre estados, y es la representación de una arista dirigida si se considera a la máquina de estados como un grafo. Tiene una condición y una acción. La condición permite saber si la máquina debe transicionar a otro estado o no. De ser satisfactoria la condición, se realiza una acción cuyo proposíto puede ser accionar sobre variables del sistema. También se incorpora una Actualización, que es una transición cuya condición es siempre falsa y sirve para ejecutar actualizaciones en las variables del sistema. 
--  Estado:  Este objeto define un estado en el sistema y contiene un arreglo de transiciones que se utilizan para conectarlo con otros estados. El estado en esta implementación es simplemente un contenedor de las transiciones.
-  
+### Sobre los nuevos estados 
+Se incluyeron nuevos estados para el manejo de la tapa por medio del motor. El objetivo es controlar el comportamiento de la tapa con una máquina de estados. Para esto se crearon cuatro estados nuevos:  `AbriendoTapa`, `TapaAbierta`, `TapaCerrada` y `CerrandoTapa` que se comportan según haya o no la presencia de una persona. 
+
+La idea es que el usuario no toque la tapa para arrojar la basura. 
+
+### Los estados pueden tener una máquina de estados adentro
+También se incluyó una máquina de estados llamada `pirMaquina` que se asigno al estado de `TapaTrabada`. Ahora todos los estados tienen la posibilidad de tener una maquina de estados interna si se lo requiriece. Desafortunadamente, no llego a explotarse todo el potencial de esta nueva funcionalidad. 
+
 ### Estados definidos
 El sistema define los siguientes estados:
 
