@@ -22,37 +22,21 @@ De esta forma se puede dar un mejor seguimiento al problema ambiental de la reco
   - Alarma (Salida Digital) (D2): Señal auditiva indicadora de posible incendio. 
   - UART: Comunicación con la computadora. Para enviar y recibir comandos. 
 
+## Tercera entrega
+En esta entrega se agregaron el sensor PIR, un motor a pasos que actuara sobre la tapa, manejo de interrupciones y inclución del ticker para tener un sistema menos bloqueante. 
 
+Ahora la máquina de estados contiene los siguientes estados:  `TapaTrabada`, `TapaDestrabada`, `Inicio`, `PresenciaDeGas`, `AbriendoTapa`, `TapaAbierta`, `TapaCerrada` y `CerrandoTapa`
 
+Se incluyó un sensor PIR para detectar la presencia de una persona y asi abrir la tapa automáticamente sin tener que tocar el contenedor. 
 
-## Primera Entrega
-En esta entrega se realizó la programación de un código que maneja: el sensor de nivel y el actuador de la tapa. 
+Se incluyó el manejo de interrupciones para realizar tareas como actualizar los estados de algunos sensores. Dentro de las interrupciones también se incluyeron varios `Ticker` para realizar cuentas regresivas o actualizar el estado de variables analógicas. 
 
-El actuador de la tapa es en este caso el LED1 y el sensor de nivel es el puerto D1. 
-
-Se adjunta una imagen de las conexiones de esta entrega. 
-
-![Diagrama de conexiones](Images/Conecciones.png "Un push button como sensor de nivel, el LED1 como el actuador de la traba de la tapa")
-
-
-## Segunda entrega
-En esta entrega se realizó la programación de la máquina de estados y se agregago un display para indicar el estado del tacho. 
-
-La maquina de estados dispone de cuatro estados: Inicio, TapaTrabada, TapaDestrabada, GasDetectado. 
-
-Desde el inicio se puede ir a todos los demas estados, sin embargo, solo se puede pasar por el una sola vez porque es para iniciar sensores. 
-
-Se incluyó el sensor de temperatura junto con un amplificador operacional en modo no inversor para amplificar la pequeña señal de temperatura, y se colocó el OpAmp en 0 a 3.3V. 
-
-También se incluyó un display para mostrar el estado actual. Y por último, se incluyó una entrada analógica simulando el sensor de gas. 
+También, a falta de un motor DC, se incluyó un motor a pasos que se utilizará para actuar sobre la tapa. Al motor a pasos se le asignó un Ticker para avanzar o retroceder un paso, de esta forma, el código del motor a pasos no es bloqueante. 
 
 A continuación un enlace a un video con una demostración del funcionamiento del mismo. 
 
-### Explicación de las conexiones
-[![Parte 1 - TP2 - Explicación Conexiones](https://img.youtube.com/vi/mLgRoVI1Ru0/0.jpg)](https://www.youtube.com/watch?v=mLgRoVI1Ru0)
-### Demostración
-[![Parte 2 - TP2 - Demostración](https://img.youtube.com/vi/movsi7g4hgY/0.jpg)](https://www.youtube.com/watch?v=movsi7g4hgY)
-
+### Explicación de las conexiones y demostración
+[![TP3](https://img.youtube.com/vi/PwA4jtDurbk/0.jpg)](https://www.youtube.com/watch?v=PwA4jtDurbk)
 
 ### Sobre la maquina de estados (maquinaDeEstados.cpp)
 La maquina de estados se encuentra definida en el archivo maquinaDeEstados.cpp. Básicamente define tres clases: 
