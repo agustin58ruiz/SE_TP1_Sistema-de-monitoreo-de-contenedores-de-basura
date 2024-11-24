@@ -62,23 +62,7 @@ El sistema define los siguientes estados:
 
 A continuación, una imagen con el diagrama de estados que explica cualitativamente el funcionamiento del programa: 
 
-![Diagrama de estados TP2 ]( Images/Maquina\ de\ estados.png "Cuatro estados: INICIO, TAPA_TRABADA, TAPA_DESTRABADA y PRESENCIA_DE_GAS.")
-### Transiciones entre estados
-Las transiciones determinan cómo moverse de un estado a otro en función de las condiciones detectadas por los sensores. Por ejemplo:
-
-- Inicio a TAPA_DESTRABADA: Esta transición se produce si el sistema se inicializa correctamente.
-- Inicio a PRESENCIA_DE_GAS: Si se detecta gas al inicio, el sistema cambia a este estado y activa la alarma.
-- TAPA_DESTRABADA a TAPA_TRABADA: Cuando el contenedor está lleno y no hay presencia de gas, la tapa se bloquea.
-- TAPA_TRABADA a TAPA_DESTRABADA: Se produce cuando hay espacio en el contenedor y no hay presencia de gas.
-- PRESENCIA_DE_GAS a TAPA_TRABADA: Se activa si el contenedor está lleno pero no hay presencia de gas.
-### Lógica de transiciones y acciones
-Cada transición está definida con una condición y una acción:
-
-- Condición: Una función que devuelve true o false dependiendo del estado de los sensores. Si devuelve true, se activa la transición.
-- Acción: Una función que se ejecuta cuando se realiza la transición. Por ejemplo, activar una alarma, mostrar mensajes en el display, o bloquear la tapa.
-### Funcionamiento
-- Inicialización: Al iniciar el sistema, se configuran los estados y se realizan las actualizaciones iniciales. Esto incluye mostrar un mensaje en el display y actualizar el estado de los sensores.
-- Evaluación del estado: El método Evaluar se ejecuta periódicamente para revisar el estado actual y determinar si debe cambiar a otro estado según las condiciones.
+![Diagrama de estados TP2 ]( Images/TP3_DiagramaDeEstados.png "Diagrama de estados con la sub-máquina de estados y los nuevos estados para controlar la tapa: ABRIENDO_TAPA, TAPA_ABIERTA, TAPA_CERRADA y CERRANDO_TAPA.")
 
 
 
