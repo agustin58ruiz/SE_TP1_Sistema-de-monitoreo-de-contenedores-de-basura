@@ -7,26 +7,18 @@
 enum class EstadoSensorDeTemperatura {NORMAL, CALIENTE, DESCONOCIDO};
 
 class SensorDeTemperatura {
-
-    private:
-
+private:
     AnalogIn sensor;
     EstadoSensorDeTemperatura EstadoDeTemperatura;
     int Umbral;
     int temperatura;
-    public: 
-
+public: 
     SensorDeTemperatura(PinName pin);
     SensorDeTemperatura();
     SensorDeTemperatura(int limiteDeTemperatura);
-
     EstadoSensorDeTemperatura Estado();
     void ActualizarEstado();
     void ObtenerTemperatura( char* );
-
-
-
-
 };
 
 #endif

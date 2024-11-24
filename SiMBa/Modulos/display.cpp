@@ -81,20 +81,16 @@ typedef struct{
 static pcf8574_t pcf8574;
 static bool initial8BitCommunicationIsCompleted;
 
-Display::Display(){
- 
+Display::Display() {
   Conexion = conexionDisplay_t::DISPLAY_CONNECTION_I2C_PCF8574_IO_EXPANDER;
   _backlight = true;
   _tickerActivated = false;
   _countdownSecs = 0;
   _backlightTicker = nullptr;
-  //this->IniciarDisplay();
-
 }
 
-void Display::IniciarDisplay(){
-    
-    if(Conexion == conexionDisplay_t::DISPLAY_CONNECTION_I2C_PCF8574_IO_EXPANDER){
+void Display::IniciarDisplay() {
+    if(Conexion == conexionDisplay_t::DISPLAY_CONNECTION_I2C_PCF8574_IO_EXPANDER) {
         pcf8574.address = PCF8574_I2C_BUS_8BIT_WRITE_ADDRESS;
         pcf8574.data = 0b00000000;
         i2cPcf8574.frequency(100000);
@@ -161,8 +157,6 @@ void Display::IniciarDisplay(){
                       DISPLAY_IR_DISPLAY_CONTROL_CURSOR_OFF |    
                       DISPLAY_IR_DISPLAY_CONTROL_BLINK_OFF );    
     delay( 1 );  
-
-
 }
 
 void Display::CharPositionWrite( uint8_t charPositionX, uint8_t charPositionY )
@@ -236,7 +230,6 @@ void Display::dataBusWrite( uint8_t dataBus )
                 pinWrite( DISPLAY_PIN_D4, dataBus & 0b00000001 );                
             }
         break;
-    
     }
     pinWrite( DISPLAY_PIN_EN, ON );              
     delay( 1 );
@@ -244,55 +237,43 @@ void Display::dataBusWrite( uint8_t dataBus )
     delay( 1 );                   
 }
 
-void Display::Backlight(){
-
+void Display::Backlight() {
     pinWrite( DISPLAY_PIN_A_PCF8574,  ON );
     _backlight = true;
 }
 
-void Display::NoBacklight(){
-
+void Display::NoBacklight() {
     pinWrite( DISPLAY_PIN_A_PCF8574,  OFF );
     _backlight = false;
-
 }
 
-void Display::EstablecerCountdown(float secs){
-    if (_backlightTicker == nullptr){
+void Display::EstablecerCountdown(float secs) {
+    if (_backlightTicker == nullptr) {
         _backlightTicker = new Ticker();
     }
     _countdownSecs = secs;
-
 }
 
-void Display::_countdownBacklightCallback(){
- 
+void Display::_countdownBacklightCallback() {
     this->NoBacklight();
     this->DesactivarCountdownBacklight();    
-
 }
 
-void Display::DesactivarCountdownBacklight(){
-   
+void Display::DesactivarCountdownBacklight() {
     NoBacklight();
     _backlightTicker->detach();
     _tickerActivated = false;
-
 }
 
-void Display::ActivarCountdownBacklight(){
-    
-    if (_tickerActivated == false){
-
+void Display::ActivarCountdownBacklight() {
+    if (_tickerActivated == false) {
         this->Backlight();
         _backlightTicker->attach(callback(this, &Display::_countdownBacklightCallback), _countdownSecs);
         _tickerActivated = true; 
     }
-    
 }
 
-void Display::codeWrite( bool type, uint8_t dataBus )
-{
+void Display::codeWrite( bool type, uint8_t dataBus ) {
     if ( type == DISPLAY_RS_INSTRUCTION )
         pinWrite( DISPLAY_PIN_RS, DISPLAY_RS_INSTRUCTION);
     else
@@ -301,8 +282,7 @@ void Display::codeWrite( bool type, uint8_t dataBus )
     dataBusWrite( dataBus );
 }
 
-void Display::pinWrite( uint8_t pinName, int value )
-{
+void Display::pinWrite( uint8_t pinName, int value ) {
     switch( Conexion ) {
         
         case conexionDisplay_t::DISPLAY_CONNECTION_I2C_PCF8574_IO_EXPANDER:
@@ -346,7 +326,7 @@ void Display::pinWrite( uint8_t pinName, int value )
     }
 }
 
-void Display::Flush(){
+void Display::Flush() {
     this->CharPositionWrite(0,0);
     this->StringWrite("                ");
     this->CharPositionWrite(0,1);

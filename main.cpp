@@ -1,14 +1,10 @@
 #include "simba.h"
 
-int main()
-{
-
+int main(){
     Simba simba; 
     simba.IniciarMaquinaDeEstados();
-    while(true){
+    while( true ) {
         simba.Evaluar();
         simba.ObtenerInformacion();
     }
-    
-
 }

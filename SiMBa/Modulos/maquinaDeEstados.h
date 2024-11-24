@@ -11,54 +11,47 @@ class MaquinaDeEstados;
 
 class Transicion {
 public:
+    CondicionFunc_t Condicion;
+    AccionFunc_t Accion;
+    Estado *EstadoSiguiente;
 
-CondicionFunc_t Condicion;
-AccionFunc_t Accion;
-Estado *EstadoSiguiente;
+    Transicion(CondicionFunc_t, AccionFunc_t, Estado *);
+    Transicion(Estado *);
 
-bool Evaluar(MaquinaDeEstados *);
-
-Transicion(CondicionFunc_t, AccionFunc_t, Estado *);
-Transicion(Estado *);
-
-Transicion &EstablecerCondicion(CondicionFunc_t);
-Transicion &EstablecerAccion(AccionFunc_t);
-
+    bool Evaluar(MaquinaDeEstados *);
+    Transicion &EstablecerCondicion(CondicionFunc_t);
+    Transicion &EstablecerAccion(AccionFunc_t);
 };
-
-
 
 typedef Transicion **TransicionesPtr_t;
 
 class Estado {
 public:
+    const char * Nombre;
+    MaquinaDeEstados * MaquinaInterna;
+    TransicionesPtr_t Transiciones;
 
-const char * Nombre;
-MaquinaDeEstados * MaquinaInterna;
-TransicionesPtr_t Transiciones;
+    Estado(const char *, TransicionesPtr_t );
+    Estado(const char *);
 
-Estado(const char *, TransicionesPtr_t );
-Estado(const char *);
-
-void Evaluar(MaquinaDeEstados *);
-void EstablecerTransiciones(TransicionesPtr_t);
-void ObtenerInformacion();
-void AsignarMaquinaInterna(MaquinaDeEstados *);
-
+    void Evaluar(MaquinaDeEstados *);
+    void EstablecerTransiciones(TransicionesPtr_t);
+    void ObtenerInformacion();
+    void AsignarMaquinaInterna(MaquinaDeEstados *);
 };
 
 class MaquinaDeEstados {
-
 private:
-Estado * EstadoInicial;
+    Estado * EstadoInicial;
 public:
-Estado * EstadoActual;
+    Estado * EstadoActual;
 
-MaquinaDeEstados(Estado *);
-void Evaluar(void);
-void ActualizarEstado(Estado *);
-void ObtenerInformacion();
-void Reiniciar();
+    MaquinaDeEstados(Estado *);
 
+    void Evaluar(void);
+    void ActualizarEstado(Estado *);
+    void ObtenerInformacion();
+    void Reiniciar();
 };
+
 #endif

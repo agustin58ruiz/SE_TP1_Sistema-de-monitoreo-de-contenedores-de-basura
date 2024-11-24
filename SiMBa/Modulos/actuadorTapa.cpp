@@ -2,8 +2,7 @@
 #include "actuadorTapa.h"
 #include "arm_book_lib.h"
 
-ActuadorTapa::ActuadorTapa():TrabaTapa(LED1)
-{
+ActuadorTapa::ActuadorTapa():TrabaTapa(LED1){
   TrabaTapa = OFF;  
 }
 

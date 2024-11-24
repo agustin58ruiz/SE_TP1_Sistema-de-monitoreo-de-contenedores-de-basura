@@ -17,121 +17,83 @@ static int steps[MAX_INDICE+1] = {
     0b1001
 };
 
-Motor::Motor(PinName Bit0, PinName Bit1, PinName Bit2,PinName Bit3)
-{
-    
+Motor::Motor(PinName Bit0, PinName Bit1, PinName Bit2,PinName Bit3) {
     _control = new BusOut(Bit0,Bit1,Bit2,Bit3);
-
     _indice = 0;
-
     *_control = 0b0000;
-
     _tiempoEntreBobina = 100000;
-
-    _revertir = false;
-
     _cantidadDePasosRestantes = 0;
-
-    _funcionando = false;
-   
 }
 
-
-
 void Motor::_avanzarUnPaso(){
-    
     *_control = steps[_indice++];
     _cantidadDePasosRestantes--;
-    if(_indice > MAX_INDICE) _indice=0;
-    
-    
+    if ( _indice > MAX_INDICE ) _indice=0;
 }
 
 void Motor::_retrocederUnPaso(){
-
     *_control = steps[_indice--];
     _cantidadDePasosRestantes++;
-    if(_indice < 0) _indice=MAX_INDICE;
-
+    if ( _indice < 0 ) _indice=MAX_INDICE;
 }
 
-void Motor::EstablecerPPMPorPaso(unsigned int rpm){
-
+void Motor::EstablecerPPMPorPaso( unsigned int rpm ){
     _tiempoEntreBobina = ((1.0/(rpm*MAX_INDICE))*MINUTO_A_SEG);
-
 }
 
-void Motor::_pasosCallbackAvanzar(){
-
-    if(_cantidadDePasosRestantes != 0){
-        
+void Motor::_pasosCallbackAvanzar() {
+    if ( _cantidadDePasosRestantes != 0 ) {
         _avanzarUnPaso();
-        
     } else {
-
         *_control = 0b0000;
         _tickerMotor->detach();
-
     }
-
 }
-void Motor::_pasosCallbackRetroceder(){
 
-    if(_cantidadDePasosRestantes != 0){
-        
+void Motor::_pasosCallbackRetroceder(){
+    if ( _cantidadDePasosRestantes != 0 ) {
         _retrocederUnPaso();
-        
     } else {
-        
         *_control = 0b0000;
         _tickerMotor->detach();
-
     }
-
 }
 
 void Motor::Pasos( int cantidadDePasos ) {
-
     _cantidadDePasosRestantes = cantidadDePasos;
-    _pasos = cantidadDePasos;
+    _cantidadDePasos = cantidadDePasos;
 
-    if ( _tickerMotor == nullptr ){
+    if ( _tickerMotor == nullptr ) {
         _tickerMotor = new Ticker();
     }
-
-    if(_cantidadDePasosRestantes > 0){
+    if ( _cantidadDePasosRestantes > 0 ) {
         _indice = 0;
-    }else{
+    } else {
         _indice = MAX_INDICE;
     }
 }
 
 int Motor::PasosRestantes(){
-
     return _cantidadDePasosRestantes;
 }
 
-void Motor::Pausar(){
-
+void Motor::Pausar() {
     _tickerMotor->detach();
     *_control = 0b0000;
-
 }
 
 void Motor::Empezar(){
-
-    if(_cantidadDePasosRestantes > 0){
+    if ( _cantidadDePasosRestantes > 0 ) {
         _tickerMotor->attach(callback(this,&Motor::_pasosCallbackAvanzar), _tiempoEntreBobina);
-    }else{
+    } else {
         _tickerMotor->attach(callback(this,&Motor::_pasosCallbackRetroceder), _tiempoEntreBobina);
     }
 }
 
 void Motor::Parar(){
-
     _tickerMotor->detach();
     _cantidadDePasosRestantes = _cantidadDePasos;
-     if(_cantidadDePasosRestantes > 0){
+     if ( _cantidadDePasosRestantes > 0 ) {
         _indice = 0;
     }else{
         _indice = MAX_INDICE;

@@ -3,22 +3,14 @@
 
 #include "maquinaDeEstados.h"
 
-class Simba{
-
+class Simba {
 private:
-
-MaquinaDeEstados * maquina;
-
+    MaquinaDeEstados * maquina;
 public:
-
-Simba();
-
-void IniciarMaquinaDeEstados(void);
-
-void ObtenerInformacion(void);
-
-void Evaluar(void);
-
+    Simba();
+    void IniciarMaquinaDeEstados(void);
+    void ObtenerInformacion(void);
+    void Evaluar(void);
 };
 
 #endif
