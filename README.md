@@ -17,8 +17,13 @@ La calidad del aire en una habitación de hospital es un factor crítico para la
 
 Con este proyecto se busca mejorar la calidad de vida de los pacientes y reducir los riesgos de infección en los hospitales. 
 
-<table border="0" cellpadding="0" cellspacing="0" width="526" style="border-collapse:
- collapse;table-layout:fixed;width:396pt">
+### 1.3 Evaluación de los proyectos
+
+Para evaluar los proyectos se propone una tabla de evaluación que permita ponderar los criterios de selección de los proyectos. Los criterios de selección son: disponibilidad del hardware, utilidad del proyecto y disponibilidad del tiempo. 
+El objetivo de la tabla de evaluación es decidir cuál de los dos proyectos es más conveniente para la implementación en función de los criterios de selección.
+Cada criterio se evaluará con una puntuación de 1 a 10, donde 1 es la peor puntuación y 10 es la mejor puntuación. El proyecto que obtenga la mayor puntuación ponderada será el proyecto seleccionado para la implementación.
+
+<table>
  <colgroup><col width="209" style="mso-width-source:userset;mso-width-alt:7643;width:157pt">
  <col width="82" style="mso-width-source:userset;mso-width-alt:2998;width:62pt">
  <col width="77" style="mso-width-source:userset;mso-width-alt:2816;width:58pt">
@@ -83,6 +88,9 @@ Con este proyecto se busca mejorar la calidad de vida de los pacientes y reducir
  <!--[endif]-->
 </tbody></table>
 
+En función de la tabla de evaluación se seleccionó el proyecto de **sistema de monitoreo de basura** para la implementación de un sistema embebido.
+
+El proyecto seleccionado abarca el manejo de sensores y actuadores, el uso de Wi-Fi para la transimisión de datos y la implementación de una aplicación web para la visualización de los datos y control a distancia.
 
 ## 2. Elicitación de requisitor y casos de uso
 
