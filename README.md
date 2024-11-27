@@ -17,6 +17,14 @@ La calidad del aire en una habitación de hospital es un factor crítico para la
 
 Con este proyecto se busca mejorar la calidad de vida de los pacientes y reducir los riesgos de infección en los hospitales. 
 
+| Proyectos                        | Sistema de monitoreo de basura | Sistema de monitoreo de calidad de aire |
+| -------------------------------- | ------------------------------ | --------------------------------------- |
+| Puntuación                       | Puntuación ponderada           | Puntuación                              | Puntuación ponderada |
+| Disponibilidad del hardware (10) | 10                             | 100                                     | 6 | 60 |
+| Utilidad del proyecto (8)        | 7                              | 70                                      | 9 | 90 |
+| Disponibilidad del tiempo (7)    | 9                              | 90                                      | 5 | 50 |
+| Total                            | \-                             | 260                                     | \- | 200 |
+
 
 ## 2. Elicitación de requisitor y casos de uso
 
