@@ -96,7 +96,7 @@ A continuacion se muestra una imagen con el diagrama de bloques del sistema de m
 
 ![Diagrama de bloques del sistema de monitoreo de basura]( Images/DiagramaEnBloquesTPFinal.png)
 
-## 2. Elicitación de requisitor y casos de uso
+## 2. Elicitación de requisitos y casos de uso
 
 El objetivo del proyecto es implementar un contenedor que incluya funcionalidades de monitoreo y control. El contenedor deberá ser capaz de detectar la presencia de un usuario, abrir la tapa, detectar la presencia de gas metano, cerrar la tapa, bloquear la tapa si esta lleno, y emitir una alarma auditiva si se detecta gas metano. El contenedor deberá ser controlado a distancia por medio de Wi-Fi o UART. El contenedor deberá tener un display que muestre el estado del contenedor y permita al usuario interactuar con el contenedor. El contenedor deberá tener una página web que permita al usuario controlar el contenedor y consultar el estado del contenedor. El contenedor deberá tener una api web que permita controlar el contenedor de forma programable. El contenedor deberá tener una batería de 5 V y un panel solar para la carga de la batería.
 
