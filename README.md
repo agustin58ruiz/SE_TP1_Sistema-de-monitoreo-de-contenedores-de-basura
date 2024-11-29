@@ -151,7 +151,7 @@ El objetivo del proyecto es implementar un contenedor que incluya funcionalidade
     <td>El display se enciende solo bajo la presencia de un usuario.</td>
   </tr>
   <tr>
-    <td rowspan="4">3. El servicio web</td>
+    <td rowspan="5">3. El servicio web</td>
     <td>3.1</td>
     <td>El servicio web tiene usuario y contraseña.</td>
   </tr>
@@ -168,18 +168,25 @@ El objetivo del proyecto es implementar un contenedor que incluya funcionalidade
     <td>El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
   </tr>
   <tr>
-    <td></td>
-    <td>3.3</td>
+    <td>3.5</td>
     <td>El servicio web ofrece métricas del estado del contenedor.</td>
   </tr>
   <tr>
-    <td>4. Alimentación</td>
+    <td rowspan="2">4. Alimentación</td>
     <td>4.1</td>
     <td>La alimentación es por medio de una batería de 5 V.</td>
   </tr>
   <tr>
-    <td></td>
     <td>4.2</td>
     <td>La carga de la batería es por medio de un panel solar.</td>
   </tr>
 </tbody></table>
+
+
+
+| Elemento | Definición |
+|----------|------------|
+| Disparador | El usuario se acerca al contenedor |
+| Precondición | El contenedor esta cerrado |
+| Flujo básico | 1. El contenedor detecta la presencia del usuario <br> 2. El contenedor abre la tapa <br> 3. El usuario deposita la basura <br> 4. El usuario se aleja del contenedor <br> 5. El contenedor cierra la tapa |
+| Flujo alternativo | 1. El contenedor detecta la presencia del usuario <br> 2. El display indica al usuario que esta lleno <br> 3. El lee el display <br> 4. El usuario se aleja del contenedor |
