@@ -188,5 +188,19 @@ El objetivo del proyecto es implementar un contenedor que incluya funcionalidade
 |----------|------------|
 | Disparador | El usuario se acerca al contenedor |
 | Precondición | El contenedor esta cerrado |
-| Flujo básico | 1. El contenedor detecta la presencia del usuario <br> 2. El contenedor abre la tapa <br> 3. El usuario deposita la basura <br> 4. El usuario se aleja del contenedor <br> 5. El contenedor cierra la tapa |
-| Flujo alternativo | 1. El contenedor detecta la presencia del usuario <br> 2. El display indica al usuario que esta lleno <br> 3. El lee el display <br> 4. El usuario se aleja del contenedor |
+| Flujo básico | 1. El contenedor detecta la presencia del usuario. <br> 2. El contenedor abre la tapa. <br> 3. El usuario deposita la basura. <br> 4. El usuario se aleja del contenedor. <br> 5. El contenedor cierra la tapa. |
+| Flujo alternativo | 1. El contenedor detecta la presencia del usuario. <br> 2. El display indica al usuario que esta lleno. <br> 3. El usuario lee el display. <br> 4. El usuario se aleja del contenedor. |
+
+| Elemento | Definición |
+|----------|------------|
+| Disparador | El contenedor detecta gas metano |
+| Precondición | El contenedor esta cerrado |
+| Flujo básico | 1. El contenedor detecta gas metano. <br> 2. El contenedor emite una alarma auditiva. <br> 3. La página web cambia el estado del contenedor a "Alerta". |
+| Flujo alternativo | 1. El contenedor detecta gas metano. <br> 2. El contenedor emite una alarma auditiva. <br> 3. La página web cambia el estado del contenedor a "Alerta". <br> 4. Un servidor llama a la api y detecta la alerta. <br> 5. El servidor envía un mail al encargado de la recolección. |
+
+| Elemento | Definición |
+|----------|------------|
+| Disparador | El contenedor se llenó |
+| Precondición | El contenedor esta cerrado |
+| Flujo básico | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". |
+| Flujo alternativo | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". <br> 4. Un servidor llama a la api y detecta el estado. <br> 5. El servidor envía un mail al encargado de la recolección. <br> 6. El recolector se hacerca al contenedor, desbloquea al contenedor con la página web y recolecta la basura. |
