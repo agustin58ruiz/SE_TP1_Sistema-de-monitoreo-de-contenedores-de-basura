@@ -94,5 +94,92 @@ El proyecto seleccionado abarca el manejo de sensores y actuadores, el uso de Wi
 
 ## 2. Elicitación de requisitor y casos de uso
 
+El objetivo del proyecto es implementar un contenedor que incluya funcionalidades de monitoreo y control.
 
 
+| Características             | SiMBa                  | Colombraro Contenedor 120L |
+|-----------------------------|------------------------|----------------------------|
+| Apertura de tapa automática | SI                     | No                         |
+| Interfaz de usuario         | Display - Sensor Pir   | No                         |
+| Capacidad                   | 120 L                  | 120 L                      |
+| Comunicación                | Wi-Fi y UART           | No                         |
+| Alimentación                | 12 V                   | No                         |
+| Métricas                    | Peso, temperatura, gas | Ninguna                    |
+| Control a distancia         | Si                     | No                         |
+
+
+
+<table><thead>
+  <tr>
+    <th>Grupo de requisitos</th>
+    <th>Id</th>
+    <th>Descripción</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td rowspan="5">1. Control</td>
+    <td>1.1</td>
+    <td>El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
+  </tr>
+  <tr>
+    <td>1.2</td>
+    <td>El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
+  </tr>
+  <tr>
+    <td>1.3</td>
+    <td>El sistema deberá cerrar la tapa si esta en ausencia de un usuario.</td>
+  </tr>
+  <tr>
+    <td>1.4</td>
+    <td>La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
+  </tr>
+  <tr>
+    <td>1.5</td>
+    <td>El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
+  </tr>
+  <tr>
+    <td rowspan="3">2. Interacción con el usuario</td>
+    <td>2.1</td>
+    <td>El usuario puede controlar el contenedor desde una pagina web.</td>
+  </tr>
+  <tr>
+    <td>2.2</td>
+    <td>El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
+  </tr>
+  <tr>
+    <td>2.3</td>
+    <td>El display se enciende solo bajo la presencia de un usuario.</td>
+  </tr>
+  <tr>
+    <td rowspan="4">3. El servicio web</td>
+    <td>3.1</td>
+    <td>El servicio web tiene usuario y contraseña.</td>
+  </tr>
+  <tr>
+    <td>3.2</td>
+    <td>El servicio web puede ser accedido desde un browser.</td>
+  </tr>
+  <tr>
+    <td>3.3</td>
+    <td>El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
+  </tr>
+  <tr>
+    <td>3.4</td>
+    <td>El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>3.3</td>
+    <td>El servicio web ofrece métricas del estado del contenedor.</td>
+  </tr>
+  <tr>
+    <td>4. Alimentación</td>
+    <td>4.1</td>
+    <td>La alimentación es por medio de una batería de 5 V.</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>4.2</td>
+    <td>La carga de la batería es por medio de un panel solar.</td>
+  </tr>
+</tbody></table>
