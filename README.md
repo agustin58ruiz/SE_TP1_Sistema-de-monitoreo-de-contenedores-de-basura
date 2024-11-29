@@ -25,20 +25,20 @@ De esta forma se puede dar un mejor seguimiento al problema ambiental de la reco
   - UART: comunicación con la computadora. para enviar y recibir comandos. 
 
 ## Tercera entrega
-En esta entrega se agregaron el sensor PIR, un motor a pasos que actuara sobre la tapa, manejo de interrupciones y inclución del ticker para tener un sistema menos bloqueante. 
+En esta entrega se agregaron el sensor PIR, un motor a pasos que actuará sobre la tapa, manejo de interrupciones y inclución del ticker para tener un sistema menos bloqueante. 
 
 Ahora la máquina de estados contiene los siguientes estados:  `TapaTrabada`, `TapaDestrabada`, `Inicio`, `PresenciaDeGas`, `AbriendoTapa`, `TapaAbierta`, `TapaCerrada` y `CerrandoTapa`
 
-Se incluyó un sensor PIR para detectar la presencia de una persona y asi abrir la tapa automáticamente sin tener que tocar el contenedor. 
+Se incluyó un sensor PIR para detectar la presencia de una persona y así abrir la tapa automáticamente sin tener que tocar el contenedor. 
 
 Se incluyó el manejo de interrupciones para realizar tareas como actualizar los estados de algunos sensores. Dentro de las interrupciones también se incluyeron varios `Ticker` para realizar cuentas regresivas o actualizar el estado de variables analógicas. 
 
 También, a falta de un motor DC, se incluyó un motor a pasos que se utilizará para actuar sobre la tapa. Al motor a pasos se le asignó un Ticker para avanzar o retroceder un paso, de esta forma, el código del motor a pasos no es bloqueante. 
 
-A continuación un enlace a un video con una demostración del funcionamiento del mismo. 
+A continuación un video con una demostración del funcionamiento del mismo. 
 
 ### Explicación de las conexiones y demostración
-[![TP3](https://img.youtube.com/vi/PwA4jtDurbk/0.jpg)](https://www.youtube.com/watch?v=PwA4jtDurbk)
+[![TP3](https://img.youtube.com/vi/PwA4jtDurbk/0.jpg)]( https://www.youtube.com/watch?v=PwA4jtDurbk ) 
 
 ### Sobre los nuevos estados 
 Se incluyeron nuevos estados para el manejo de la tapa por medio del motor. El objetivo es controlar el comportamiento de la tapa con una máquina de estados. Para esto se crearon cuatro estados nuevos:  `AbriendoTapa`, `TapaAbierta`, `TapaCerrada` y `CerrandoTapa` que se comportan según haya o no la presencia de una persona. 
