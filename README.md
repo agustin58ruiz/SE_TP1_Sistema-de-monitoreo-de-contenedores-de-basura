@@ -94,7 +94,7 @@ El proyecto seleccionado abarca el manejo de sensores y actuadores, el uso de Wi
 
 A continuacion se muestra una imagen con el diagrama de bloques del sistema de monitoreo de basura.
 
-![Diagrama de bloques del sistema de monitoreo de basura](Images/Diagrama_de_bloques.png)
+![Diagrama de bloques del sistema de monitoreo de basura]( Images/DiagramaEnBloquesTPFinal.png)
 
 ## 2. Elicitación de requisitor y casos de uso
 
