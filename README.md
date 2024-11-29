@@ -92,9 +92,15 @@ En función de la tabla de evaluación se seleccionó el proyecto de **sistema d
 
 El proyecto seleccionado abarca el manejo de sensores y actuadores, el uso de Wi-Fi para la transimisión de datos y la implementación de una aplicación web para la visualización de los datos y control a distancia.
 
+A continuacion se muestra una imagen con el diagrama de bloques del sistema de monitoreo de basura.
+
+![Diagrama de bloques del sistema de monitoreo de basura](Images/Diagrama_de_bloques.png)
+
 ## 2. Elicitación de requisitor y casos de uso
 
-El objetivo del proyecto es implementar un contenedor que incluya funcionalidades de monitoreo y control.
+El objetivo del proyecto es implementar un contenedor que incluya funcionalidades de monitoreo y control. El contenedor deberá ser capaz de detectar la presencia de un usuario, abrir la tapa, detectar la presencia de gas metano, cerrar la tapa, bloquear la tapa si esta lleno, y emitir una alarma auditiva si se detecta gas metano. El contenedor deberá ser controlado a distancia por medio de Wi-Fi o UART. El contenedor deberá tener un display que muestre el estado del contenedor y permita al usuario interactuar con el contenedor. El contenedor deberá tener una página web que permita al usuario controlar el contenedor y consultar el estado del contenedor. El contenedor deberá tener una api web que permita controlar el contenedor de forma programable. El contenedor deberá tener una batería de 5 V y un panel solar para la carga de la batería.
+
+A continuación se muestra una tabla comparativa entre el contenedor SiMBa y el contenedor de Colombraro de 120 L que es el producto más vendido del mercado.
 
 
 | Características             | SiMBa                  | Colombraro Contenedor 120L |
@@ -107,7 +113,7 @@ El objetivo del proyecto es implementar un contenedor que incluya funcionalidade
 | Métricas                    | Peso, temperatura, gas | Ninguna                    |
 | Control a distancia         | Si                     | No                         |
 
-
+Se identificaron los siguientes grupos de requisitos:
 
 <table><thead>
   <tr>
@@ -182,7 +188,7 @@ El objetivo del proyecto es implementar un contenedor que incluya funcionalidade
   </tr>
 </tbody></table>
 
-
+En base a los requisitos se establecieron los siguientes casos de uso:
 
 | Elemento | Definición |
 |----------|------------|
