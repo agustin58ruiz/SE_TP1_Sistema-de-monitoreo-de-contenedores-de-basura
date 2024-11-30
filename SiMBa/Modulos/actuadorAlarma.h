@@ -11,11 +11,9 @@ class ActuadorAlarma
         EstadoAlarma EstadoDeLaAlarma;
         DigitalOut ActuadorDeAlarma;
     public: 
-        
         ActuadorAlarma();
         void Activar();
         void Desactivar();
-
         void ActualizarEstado();
         EstadoAlarma Estado();
 };

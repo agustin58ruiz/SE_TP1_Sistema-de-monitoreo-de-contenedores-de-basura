@@ -7,24 +7,17 @@
 enum class EstadoSensorDeGas {NORMAL, SATURADO, DESCONOCIDO};
 
 class SensorDeGas {
-
-    private:
-
+private:
     AnalogIn sensor;
     EstadoSensorDeGas EstadoDeGas;
     float Umbral;
-    public: 
-
-    SensorDeGas(PinName pin);
-    SensorDeGas();
-    SensorDeGas(float limite);
-
+    float _periodoActualizacion; 
+    Ticker *_actualizacionTicker;
+    void _actualizacionCallback();
+public: 
+    SensorDeGas(PinName pin, float umbral, float periodoActualizacion);
     EstadoSensorDeGas Estado();
     void ActualizarEstado();
-
-
-
-
 };
 
 #endif
