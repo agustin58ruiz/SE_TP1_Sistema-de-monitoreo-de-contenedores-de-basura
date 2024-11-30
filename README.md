@@ -210,3 +210,92 @@ En base a los requisitos se establecieron los siguientes casos de uso:
 | Precondición | El contenedor esta cerrado |
 | Flujo básico | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". |
 | Flujo alternativo | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". <br> 4. Un servidor llama a la api y detecta el estado. <br> 5. El servidor envía un mail al encargado de la recolección. <br> 6. El recolector se hacerca al contenedor, desbloquea al contenedor con la página web y recolecta la basura. |
+
+
+## 3. Estado de los requisitos
+
+### 30/11
+En esta sección se muestra el estado de implementación de los requisitos hasta el momento. Se observa que gran parte de los requisitos conrresponden a la implementación del servidor web para que sean realizados. 
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-x4od{background-color:#fffe65;border-color:inherit;color:#000000;text-align:left;vertical-align:middle}
+.tg .tg-8eqh{background-color:#f8ff00;border-color:inherit;color:#000000;text-align:left;vertical-align:middle}
+.tg .tg-bw5o{background-color:#fe0000;border-color:inherit;color:#000000;text-align:left;vertical-align:middle}
+.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-xzpz{background-color:#34ff34;border-color:inherit;color:#000000;text-align:left;vertical-align:middle}
+.tg .tg-hrbo{background-color:#fe0000;border-color:inherit;color:#333333;text-align:left;vertical-align:middle}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-fymr">Requisito</th>
+    <th class="tg-fymr">Comentarios</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-x4od">1.1 El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
+    <td class="tg-0pky">Este requisito necesita mejorarse. Está implementado a medias.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.2 El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.3 El sistema deberá cerrar la tapa si esta en ausencia de un usuario.</td>
+    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">1.4 La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.5 El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
+    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">2.1 El usuario puede controlar el contenedor desde una pagina web.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">2.2 El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-8eqh">2.3 El display se enciende solo bajo la presencia de un usuario.</td>
+    <td class="tg-0pky">Hay algunos estados donde no concuerda la lógica con este comportamiento.</td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">3.1 El servicio web tiene usuario y contraseña.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">3.2 El servicio web puede ser accedido desde un browser.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.3 El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.4 El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.5 El servicio web ofrece métricas del estado del contenedor.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">4.1 La alimentación es por medio de una batería de 5 V.</td>
+    <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">4.2 La carga de la batería es por medio de un panel solar.</td>
+    <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
+  </tr>
+</tbody></table>
+
