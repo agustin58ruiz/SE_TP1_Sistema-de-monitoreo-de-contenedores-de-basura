@@ -224,7 +224,7 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-x4od">1.1 El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
+    <td class="tg-x4od">1.1 :yellow_circle: El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
     <td class="tg-0pky">Este requisito necesita mejorarse. Está implementado a medias.</td>
   </tr>
   <tr>
@@ -236,7 +236,7 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
   </tr>
   <tr>
-    <td class="tg-bw5o">1.4 La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
+    <td class="tg-bw5o">1.4 :red_circle: La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
     <td class="tg-0pky">No implementado.</td>
   </tr>
   <tr>
@@ -252,7 +252,7 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">Implementado.</td>
   </tr>
   <tr>
-    <td class="tg-8eqh">2.3 El display se enciende solo bajo la presencia de un usuario.</td>
+    <td class="tg-8eqh">2.3 :yellow_circle: El display se enciende solo bajo la presencia de un usuario.</td>
     <td class="tg-0pky">Hay algunos estados donde no concuerda la lógica con este comportamiento.</td>
   </tr>
   <tr>
