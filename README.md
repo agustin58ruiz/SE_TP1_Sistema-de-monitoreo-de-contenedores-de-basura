@@ -270,7 +270,7 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">Hay algunos estados donde no concuerda la lógica con este comportamiento.</td>
   </tr>
   <tr>
-    <td class="tg-bw5o">3.1 El servicio web tiene usuario y contraseña.</td>
+    <td class="tg-bw5o">3.1 :red_circle: El servicio web tiene usuario y contraseña.</td>
     <td class="tg-0pky">No implementado.</td>
   </tr>
   <tr>
@@ -294,7 +294,7 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">4.2 La carga de la batería es por medio de un panel solar.</td>
+    <td class="tg-hrbo">4.2 :red_circle: La carga de la batería es por medio de un panel solar.</td>
     <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
   </tr>
 </tbody></table>
