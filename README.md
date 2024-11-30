@@ -242,11 +242,11 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">Este requisito necesita mejorarse. Está implementado a medias.</td>
   </tr>
   <tr>
-    <td class="tg-xzpz">1.2 El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
+    <td class="tg-xzpz">1.2 :green_circle: El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
     <td class="tg-0pky">Implementado.</td>
   </tr>
   <tr>
-    <td class="tg-xzpz">1.3 El sistema deberá cerrar la tapa si esta en ausencia de un usuario.</td>
+    <td class="tg-xzpz">1.3 :green_circle: El sistema deberá cerrar la tapa si esta en ausencia de un usuario.</td>
     <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
   </tr>
   <tr>
@@ -254,15 +254,15 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">No implementado.</td>
   </tr>
   <tr>
-    <td class="tg-xzpz">1.5 El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
+    <td class="tg-xzpz">1.5 :green_circle: El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
     <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
   </tr>
   <tr>
-    <td class="tg-xzpz">2.1 El usuario puede controlar el contenedor desde una pagina web.</td>
+    <td class="tg-xzpz">2.1 :green_circle: El usuario puede controlar el contenedor desde una pagina web.</td>
     <td class="tg-0pky">Implementado.</td>
   </tr>
   <tr>
-    <td class="tg-xzpz">2.2 El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
+    <td class="tg-xzpz">2.2 :green_circle: El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
     <td class="tg-0pky">Implementado.</td>
   </tr>
   <tr>
@@ -274,23 +274,23 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">No implementado.</td>
   </tr>
   <tr>
-    <td class="tg-bw5o">3.2 El servicio web puede ser accedido desde un browser.</td>
+    <td class="tg-bw5o">3.2 :red_circle: El servicio web puede ser accedido desde un browser.</td>
     <td class="tg-0pky">No implementado.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">3.3 El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
+    <td class="tg-hrbo">3.3 :red_circle: El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
     <td class="tg-0pky">No implementado.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">3.4 El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
+    <td class="tg-hrbo">3.4 :red_circle: El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
     <td class="tg-0pky">No implementado.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">3.5 El servicio web ofrece métricas del estado del contenedor.</td>
+    <td class="tg-hrbo">3.5 :red_circle: El servicio web ofrece métricas del estado del contenedor.</td>
     <td class="tg-0pky">No implementado.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">4.1 La alimentación es por medio de una batería de 5 V.</td>
+    <td class="tg-hrbo">4.1 :red_circle: La alimentación es por medio de una batería de 5 V.</td>
     <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
   </tr>
   <tr>
