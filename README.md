@@ -217,20 +217,6 @@ En base a los requisitos se establecieron los siguientes casos de uso:
 ### 30/11
 En esta sección se muestra el estado de implementación de los requisitos hasta el momento. Se observa que gran parte de los requisitos conrresponden a la implementación del servidor web para que sean realizados. 
 
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-x4od{background-color:#fffe65;border-color:inherit;color:#000000;text-align:left;vertical-align:middle}
-.tg .tg-8eqh{background-color:#f8ff00;border-color:inherit;color:#000000;text-align:left;vertical-align:middle}
-.tg .tg-bw5o{background-color:#fe0000;border-color:inherit;color:#000000;text-align:left;vertical-align:middle}
-.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-xzpz{background-color:#34ff34;border-color:inherit;color:#000000;text-align:left;vertical-align:middle}
-.tg .tg-hrbo{background-color:#fe0000;border-color:inherit;color:#333333;text-align:left;vertical-align:middle}
-</style>
 <table class="tg"><thead>
   <tr>
     <th class="tg-fymr">Requisito</th>
