@@ -55,6 +55,18 @@ void Wifi::ComInit(){
     Transicion* CwMode2WaitCwMode = new Transicion( WaitCwMode );
     Transicion* WaitCwMode2CwJapIsSet = new Transicion( CwJapIsSet );
     Transicion* WaitCwMode2Error = new Transicion( Error );
+
+    // TRANSICIONES INIT ****************************************
+    TransicionesPtr_t transicionesInit = new Transicion*[]{ Init2At, nullptr};
+    // Init -> At
+    Init2At->EstablecerCondicion([](){
+        return true;
+    }).EstablecerAccion([](){
+        
+    });
+
+
+    // TRANSICIONES SEND AT *************************************
     
 
 }
