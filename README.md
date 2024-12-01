@@ -215,7 +215,7 @@ En base a los requisitos se establecieron los siguientes casos de uso:
 ## 3. Estado de los requisitos
 
 ### 30/11
-En esta sección se muestra el estado de implementación de los requisitos hasta el momento. Se observa que gran parte de los requisitos conrresponden a la implementación del servidor web para que sean realizados. 
+En esta sección se muestra el estado de implementación de los requisitos hasta el momento. Se observa que gran parte de los requisitos corresponden a la implementación del servidor web para que sean realizados. El trabajo final depende de la implementación del módulo Wi-Fi. 
 
 <table class="tg"><thead>
   <tr>
