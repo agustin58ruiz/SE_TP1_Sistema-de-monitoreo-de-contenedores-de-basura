@@ -4,10 +4,10 @@
 ## Fecha: 2. º cuatrimestre 2024
 
 ## 1. Selección del proyecto a implementar
-Se proponen dos proyectos para la implementación de un sistema embebido. En primer lugar se propone un sistema de monitoreo de basura que permita llevar un registro en tiempo real del estado de los contenedores de basura. Por otro lado, se propone un sistema de monitoreo de la calidad del aire en una habitación de hopital para detectar la presencia de gases tóxicos y asegurar la asepsia del ambiente.
+Se proponen dos proyectos para la implementación de un sistema embebido. En primer lugar se propone un sistema de monitoreo de basura que permita llevar un registro en tiempo real del estado de los contenedores de basura. Por otro lado, se propone un sistema de monitoreo de la calidad del aire en una habitación de hospital para detectar la presencia de gases tóxicos y asegurar la asepsia del ambiente.
 
-### 1.1 Sitema de monitoreo de basura
-La recolección de basura en la Ciudad de Buenos Aires es compleja y requiere de una inversión en recursos elevada. La recolección de residuos se realiza de forma agendada en donde los recolectores realizan una ruta definida. Debido a que los containedores no siempre están cargados, o están cargados de más, se propone un sistema de monitoreo para llevar un registro en tiempo real del estado de los contenedores. El sistema se compone de dos partes. Por un lado, un sistema embebido capaz de realizar un sondeo de los parámetros del contenedor tales como: capacidad, humedad, detección de gas, temperatura, presión, y también de accionar algunos mecanismos a implementar en el contendor como ventilación, bloqueo de la tapa, indicador de bateria. Por otro lado, se dispondrá de una central de datos que recepcionará todas las variables de los dispositivos que permitirá la implementación de rutas de recolección dinámicas, analisis de datos y utilización eficiente de los recursos. De esta forma se puede dar un mejor seguimiento al problema ambiental de la recolección de basura y una mejora en la eficacia de las políticas ambientales de la ciudad.
+### 1.1 Sistema de monitoreo de basura
+La recolección de basura en la Ciudad de Buenos Aires es compleja y requiere de una inversión en recursos elevada. La recolección de residuos se realiza de forma agendada en donde los recolectores realizan una ruta definida. Debido a que los contenedores no siempre están cargados, o están cargados de más, se propone un sistema de monitoreo para llevar un registro en tiempo real del estado de los contenedores. El sistema se compone de dos partes. Por un lado, un sistema embebido capaz de realizar un sondeo de los parámetros del contenedor tales como: capacidad, humedad, detección de gas, temperatura, presión, y también de accionar algunos mecanismos a implementar en el contendor como ventilación, bloqueo de la tapa, indicador de bateria. Por otro lado, se dispondrá de una central de datos que recepcionará todas las variables de los dispositivos que permitirá la implementación de rutas de recolección dinámicas, analisis de datos y utilización eficiente de los recursos. De esta forma se puede dar un mejor seguimiento al problema ambiental de la recolección de basura y una mejora en la eficacia de las políticas ambientales de la ciudad.
 
 Con este proyecto se busca mejorar la eficiencia de la recolección de basura y reducir los costos asociados a la misma. También se busca que se lleve un registro del estado los contenedores y se realice un seguimiento de las rutas de recolección que permitan una mejor utilización de los recursos. 
 
@@ -107,7 +107,7 @@ A continuación se muestra una tabla comparativa entre el contenedor SiMBa y el 
 |-----------------------------|------------------------|----------------------------|
 | Apertura de tapa automática | SI                     | No                         |
 | Interfaz de usuario         | Display - Sensor Pir   | No                         |
-| Capacidad                   | 120 L                  | 120 L                      |
+| Capacidad                   | 120 l                  | 120 l                      |
 | Comunicación                | Wi-Fi y UART           | No                         |
 | Alimentación                | 12 V                   | No                         |
 | Métricas                    | Peso, temperatura, gas | Ninguna                    |
@@ -210,3 +210,78 @@ En base a los requisitos se establecieron los siguientes casos de uso:
 | Precondición | El contenedor esta cerrado |
 | Flujo básico | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". |
 | Flujo alternativo | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". <br> 4. Un servidor llama a la api y detecta el estado. <br> 5. El servidor envía un mail al encargado de la recolección. <br> 6. El recolector se hacerca al contenedor, desbloquea al contenedor con la página web y recolecta la basura. |
+
+
+## 3. Estado de los requisitos
+
+### 30/11
+En esta sección se muestra el estado de implementación de los requisitos hasta el momento. Se observa que gran parte de los requisitos corresponden a la implementación del servidor web para que sean realizados. El trabajo final depende de la implementación del módulo Wi-Fi. 
+
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-fymr">Requisito</th>
+    <th class="tg-fymr">Comentarios</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-x4od">1.1 :yellow_circle: El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
+    <td class="tg-0pky">Este requisito necesita mejorarse. Está implementado a medias.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.2 :green_circle: El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.3 :green_circle: El sistema deberá cerrar la tapa si esta en ausencia de un usuario.</td>
+    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">1.4 :red_circle: La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.5 :green_circle: El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
+    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">2.1 :green_circle: El usuario puede controlar el contenedor desde una pagina web.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">2.2 :green_circle: El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-8eqh">2.3 :yellow_circle: El display se enciende solo bajo la presencia de un usuario.</td>
+    <td class="tg-0pky">Hay algunos estados donde no concuerda la lógica con este comportamiento.</td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">3.1 :red_circle: El servicio web tiene usuario y contraseña.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">3.2 :red_circle: El servicio web puede ser accedido desde un browser.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.3 :red_circle: El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.4 :red_circle: El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.5 :red_circle: El servicio web ofrece métricas del estado del contenedor.</td>
+    <td class="tg-0pky">No implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">4.1 :red_circle: La alimentación es por medio de una batería de 5 V.</td>
+    <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">4.2 :red_circle: La carga de la batería es por medio de un panel solar.</td>
+    <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
+  </tr>
+</tbody></table>
+
