@@ -316,7 +316,62 @@ void Wifi::ComInit(){
     }).EstablecerAccion([this](){
         _comStringWrite( "AT+CIPMUX=1\r\n" );
         _comExpectedResponse = responseOk;
-        _delay
+        _delay->Empezar( DELAY_5_SECONDS );
+    });
+
+    // TRANSICIONES WAIT CIPMUX
+    TransicionesPtr_t transicionesWaitCipMux = new Transicion*[]{};
+    // WaitCipMux -> CipServer
+    WaitCipMux2CipServer->EstablecerCondicion([this](){
+        return _isExpectedResponse();
+    }).EstablecerAccion([this](){
+        _delay->Empezar( DELAY_5_SECONDS );
+    });
+
+    // WaitCipMux -> Error
+    WaitCipMux2Error->EstablecerCondicion([this](){
+        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
+    }).EstablecerAccion([this](){
+        printf("AT+CIPMUX=1 command not ");
+        printf("responded correctly\r\n");
+    });
+    
+    // TRANSICIONES SEND CIPSERVER
+    TransicionesPtr_t transicionesCipServer = new Transicion*[] {};
+    // CipServer -> WaitCipServer
+    CipServer2WaitCipServer->EstablecerCondicion([this](){
+        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
+    }).EstablecerAccion([this](){
+        _comStringWrite( "AT+CIPSERVER=1,80\r\n" );
+        _comExpectedResponse = responseOk;
+        _delay->Empezar( DELAY_5_SECONDS );
+    });
+
+    // TRANSICIONES WAIT CIPSERVER
+    TransicionesPtr_t transicionesWaitCipServer = new Transicion*[]{};
+    // WaitCipServer -> CipStatus
+    WaitCipServer2CipStatus->EstablecerCondicion([this](){
+        return _isExpectedResponse();
+    }).EstablecerAccion([this](){
+        _delay->Empezar( DELAY_5_SECONDS );
+    });
+    // WaitCipServer -> ERROR
+    WaitCipServer2Error->EstablecerCondicion([this](){
+        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
+    }).EstablecerAccion([this](){
+        printf("AT+CIPSERVER=1,80 command not ");
+        printf("responded correctly\r\n");
+    });
+
+    // TRANSICION SEND CIPSTATUS
+    TransicionesPtr_t transicionesCipStatus = new Transicion*[]{};
+    // CipStatus -> WaitCipStatus3
+    CipStatus2WaitCipStatusStatus3->EstablecerCondicion([this](){
+        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
+    }).EstablecerAccion([this](){
+        _comStringWrite( "AT+CIPSTATUS\r\n" );
+        _comExpectedResponse = responseStatus3;
+        _delay->Empezar( DELAY_5_SECONDS );
     });
 
 
