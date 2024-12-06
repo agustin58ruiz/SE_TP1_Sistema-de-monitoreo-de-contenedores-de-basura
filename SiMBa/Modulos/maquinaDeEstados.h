@@ -3,8 +3,13 @@
 
 #define MAX_NOMBRE_ESTADO_CHARS 128
 
-typedef bool (* CondicionFunc_t)(void);
-typedef void (* AccionFunc_t)(void); //int, void*
+#include <functional>
+
+typedef std::function<bool()> CondicionFunc_t;
+typedef std::function<void()> AccionFunc_t;
+
+//typedef bool (* CondicionFunc_t)(void);
+//typedef void (* AccionFunc_t)(void); //int, void*
 
 class Estado;
 class MaquinaDeEstados;
