@@ -30,7 +30,7 @@ static Display display;
 static ActuadorAlarma alarma;
 static SensorDePresencia sensorPir(D3, PullDown);
 static Motor motor(D4,D5,D6,D7);
-static Temporizador espera(TIEMPO_ESPERA_SEC);
+static Temporizador espera = Temporizador();
 
 Simba::Simba() {
     maquina = nullptr;
@@ -61,43 +61,43 @@ void Simba::IniciarMaquinaDeEstados() {
     MaquinaDeEstados* pirMaquina = new MaquinaDeEstados(PirInicio);
 
     // ---------------- TRANSICIONES---------------------
-    Transicion* InicioActualizaciones      = new Transicion( nullptr ); 
-    Transicion* Inicio2TapaDestrabada      = new Transicion( TapaDestrabada );
-    Transicion* Inicio2PresenciaDeGas      = new Transicion( PresenciaDeGas );
+    Transicion* InicioActualizaciones      = new TransicionSimple( nullptr ); 
+    Transicion* Inicio2TapaDestrabada      = new TransicionSimple( TapaDestrabada );
+    Transicion* Inicio2PresenciaDeGas      = new TransicionSimple( PresenciaDeGas );
 
-    Transicion* TapaTrabadaActualizaciones = new Transicion( nullptr ); 
-    Transicion* TapaTrabada2TapaDestrabada = new Transicion( TapaDestrabada );
-    Transicion* TapaTrabada2PresenciaDeGas = new Transicion( PresenciaDeGas );
+    Transicion* TapaTrabadaActualizaciones = new TransicionSimple( nullptr ); 
+    Transicion* TapaTrabada2TapaDestrabada = new TransicionSimple( TapaDestrabada );
+    Transicion* TapaTrabada2PresenciaDeGas = new TransicionSimple( PresenciaDeGas );
 
-    Transicion* TapaDestrabadaActualizaciones = new Transicion( nullptr ); 
-    Transicion* TapaDestrabada2AbriendoTapa = new Transicion( AbriendoTapa );
-    Transicion* TapaDestrabada2TapaTrabada = new Transicion( TapaTrabada );
-    Transicion* TapaDestrabada2PresenciaDeGas = new Transicion( PresenciaDeGas );
+    Transicion* TapaDestrabadaActualizaciones = new TransicionSimple( nullptr ); 
+    Transicion* TapaDestrabada2AbriendoTapa = new TransicionSimple( AbriendoTapa );
+    Transicion* TapaDestrabada2TapaTrabada = new TransicionSimple( TapaTrabada );
+    Transicion* TapaDestrabada2PresenciaDeGas = new TransicionSimple( PresenciaDeGas );
 
-    Transicion* PresenciaDeGasActualizaciones = new Transicion ( nullptr );
-    Transicion* PresenciaDeGas2TapaDestrabada = new Transicion( TapaDestrabada );
-    Transicion* PresenciaDeGas2TapaTrabada = new Transicion( TapaTrabada );
+    Transicion* PresenciaDeGasActualizaciones = new TransicionSimple ( nullptr );
+    Transicion* PresenciaDeGas2TapaDestrabada = new TransicionSimple( TapaDestrabada );
+    Transicion* PresenciaDeGas2TapaTrabada = new TransicionSimple( TapaTrabada );
 
-    Transicion* AbriendoTapa2TapaAbierta = new Transicion( TapaAbierta );
-    Transicion* AbriendoTapa2CerrandoTapa = new Transicion( CerrandoTapa );
+    Transicion* AbriendoTapa2TapaAbierta = new TransicionSimple( TapaAbierta );
+    Transicion* AbriendoTapa2CerrandoTapa = new TransicionSimple( CerrandoTapa );
 
-    Transicion* TapaAbierta2CerrandoTapa = new Transicion( CerrandoTapa );
+    Transicion* TapaAbierta2CerrandoTapa = new TransicionSimple( CerrandoTapa );
 
-    Transicion* Cualquiera2PresenciaDeGas = new Transicion( PresenciaDeGas );
+    Transicion* Cualquiera2PresenciaDeGas = new TransicionSimple( PresenciaDeGas );
   
-    Transicion* CerrandoTapa2AbriendoTapa = new Transicion( AbriendoTapa );
-    Transicion* CerrandoTapa2TapaCerrada = new Transicion( TapaCerrada );
+    Transicion* CerrandoTapa2AbriendoTapa = new TransicionSimple( AbriendoTapa );
+    Transicion* CerrandoTapa2TapaCerrada = new TransicionSimple( TapaCerrada );
 
-    Transicion* TapaCerrada2TapaDestrabada = new Transicion( TapaDestrabada );
-    Transicion* TapaCerrada2AbriendoTapa = new Transicion( AbriendoTapa );
+    Transicion* TapaCerrada2TapaDestrabada = new TransicionSimple( TapaDestrabada );
+    Transicion* TapaCerrada2AbriendoTapa = new TransicionSimple( AbriendoTapa );
 
     // ----------- TRANSICIONES DE SUBESTADOS -----------
 
     // Sensor PIR
-    Transicion* PirInicio2PirPersonaDetectada = new Transicion( PirPersonaDetectada );
-    Transicion* PirInicio2PirPersonaNoDetectada = new Transicion( PirPersonaNoDetectada );
-    Transicion* PirPersonaDetectada2PirPersonaNoDetectada =  new Transicion( PirPersonaNoDetectada );
-    Transicion* PirPersonaNoDetectada2PirPersonaDetectada = new Transicion( PirPersonaDetectada );
+    Transicion* PirInicio2PirPersonaDetectada = new TransicionSimple( PirPersonaDetectada );
+    Transicion* PirInicio2PirPersonaNoDetectada = new TransicionSimple( PirPersonaNoDetectada );
+    Transicion* PirPersonaDetectada2PirPersonaNoDetectada =  new TransicionSimple( PirPersonaNoDetectada );
+    Transicion* PirPersonaNoDetectada2PirPersonaDetectada = new TransicionSimple( PirPersonaDetectada );
     
 
     // TRANSICIONES INICIO **********************************************************
@@ -305,7 +305,7 @@ void Simba::IniciarMaquinaDeEstados() {
         display.CharPositionWrite(0,1);
         display.StringWrite( "Gracias!" );
         motor.Pasos(-MOTOR_PASOS);
-        espera.Empezar();
+        espera.Empezar( TIEMPO_ESPERA_SEC );
         motor.Empezar();
     });
 
@@ -349,7 +349,7 @@ void Simba::IniciarMaquinaDeEstados() {
         display.StringWrite( "Tapa Cerrada" );
         display.CharPositionWrite(0,1);
         display.StringWrite( "Gracias!" );
-        espera.Empezar();
+        espera.Empezar( TIEMPO_ESPERA_SEC );
     });
     
     // CerrandoTapa -> AbriendoTapa

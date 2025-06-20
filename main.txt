@@ -1,0 +1,32 @@
+#include "SiMBa/Modulos/Wi-Fi/buffer.h"
+#include "mbed.h"
+
+#include "arm_book_lib.h"
+
+static UnbufferedSerial uartWifi( PE_8, PE_7, 115200 ); 
+static UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
+static Buffer buffer(128);
+
+void on_rx_interrupt()
+{
+    char c;
+
+    // Read the data to clear the receive interrupt.
+    if (uartWifi.read(&c, 1)) {
+        // Echo the input back to the terminal.
+        //uartUsb.write(&c, 1);
+        buffer.Write(&c);
+    }
+}
+
+int main(){
+      
+    char str[]="AT\r\n";
+    //uartWifi.read();
+    uartWifi.attach(&on_rx_interrupt, UnbufferedSerial::RxIrq);
+    while(  ) {
+
+        uartWifi.write(str, strlen(str));
+        for(char i = ' '; i != )
+    }
+}

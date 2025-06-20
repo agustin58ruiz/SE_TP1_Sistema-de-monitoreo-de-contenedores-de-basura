@@ -15,6 +15,7 @@ public:
     EstadoTemporizador Estado();
     void Empezar(float segundos);
     void Parar();
+    bool EstaFinalizado();
 };
 
 #endif

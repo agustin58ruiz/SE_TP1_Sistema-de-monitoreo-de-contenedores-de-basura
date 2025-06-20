@@ -1,0 +1,6 @@
+#ifndef WI_FI_TYPES__H
+#define WI_FI_TYPES__H
+
+enum class ParseStatus { SUCCESSFUL_MATCH, SUCCESSFUL_NO_MATCH, FULL_BUFFER, FAILED_NO_READ };
+
+#endif

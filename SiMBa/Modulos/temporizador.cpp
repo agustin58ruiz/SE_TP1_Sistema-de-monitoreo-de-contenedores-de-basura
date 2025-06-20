@@ -9,10 +9,11 @@ Temporizador::Temporizador() {
 
 void Temporizador::Empezar(float segundos) {
     
-    if ( _estado != EstadoTemporizador::EMPEZADO ) {
-        _ticker->attach(callback(this, &Temporizador::_callback), segundos);
-        _estado = EstadoTemporizador::EMPEZADO;
+    if ( _estado == EstadoTemporizador::EMPEZADO ) {
+        _ticker->detach();
     }
+    _ticker->attach(callback(this, &Temporizador::_callback), segundos);
+    _estado = EstadoTemporizador::EMPEZADO;
 }
 
 void Temporizador::Parar() {
@@ -26,4 +27,8 @@ void Temporizador::_callback() {
 
 EstadoTemporizador Temporizador::Estado() {
     return _estado;
+}
+
+bool Temporizador::EstaFinalizado() {
+    return _estado == EstadoTemporizador::FINALIZADO;
 }
