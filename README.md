@@ -252,36 +252,36 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">Implementado.</td>
   </tr>
   <tr>
-    <td class="tg-8eqh">2.3 :yellow_circle: El display se enciende solo bajo la presencia de un usuario.</td>
-    <td class="tg-0pky">Hay algunos estados donde no concuerda la lógica con este comportamiento.</td>
+    <td class="tg-8eqh">2.3 :green_circle: El display se enciende solo bajo la presencia de un usuario.</td>
+    <td class="tg-0pky">El display se enciende bajo la presencia de un usuario.</td>
   </tr>
   <tr>
-    <td class="tg-bw5o">3.1 :red_circle: El servicio web tiene usuario y contraseña.</td>
-    <td class="tg-0pky">No implementado.</td>
+    <td class="tg-bw5o">3.1 :gray_circle: El servicio web tiene usuario y contraseña.</td>
+    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
   <tr>
-    <td class="tg-bw5o">3.2 :red_circle: El servicio web puede ser accedido desde un browser.</td>
-    <td class="tg-0pky">No implementado.</td>
+    <td class="tg-bw5o">3.2 :green_circle: El servicio web puede ser accedido desde un browser.</td>
+    <td class="tg-0pky">Se implementó un servicio web con un home desde donde se pueden acceder a algunas acciones del tacho de basura.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">3.3 :red_circle: El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
-    <td class="tg-0pky">No implementado.</td>
+    <td class="tg-hrbo">3.3 :green_circle: El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
+    <td class="tg-0pky">Con el servicio web se puede controlar la tapa.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">3.4 :red_circle: El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
-    <td class="tg-0pky">No implementado.</td>
+    <td class="tg-hrbo">3.4 :green_circle: El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
+    <td class="tg-0pky">Se agregó la posibilidad de realizar acciones sobre el contenedor mediante una api web que actualmente incluye control sobre la tapa.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">3.5 :red_circle: El servicio web ofrece métricas del estado del contenedor.</td>
-    <td class="tg-0pky">No implementado.</td>
+    <td class="tg-hrbo">3.5 :green_circle: El servicio web ofrece métricas del estado del contenedor.</td>
+    <td class="tg-0pky">El servicio web ofrece la temperatura.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">4.1 :red_circle: La alimentación es por medio de una batería de 5 V.</td>
-    <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
+    <td class="tg-hrbo">4.1 :gray_circle: La alimentación es por medio de una batería de 5 V.</td>
+    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">4.2 :red_circle: La carga de la batería es por medio de un panel solar.</td>
-    <td class="tg-0pky">Este punto es dificil de lograr. Debe estudiarse mejor el problema de la alimentación.</td>
+    <td class="tg-hrbo">4.2 :gray_circle: La carga de la batería es por medio de un panel solar.</td>
+    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
 </tbody></table>
 
