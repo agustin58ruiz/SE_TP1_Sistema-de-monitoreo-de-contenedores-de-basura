@@ -6,6 +6,9 @@
 #include "app.h"
 #include "miscellaneous.h"
 #include "wi-fi-status.h"
+#include "link-queue.h"
+
+#include "wi-fi-commands.h"
 #include "uart.h"
 #include "at.h"
 
@@ -18,7 +21,7 @@
 
 #define LINKS_NUMBER 5
 
-#define IP_MAX_LENGTH (15 + 1)
+
 #define HTTP_HEADER_LENGTH STRING_2_SEND_MAX_LENGTH - 1
 #define BUFFER_LENGTH 128
 
@@ -39,8 +42,8 @@ static const char responseCiprecvdata[] = "+CIPRECVDATA,";
 static char responseWildcard[20] = ""; 
 
 static int currentConnectionId;
-static char wifiComApSsid[AP_SSID_MAX_LENGTH] = "RuizAgustin";
-static char wifiComApPassword[AP_PASSWORD_MAX_LENGTH] = "1tBk1qkwdW";
+static char wifiComApSsid[AP_SSID_MAX_LENGTH] = ;
+static char wifiComApPassword[AP_PASSWORD_MAX_LENGTH] = ;
 static char wifiComIpAddress[IP_MAX_LENGTH];
 
 static const char htmlCode [] =
@@ -50,15 +53,19 @@ static char lastResponse[50]="";
 static int *indexes = nullptr;
 
 static WiFiStatus* wifiStatus=nullptr;
+static WiFiCommands* wifiCommands=nullptr;
 static int linksLengths[LINKS_NUMBER];
 
-Wifi::Wifi(){
+Wifi::Wifi(App * app){
     _maquina = nullptr;
     _delay = new Temporizador();
    // wifi = &uartWifi;
     _logs = false;
     _rx = nullptr;
-    _app = new App();
+    _app = app;
+    _route[0] = '\0';
+    _route[HTTP_MAX_HEADER_CHARS - 1] = '\0';
+    
 }
 
 void Wifi::ComInit(){
@@ -79,6 +86,7 @@ void Wifi::ComInit(){
     Estado* LoadIp = new Estado( "WIFI_STATE_LOAD_IP" );
     Estado* CipMux = new Estado( "WIFI_STATE_SEND_CIPMUX" );
     Estado* WaitCipMux = new Estado( "WIFI_STATE_WAIT_CIPMUX" );
+    Estado* WaitCipMuxError = new Estado( "WIFI_STATE_WAIT_CIPMUX_ERROR" );
     Estado* CipServer = new Estado( "WIFI_STATE_SEND_CIPSERVER" );
     Estado* WaitCipServer = new Estado( "WIFI_STATE_WAIT_CIPSERVER" );
     Estado* CipRecvMode = new Estado( "WIFI_STATE_SEND_CIPRECVMODE");
@@ -87,8 +95,6 @@ void Wifi::ComInit(){
     /*REDEFINIENDO CIPSTATUS*/
     Estado* CipStatus = new Estado( "WIFI_STATE_SEND_CISTATUS");
     Estado* ProcessingCipStatus = new Estado("WIFI_STATE_PROCESSING_CIPSTATUS"); 
-
-
 
     //Estado* CipStatus = new Estado( "WIFI_STATE_SEND_CIPSTATUS" );
     Estado* WaitCipStatusStatus3 = new Estado( "WIFI_STATE_WAIT_CIPSTATUS_STATUS_3" );
@@ -100,7 +106,11 @@ void Wifi::ComInit(){
     Estado* WaitCipRecvLenQuery = new Estado( "WIFI_STATE_WAIT_CIPRECVDATA_QUERY");
     
     Estado* CipRecvData = new Estado( "WIFI_STATE_SEND_CIPRECVDATA" );
+    Estado* WaitCipRecvData = new Estado( "WIFI_STATE_WAIT_CIPRECVDATA" );
+
     Estado* WaitCipRecvData1 = new Estado( "WIFI_STATE_WAIT_CIPRECVDATA1" );
+
+
     Estado* WaitCipRecvData2 = new Estado( "WIFI_STATE_WAIT_CIPRECVDATA2" );
 
     Estado* CipSend = new Estado( "WIFI_STATE_SEND_CIPSEND" );
@@ -114,16 +124,21 @@ void Wifi::ComInit(){
     Estado* Idle = new Estado( "WIFI_STATE_IDLE" );
     Estado* Error = new Estado( "WIFI_STATE_ERROR" );
 
+
+
+
+
+
+
+
     // ---------- CREACION MAQUINA DE ESTADOS -----------
     MaquinaDeEstados* maquina = new MaquinaDeEstados(Init);
 
     // ---------------- TRANSICIONES---------------------
 
-    Transicion* Init2At = new TransicionSimple( At );
-    Transicion* At2WaitAt = new TransicionSimple( WaitAt );
-    Transicion* WaitAt2CwMode = new TransicionSimple( CwMode );
+    
     //Transicion* WaitAt2Idle = new TransicionSimple( Idle );
-    Transicion* WaitAt2Error = new TransicionSimple( Error );
+    
     Transicion* CwMode2WaitCwMode = new TransicionSimple( WaitCwMode );
     Transicion* WaitCwMode2CwJapIsSet = new TransicionSimple( CwJapIsSet );
     Transicion* WaitCwMode2Error = new TransicionSimple( Error );
@@ -139,104 +154,73 @@ void Wifi::ComInit(){
     Transicion* WaitCifsr2LoadIp = new TransicionSimple( LoadIp );
     Transicion* WaitCifsr2Error = new TransicionSimple( Error );
     Transicion* LoadIp2CipMux = new TransicionSimple( CipMux );
-    Transicion* CipMux2WaitCipMux = new TransicionSimple( WaitCipMux );
-    Transicion* WaitCipMux2CipServer = new TransicionSimple( CipServer );
-    Transicion* WaitCipMux2Error = new TransicionSimple( Error );
-    Transicion* CipServer2WaitCipServer = new TransicionSimple( WaitCipServer );
-    Transicion* WaitCipServer2CipRecvMode = new TransicionSimple( CipRecvMode );
-    Transicion* WaitCipServer2Error = new TransicionSimple( Error );
-    Transicion* CipRecvMode2WaitCipRecvMode = new TransicionSimple( WaitCipRecvMode );
+
+    wifiCommands = new WiFiCommands();
+    wifiStatus = new WiFiStatus();
     
-    Transicion* WaitCipRecvMode2CwState = new TransicionSimple( CipStatus );
-    Transicion* ProcessingCipStatusActualizacion = new Actualizacion();
-    Transicion* CipStatus2ProcessingCipStatus = new TransicionSimple( ProcessingCipStatus );
+    // INIT ****************************************
 
-    Transicion* ProcessingCipStatus2CipStatus = new TransicionSimple( CipStatus );
-
-
-    Transicion* ProcessingCipStatus2Error = new TransicionSimple( CipStatus );
-
-    Transicion* WaitCipRecvMode2CipStatus = new TransicionSimple( CipStatus );
-    Transicion* WaitCipRecvMode2Error = new TransicionSimple( Error );
-    Transicion* CipStatus2WaitCipStatusStatus3 = new TransicionSimple( WaitCipStatusStatus3 );
-    Transicion* WaitCipStatusStatus32WaitCipStatus = new TransicionSimple( WaitCipStatus );
-    Transicion* WaitCipStatusStatus32CipStatus = new TransicionSimple( CipStatus );
-    Transicion* WaitCipStatus2WaitGetId = new TransicionSimple( WaitGetId );
-    Transicion* WaitCipStatus2CipStatus = new TransicionSimple( CipStatus );
-
-    Transicion* WaitGetId2WaitCipStatusOk = new TransicionSimple( WaitCipStatusOk );
-
-    Transicion* WaitCipStatusOk2CipRecvDataQuery = new TransicionSimple( CipRecvLenQuery );
-    Transicion* CipRecvLenQuery2WaitCipRecvLenQuery = new TransicionSimple( WaitCipRecvLenQuery );
-    Transicion* WaitCipRecvLenQuery2CipRecvData = new TransicionSimple( CipRecvData );
-    Transicion* WaitCipRecvLenQuery2Error = new TransicionSimple( Error );
-    
-    Transicion* WaitCipStatusOk2CipRecvData = new TransicionSimple( CipRecvData );
-    Transicion* CipRecvData2WaitCipRecvData1 = new TransicionSimple( WaitCipRecvData1 );
-    Transicion* WaitCipRecvData12WaitCipRecvData2 = new TransicionSimple( WaitCipRecvData2 );
-    Transicion* WaitCipRecvData12Error = new TransicionSimple( Error );
-    Transicion* WaitCipRecvData22CipSend = new TransicionSimple( CipSend );
-    
-    Transicion* CipSend2WaitCipSend = new TransicionSimple( WaitCipSend );
-    Transicion* WaitCipSend2SendHtml = new TransicionSimple( SendHtml );
-    Transicion* WaitCipSend2CipStatus = new TransicionSimple( CipStatus );
-    Transicion* SendHtml2WaitHtml = new TransicionSimple( WaitHtml );
-    Transicion* WaitHtml2CipClose = new TransicionSimple( CipClose );
-    Transicion* WaitHtml2CipSend = new TransicionSimple( CipSend );
-    Transicion* CipClose2WaitCipClose = new TransicionSimple( WaitCipClose );
-    Transicion* WaitCipClose2CipStatus_1 = new TransicionSimple( CipStatus );
-    Transicion* WaitCipClose2CipStatus_2 = new TransicionSimple( CipStatus );
-    
-
-
-    // TRANSICIONES INIT ****************************************
-    Init->EstablecerTransiciones( new Transicion*[]{ Init2At, nullptr} );
-    // Init -> At
-    Init2At->EstablecerCondicion([this](){        
-        return true;
-    }).EstablecerAccion([this](){
-        _delay->Empezar(DELAY_5_SECONDS);
+    Init->EstablecerActualizacion( [this, At](){
+                
+      //  _delay->Empezar(DELAY_5_SECONDS);
+        return At;
     });
 
 
-    // TRANSICIONES SEND AT *************************************
-    At->EstablecerTransiciones( new Transicion*[]{ At2WaitAt, nullptr } );
-    // At -> WaitAt
-    At2WaitAt->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        serialWiFi.WriteString("AT\r\n");
-        _comExpectedResponse = responseOk;
-        _delay->Empezar(DELAY_5_SECONDS);
+    // SEND AT *************************************
+    At->EstablecerActualizacion([this, WaitAt](){
+        Estado * nextState = nullptr;
+
+        //if ( _delay->Estado() == EstadoTemporizador::FINALIZADO ) {
+            serialWiFi.WriteString("AT\r\n");
+            _comExpectedResponse = responseOk;
+            _delay->Empezar(DELAY_5_SECONDS);
+            nextState = WaitAt;
+            wifiCommands->Reset();
+        //}
+
+        return nextState;
     });
+    
 
     // TRANSICIONES WAIT AT *************************************
-    WaitAt->EstablecerTransiciones( new Transicion* []{ WaitAt2CwMode, WaitAt2Error, nullptr } );
-    // WaitAt -> CwMode
-    WaitAt2CwMode->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _delay->Empezar(DELAY_5_SECONDS);
-    });
 
-    // WaitAt -> Error
-    WaitAt2Error->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([](){
-        printf("AT command not responded ");
-        printf("correctly\r\n");
+    WaitAt->EstablecerActualizacion( [this,Error, CwMode](){
+        Estado * nextState = nullptr;
+        
+
+        switch ( wifiCommands->ParseAtAsync( serialWiFi ) ) {
+            case ParseStatus::FAILED_NO_READ: 
+                _maquina->EscribirLog("AT command not responded ");
+                _maquina->EscribirLog("correctly\r\n");
+                nextState = Error;
+                break;
+            case ParseStatus::SUCCESSFUL_MATCH: 
+                nextState = CwMode;
+                break;
+            default: break;
+        }
+
+        return nextState;
     });
 
     // TRANSICIONES SEND CWMODE
-    CwMode->EstablecerTransiciones( new Transicion*[]{ CwMode2WaitCwMode, nullptr } );
+    CwMode->EstablecerActualizacion([this, WaitCwMode](){
+        serialWiFi.WriteString("AT+CWMODE=1\r\n");
+        _comExpectedResponse = responseOk;
+        _delay->Empezar(DELAY_5_SECONDS);
+        return WaitCwMode;
+    });
+
+    /*CwMode->EstablecerTransiciones( new Transicion*[]{ CwMode2WaitCwMode, nullptr } );
     // CwMode -> WaitCwMode 
     CwMode2WaitCwMode->EstablecerCondicion([this](){
-        return true;//_delay->Estado() == EstadoTemporizador::FINALIZADO;
+        return true;
     }).EstablecerAccion([this](){
         serialWiFi.WriteString("AT+CWMODE=1\r\n");
         _comExpectedResponse = responseOk;
         _delay->Empezar(DELAY_5_SECONDS);
-    });
+    });*/
 
     // TRANSICIONES WAIT CWMODE
     WaitCwMode->EstablecerTransiciones( new Transicion* []{ WaitCwMode2CwJapIsSet, WaitCwMode2Error, nullptr} );
@@ -332,7 +316,16 @@ void Wifi::ComInit(){
     });
 
     // TRANSICIONES SEND CIFSR
-    Cifsr->EstablecerTransiciones( new Transicion*[]{Cifsr2WaitCifsr, nullptr} );
+    Cifsr->EstablecerActualizacion([this, WaitCifsr](){
+        
+        serialWiFi.WriteString( "AT+CIFSR\r\n" );
+        wifiCommands->Reset();
+        _delay->Empezar(DELAY_5_SECONDS);
+
+        return WaitCifsr;
+    });
+
+    /*Cifsr->EstablecerTransiciones( new Transicion*[]{Cifsr2WaitCifsr, nullptr} );
     // Cifsr -> WaitCifsr
     Cifsr2WaitCifsr->EstablecerCondicion([this](){
         return true;//_delay->Estado() == EstadoTemporizador::FINALIZADO;
@@ -341,497 +334,422 @@ void Wifi::ComInit(){
             _comExpectedResponse = responseCifsr;
             _delay->Empezar(DELAY_5_SECONDS);
     });
-
+*/
     // TRANSICIONES WAIT CIFSR
-    WaitCifsr->EstablecerTransiciones( new Transicion* []{WaitCifsr2LoadIp, WaitCifsr2Error, nullptr} );
-    // WaitCifsr -> LoadIp
-    WaitCifsr2LoadIp->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _strPositionIndex = 0;
-    });
-    // WaitCifsr -> Error
-    WaitCifsr2Error->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([](){
-        printf("AT+CIFSR command not responded ");
-        printf("correctly\r\n");
-    });
+    WaitCifsr->EstablecerActualizacion([Error, CipMux, this](){
+        Estado * nextState = nullptr;
 
-    // TRANSICIONES LOAD IP
-    LoadIp->EstablecerTransiciones( new Transicion*[]{LoadIp2CipMux, nullptr} );
-
-    // LoadIp -> CipMux
-    LoadIp2CipMux->EstablecerCondicion([this](){
-        if( serialWiFi.ReadChar(&_receivedChar) ) {
-            if ( ( _receivedChar != '"' ) &&
-            ( _strPositionIndex < IP_MAX_LENGTH ) ) {
-                wifiComIpAddress[_strPositionIndex] = _receivedChar;
-                _strPositionIndex++;
-            } else { 
-                return true;
-            }
+        switch (wifiStatus->ParseCifsrAsync( serialWiFi) ) {
+            case ParseStatus::SUCCESSFUL_MATCH: 
+                printf("IP: %s\r\n", wifiStatus->Ip());
+                printf("MAC: %s\r\n", wifiStatus->Mac());
+                nextState = CipMux;
+                break;
+            case ParseStatus::FAILED_NO_READ:
+                printf("AT+CIFSR command not responded ");
+                printf("correctly\r\n");
+                nextState = Error;
+                break;
+            default: break;
         }
-        return false;
 
-    }).EstablecerAccion([this](){
-        wifiComIpAddress[_strPositionIndex] = '\0';
-        printf("IP address assigned correctly: ");
-        printf("%s\r\n\r\n", wifiComIpAddress );
+        return nextState;
     });
+
 
     // TRANSICIONES SEND CIPMUX
-    CipMux->EstablecerTransiciones( new Transicion*[]{CipMux2WaitCipMux, nullptr} );
-    //CipMux -> WaitCipMux
-    CipMux2WaitCipMux->EstablecerCondicion([this](){
-        return true;//_delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
+    CipMux->EstablecerActualizacion([this, WaitCipMux](){
         serialWiFi.WriteString( "AT+CIPMUX=1\r\n" );
         _comExpectedResponse = responseOk;
         _delay->Empezar( DELAY_5_SECONDS );
+        if ( wifiCommands != nullptr ) { wifiCommands->Reset(); }
+        
+
+        return WaitCipMux;
     });
+
+
 
     // TRANSICIONES WAIT CIPMUX
-    WaitCipMux->EstablecerTransiciones( new Transicion*[]{WaitCipMux2CipServer, WaitCipMux2Error, nullptr} );
-    // WaitCipMux -> CipServer
-    WaitCipMux2CipServer->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
+    WaitCipMux->EstablecerActualizacion([this, CipServer, Error](){
+        Estado * nextState = nullptr;
+        if ( wifiCommands == nullptr ) { wifiCommands = new WiFiCommands(); }
+
+        switch (wifiCommands->WaitForOkAsync( serialWiFi )) {
+            case ParseStatus::FAILED_NO_READ: 
+                _maquina->EscribirLog("AT+CIPMUX=1 command not ");
+                _maquina->EscribirLog("responded correctly\r\n");
+                nextState = Error;
+                break;
+            case ParseStatus::SUCCESSFUL_MATCH: 
+                _maquina->EscribirLog("Se obtuvo OK CIPMUX=1\r\n");
+                _delay->Empezar( DELAY_5_SECONDS );
+                nextState = CipServer;
+                break;
+            default: break;
+        }
+
+        return nextState;
     });
 
-    // WaitCipMux -> Error
-    WaitCipMux2Error->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        printf("AT+CIPMUX=1 command not ");
-        printf("responded correctly\r\n");
-    });
     
+
+
     // TRANSICIONES SEND CIPSERVER
-    CipServer->EstablecerTransiciones( new Transicion*[] {CipServer2WaitCipServer, nullptr} );
-    // CipServer -> WaitCipServer
-    CipServer2WaitCipServer->EstablecerCondicion([this](){
-        return true;//_delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
+    CipServer->EstablecerActualizacion([this, WaitCipServer](){
         serialWiFi.WriteString( "AT+CIPSERVER=1,80\r\n" );
-        _comExpectedResponse = responseOk;
+        //_comExpectedResponse = responseOk;
         _delay->Empezar( DELAY_5_SECONDS );
+
+        wifiCommands->Reset(); 
+
+        return WaitCipServer; 
     });
+
+
 
     // TRANSICIONES WAIT CIPSERVER
-    WaitCipServer->EstablecerTransiciones( new Transicion*[]{WaitCipServer2CipRecvMode, WaitCipServer2Error, nullptr} );
-    // WaitCipServer -> CipRecvMode
-    WaitCipServer2CipRecvMode->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
+    WaitCipServer->EstablecerActualizacion([this, CipRecvMode, Error, CipServer](){
+        Estado * nextState = nullptr;
+        if ( !_delay->EstaFinalizado() ) {
+            //if ( !serialWiFi.Readable() ) return nex   if ( wifiCommands == nullptr ) { wifiCommands = new WiFiCommands(); }
+
+            switch ( wifiCommands->WaitForOkAsync( serialWiFi ) ) {
+                case ParseStatus::FAILED_NO_READ: 
+                    _maquina->EscribirLog("AT+CIPSERVER=1,80 command not ");
+                    _maquina->EscribirLog("responded correctly\r\n");
+                    nextState = Error;
+                    break;
+                case ParseStatus::SUCCESSFUL_MATCH: 
+                    //_maquina->EscribirLog("WaitCiPServer_SUCCESS\r\n");
+                    nextState = CipRecvMode;
+                    break;        
+                default: 
+                    break;
+            }
+        } else nextState = CipServer;
+        
+        return nextState;
     });
-    // WaitCipServer -> ERROR
-    WaitCipServer2Error->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        printf("AT+CIPSERVER=1,80 command not ");
-        printf("responded correctly\r\n");
-    });
+    
 
     // TRANSICIONES SEND CIPRECVMODE
-    CipRecvMode->EstablecerTransiciones( new Transicion*[]{CipRecvMode2WaitCipRecvMode, nullptr} );
-    // CipRecvMode -> WaitCipRecvMode
-    CipRecvMode2WaitCipRecvMode->EstablecerCondicion([this](){
-        return true;//_delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
+    CipRecvMode->EstablecerActualizacion([this, WaitCipRecvMode ](){
         serialWiFi.WriteString( "AT+CIPRECVMODE=1\r\n" );
-        _comExpectedResponse = responseOk;
+        
         _delay->Empezar( DELAY_5_SECONDS );
+        return WaitCipRecvMode;
     });
-
-
 
     // TRANSICIONES WAIT CIPRECVMODE
-    WaitCipRecvMode->EstablecerTransiciones( new Transicion*[]{ WaitCipRecvMode2CwState/*WaitCipRecvMode2CipStatus*/, WaitCipRecvMode2Error, nullptr} );
-    // WaitCipRecvMode -> CwState
-    WaitCipRecvMode2CwState->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
+    WaitCipRecvMode->EstablecerActualizacion([this, Error, CipStatus](){
+        Estado * nextState = nullptr;
+
+        if ( !serialWiFi.Readable() ) return nextState;
+
+        if ( wifiCommands == nullptr ) { wifiCommands = new WiFiCommands(); }
+
+        switch ( wifiCommands->ParseCipRecvMode( serialWiFi )) {
+            case ParseStatus::FAILED_NO_READ: 
+                _maquina->EscribirLog("AT+CIPRECVMODE=1\r\n command not ");
+                _maquina->EscribirLog("responded correctly\r\n");
+                nextState = Error;
+                break;
+            case ParseStatus::SUCCESSFUL_MATCH: 
+                switch ( wifiCommands->GetState() ) {
+
+                    case WiFiCommandState::OK:
+                        _maquina->EscribirLog("Se obtuvo OK AT+CIPSERVER=1,80\r\n");
+                        _delay->Empezar( DELAY_5_SECONDS );
+                        nextState = CipStatus;
+                        break;
+                    default: 
+                        _maquina->EscribirLog("No se obtuvo respuesta\r\n");
+                        break;   
+                }
+                break;
+            default: break;
+            }
+            return nextState;
     });
-    
-    
-    
-    
-    
-    // WaitCipRecvMode -> CipStatus
-    WaitCipRecvMode2CipStatus->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
-    });
-
-    // WaitCipRecvMode-> Error
-    WaitCipRecvMode2Error->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([](){
-        printf("AT+CIPRECVMODE=1 command not ");
-        printf("responded correctly\r\n");
-    });
 
 
-    // TRANSICIONES SEND CWSTATE
-    
-
-    CipStatus->EstablecerTransiciones( new Transicion*[]{ CipStatus2ProcessingCipStatus, nullptr} );
-    // CwState -> ProcessingCwState
-    CipStatus2ProcessingCipStatus->EstablecerCondicion([this](){
-        return true;
-    }).EstablecerAccion([this](){
+    // SEND CWSTATE
+    CipStatus->EstablecerActualizacion([this, ProcessingCipStatus](){
         flush_last_command_response( serialWiFi );
         serialWiFi.WriteString( "AT+CIPSTATUS\r\n" );
-        _delay->Empezar( DELAY_1_SECONDS );
+       _delay->Empezar( DELAY_1_SECONDS );
+
+
+        // Test
+        //_app->RenderHtml( this );
+
+        wifiStatus->ResetIndex();
+        return ProcessingCipStatus;
     });
 
-    // TRANSICIONES PROCESSING CIPSTATUS
-    ProcessingCipStatus->EstablecerTransiciones(new Transicion*[]{ ProcessingCipStatusActualizacion, ProcessingCipStatus2Error, nullptr });
+    // PROCESSING CIPSTATUS
+    ProcessingCipStatus->EstablecerActualizacion([this, CipStatus, CipRecvLenQuery](){
 
-    ProcessingCipStatusActualizacion->EstablecerAccion([this](){
-        if ( _delay->EstaFinalizado() ) {
-            if ( wifiStatus == nullptr ) { wifiStatus = new WiFiStatus(); }
+        Estado * nextState = nullptr;
+        
+        if ( _delay->EstaFinalizado() ) {return CipStatus;}
+           // nextState = CipStatus;
             
-            switch(wifiStatus->Parse( serialWiFi )) {
+            //if (!serialWiFi.Readable()) { return nextState;}
+            switch(wifiStatus->ParseAsync( serialWiFi )) {
 
                 case ParseStatus::FAILED_NO_READ: _maquina->EscribirLog("Fallo\r\n"); break;
-                case ParseStatus::SUCCESSFUL_MATCH: _maquina->EscribirLog("Exito\r\n"); break;
-                default: break;
+                case ParseStatus::SUCCESSFUL_MATCH:
+                    
+                    switch ( wifiStatus->GetState() ) {
+                       case WiFiConnectionState::CONNECTED_NO_IP:
+                           //_maquina->EscribirLog("Conectado SIN IP\r\n");
+                           break;
+                       case WiFiConnectionState::CONNECTED_WITH_IP:
+                           //_maquina->EscribirLog("Conectado con IP\r\n");
+                          // _app->SendHtmlTo( this );
+
+                           break;
+                       case WiFiConnectionState::DISCONNECTED:
+                           //_maquina->EscribirLog("Desconectado \r\n");
+                         //  _app->SendHtmlTo( this );
+                           break;
+                       case WiFiConnectionState::CONNECTING:
+                           //_maquina->EscribirLog("Conectando\r\n");
+                           nextState = CipRecvLenQuery;
+                           break;
+                       case WiFiConnectionState::NOT_STARTED:
+                           //_maquina->EscribirLog("Coneccion no iniciada\r\n");
+                           break;
+                       case WiFiConnectionState::UNKNOWN:
+                           //_maquina->EscribirLog("Desconocido.\r\n");
+                           break;
+                    }
+                
+                    break;
+                
+                default:
+                    
+                 break;
             }
-        }
-    });
-
-    ProcessingCipStatus2CipStatus->EstablecerCondicion([this](){
-        return _delay->EstaFinalizado();
-    }).EstablecerAccion([this](){
-
-        switch ( wifiStatus->GetState() ) {
-            case WiFiConnectionState::CONNECTED_NO_IP:
-                _maquina->EscribirLog("Conectado SIN IP\r\n");
-                break;
-            case WiFiConnectionState::CONNECTED_WITH_IP:
-                _maquina->EscribirLog("Conectado con IP\r\n");
-                break;
-            case WiFiConnectionState::DISCONNECTED:
-                _maquina->EscribirLog("Desconectado \r\n");
-                break;
-            case WiFiConnectionState::CONNECTING:
-                _maquina->EscribirLog("Conectando\r\n");
-                break;
-            case WiFiConnectionState::NOT_STARTED:
-                _maquina->EscribirLog("Coneccion no iniciada\r\n");
-                break;
-            case WiFiConnectionState::UNKNOWN:
-                _maquina->EscribirLog("Desconocido.\r\n");
-                break;
-        }
-    });
-
-    ProcessingCipStatus2Error->EstablecerCondicion([this](){
-        if ( _delay->EstaFinalizado() ) {
-            if ( wifiStatus == nullptr ) { wifiStatus = new WiFiStatus(); }
-
-            //serialWiFi.ReadString(str);
-            //_maquina->EscribirLog(str);
             
-            switch(wifiStatus->Parse( serialWiFi )) {
+       // }
 
-                case ParseStatus::FAILED_NO_READ: _maquina->EscribirLog("Fallo\r\n"); break;
-                case ParseStatus::SUCCESSFUL_MATCH: _maquina->EscribirLog("Exito\r\n"); break;
-                default: break;
-            }
+        return nextState;
 
-
-            return true;
-        }
-
-        return false;
-
-    }).EstablecerAccion([this](){
-
-        switch ( wifiStatus->GetState() ) {
-            case WiFiConnectionState::CONNECTED_NO_IP:
-                _maquina->EscribirLog("Conectado SIN IP\r\n");
-                break;
-            case WiFiConnectionState::CONNECTED_WITH_IP:
-                _maquina->EscribirLog("Conectado con IP\r\n");
-                break;
-            case WiFiConnectionState::DISCONNECTED:
-                _maquina->EscribirLog("Desconectado \r\n");
-                break;
-            case WiFiConnectionState::CONNECTING:
-                _maquina->EscribirLog("Conectando\r\n");
-                break;
-            case WiFiConnectionState::NOT_STARTED:
-                _maquina->EscribirLog("Coneccion no iniciada\r\n");
-                break;
-            case WiFiConnectionState::UNKNOWN:
-                _maquina->EscribirLog("Desconocido.\r\n");
-                break;
-        }
     });
-    /*
-    // TRANSICIONES SEND CIPSTATUS
-    CipStatus->EstablecerTransiciones( new Transicion*[]{CipStatus2WaitCipStatusStatus3, nullptr} );
-    // CipStatus -> WaitCipStatus3
-    CipStatus2WaitCipStatusStatus3->EstablecerCondicion([this](){
-        return true;//_delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        serialWiFi.WriteString( "AT+CIPSTATUS\r\n" );
-        _comExpectedResponse = responseStatus3;
-        _delay->Empezar( DELAY_1_SECONDS );
-    });
-    */
-/*************************************************************************************************************************************************************************************/
-
-
-
-
-/*************************************************************************************************************************************************************************************/
-
-
-    // TRANSICION WAIT CIPSTATUS STATUS 3
-    WaitCipStatusStatus3->EstablecerTransiciones( new Transicion*[]{WaitCipStatusStatus32WaitCipStatus, WaitCipStatusStatus32CipStatus, nullptr} );
-    //  WaitCipStatusStatus3 -> WaitCipStatus
-    WaitCipStatusStatus32WaitCipStatus->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
-        _comExpectedResponse = responseCipstatus;
-    });
-
-    // WaitCipStatusStatus3 -> CipStatus
-    WaitCipStatusStatus32CipStatus->EstablecerCondicion([this](){
-
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
-    });
-
-    // TRANCISION WAIT CIPSTATUS
-    WaitCipStatus->EstablecerTransiciones( new Transicion*[]{WaitCipStatus2WaitGetId, WaitCipStatus2CipStatus, nullptr} );
-    // WaitCipStatus -> WaitGetId
-    WaitCipStatus2WaitGetId->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([](){});
-
-    // WaitCipStatus -> CipStatus
-    WaitCipStatus2CipStatus->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
-    });
-
-    // TRANSICIONES WAIT GET ID
-    WaitGetId->EstablecerTransiciones( new Transicion*[]{WaitGetId2WaitCipStatusOk, nullptr} );
-    // WaitGetId -> WaitCipStatusOk
-    WaitGetId2WaitCipStatusOk->EstablecerCondicion([this](){
-        return serialWiFi.ReadChar(&_receivedChar);
-    }).EstablecerAccion([this](){
-        _currentConnectionId = _receivedChar;
-        _comExpectedResponse = responseOk;
-    });
-    
-
-    // TRANSICIONES WAIT CIPSTATUS OK
-    WaitCipStatusOk->EstablecerTransiciones( new Transicion*[]{WaitCipStatusOk2CipRecvDataQuery, nullptr} );
-    // WaitCipStatusOk -> CipRecvDataQuery
-    WaitCipStatusOk2CipRecvDataQuery->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([](){});
-
-/**********************************/
-
-/* 
-    Aca voy a arreglar el código. 
-
-    Tengo que poner el length. 
-*/
 
     // TRANSICIONES SEND CIPRECVLEN QUERY
-    CipRecvLenQuery->EstablecerTransiciones( new Transicion*[]{ CipRecvLenQuery2WaitCipRecvLenQuery, nullptr } );
-    // CipRecvLenQuery -> WaitCipRecvLenQuery
-    CipRecvLenQuery2WaitCipRecvLenQuery->EstablecerCondicion([](){
-        return true;
-    }).EstablecerAccion([this](){
+    CipRecvLenQuery->EstablecerActualizacion([this, WaitCipRecvLenQuery](){
         serialWiFi.WriteString("AT+CIPRECVLEN?\r\n");
-        _comExpectedResponse = responseOk;
-        _delay->Empezar( DELAY_5_SECONDS );
+        _maquina->EscribirLog("Enviado CIPRCVLEN\r\n");
+        wifiStatus->ResetIndex();
+        return WaitCipRecvLenQuery;
+
     });
+
     
     // TRANSICIONES WAIT CIPRECVDATA QUERY 
-    WaitCipRecvLenQuery->EstablecerTransiciones( new Transicion*[]{ WaitCipRecvLenQuery2CipRecvData, WaitCipRecvLenQuery2Error,nullptr} );
-    // WaitCipRecvDataQuery -> CipRecvData
-    WaitCipRecvLenQuery2CipRecvData->EstablecerCondicion([this](){
-        char c;
-        char str[50];
-        serialWiFi.ReadString( str );
-        parseLengthArray(str, linksLengths);
+    WaitCipRecvLenQuery->EstablecerActualizacion([this, Error, CipRecvData](){
+        Estado * nextState = nullptr;
+        ParseStatus st;
+        switch ( st = wifiStatus->ParseCipRecvLenAsync( serialWiFi ) ) {
+            case ParseStatus::FAILED_NO_READ:
+                _maquina->EscribirLog("No se parseo la longitud de los links\r\n"); 
+                nextState = Error;
+                break;
+            case ParseStatus::SUCCESSFUL_MATCH: 
+                _maquina->EscribirLog("Se parseo el linklength\r\n"); 
+                nextState = CipRecvData;
+                break;
+            default: 
+                //printf("FALLO LINKLEGNTH %d\r\n", (int)st);
+            break;
+        }
+        return nextState;
+    });
+
+
+    // SEND CIPRECVDATA
+    CipRecvData->EstablecerActualizacion([this, WaitCipRecvData, CipStatus, CipClose](){
         
-        _maquina->EscribirLog(str);
-        _maquina->EscribirLog("Evaluando: WaitCipRecvDataQuery2CipRecvData\r\n");
-        return false;
-    }).EstablecerAccion([this](){});
+        Estado * nextState = nullptr;
+        _currentConnectionId = wifiStatus->GetLink();
+        if (_currentConnectionId != -1) {
+            printf("EL LINK: %d\r\n",_currentConnectionId);
+            printf("EL LENGTH: %d\r\n",wifiStatus->GetLinkLenght(_currentConnectionId));
+            if ( wifiStatus->GetLinkLenght(_currentConnectionId) != 0) {
 
-    // WaitCipRecvDataQuery -> Error
-    WaitCipRecvLenQuery2Error->EstablecerCondicion([this](){
-        _maquina->EscribirLog("Evaluando: WaitCipRecvDataQuery2Error\r\n");
-        return _delay->EstaFinalizado();
-    }).EstablecerAccion([this](){
+                sprintf(_strToSendRecv,"AT+CIPRECVDATA=%d,%d\r\n", _currentConnectionId, HTTP_HEADER_LENGTH);
+                sprintf( responseWildcard, "%s%d:",responseCiprecvdata, HTTP_HEADER_LENGTH); // sprintf es lento, es para asegurar que no se pierda datos en wait ciprecvdata
 
-    } );
+                serialWiFi.WriteString( _strToSendRecv );
+                _delay->Empezar( DELAY_5_SECONDS );
 
-/**********************************/
+                wifiCommands->Reset();
+                nextState = WaitCipRecvData;
+            } else nextState = CipClose;
+            
+        } else {
+            nextState = CipStatus; 
+        }
+        return nextState;
+    });
 
-    // TRANSICIONES SEND CIPRECVDATA
-    CipRecvData->EstablecerTransiciones( new Transicion*[]{CipRecvData2WaitCipRecvData1, nullptr} );
-    // CipRecvData -> WaitCipRecvData1
-    CipRecvData2WaitCipRecvData1->EstablecerCondicion([](){
-        return true;
-    }).EstablecerAccion([this](){
-        sprintf(_strToSendRecv,"AT+CIPRECVDATA=%c,%d\r\n",_currentConnectionId, HTTP_HEADER_LENGTH);
-        sprintf( responseWildcard, "%s%d:",responseCiprecvdata, HTTP_HEADER_LENGTH); // sprintf es lento, es para asegurar que no se pierda datos en wait ciprecvdata
-        _comExpectedResponse = responseWildcard;
-        serialWiFi.WriteString( _strToSendRecv );
-        _delay->Empezar( DELAY_5_SECONDS );
+    
+    // ESTADO WAIT CIPRECVDATA
+    WaitCipRecvData->EstablecerActualizacion([this, CipSend, Error](){
+        Estado * nextState = nullptr;
+        //printf("WAIT CIP RECV DATA\r\n");
+        switch( wifiCommands->ParseCipRecvDataAsync( serialWiFi, _route, HTTP_MAX_HEADER_CHARS) ) {
+            case ParseStatus::SUCCESSFUL_MATCH:
+                nextState = CipSend;
+                _trimRoute();
+                
+                _lengthOfHtmlCode = _app->HandleRequest(this);
+                break;
+            case ParseStatus::FAILED_NO_READ:
+                nextState = Error;
+                break;
+            default: 
+                //printf("My String: %s\r\n", _route);
+            
+            break;
+        }
+        return nextState;
     });
 
     
 
-
-    // TRANSICIONES WAIT CIPRECVDATA 1
-    WaitCipRecvData1->EstablecerTransiciones( new Transicion*[]{WaitCipRecvData12WaitCipRecvData2, WaitCipRecvData12Error, nullptr} );
-    // WaitCipRecvData1 -> WaitCipRecvData2
-    WaitCipRecvData12WaitCipRecvData2->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _strPositionIndex=0;
-    });
-
-    // WaitCipRecvData1 -> Error
-    WaitCipRecvData12Error->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        printf("%s command not ",_strToSendRecv);
-        printf("responded correctly\r\n");
-        printf("Expected string was: %s\r\n",_comExpectedResponse);
-    });
-
-
-    // TRANSICIONES WAIT CIPRECVDATA 2
-    WaitCipRecvData2->EstablecerTransiciones( new Transicion*[]{WaitCipRecvData22CipSend, nullptr} );
-    // WaitCipRecvData2 -> CipSend
-    WaitCipRecvData22CipSend->EstablecerCondicion([this](){
-        if( serialWiFi.ReadChar(&_receivedChar) ) {
-            if ( ( _receivedChar != '\n' ) &&
-            ( _strPositionIndex < HTTP_HEADER_LENGTH ) ) {
-                _strToSendRecv[_strPositionIndex] = _receivedChar;
-                _strPositionIndex++;
-            } else { 
-                return true;
-            }
-        }
-        return false;
-    }).EstablecerAccion([this](){
-        _strToSendRecv[_strPositionIndex] = '\0';
-        _strPositionIndex = 0;
-        printf("%s",_strToSendRecv);
-
-    });
-
     // TRANSICIONES SEND CIPSEND
-    CipSend->EstablecerTransiciones( new Transicion*[]{CipSend2WaitCipSend, nullptr} );
-    // CipSend -> WaitCipSend
-    CipSend2WaitCipSend->EstablecerCondicion([](){
-        return true;
-    }).EstablecerAccion([this](){
-        
-        _lengthOfHtmlCode = _app->RenderHtml(this);
-        sprintf( _strToSendRecv, "AT+CIPSEND=%c,%d\r\n",_currentConnectionId, _lengthOfHtmlCode );
+    CipSend->EstablecerActualizacion([this, WaitCipSend](){
+        int htmlLength;
+        if ( _lengthOfHtmlCode > TCP_IP_MAX_SEND_CHARS ) {
+            htmlLength = TCP_IP_MAX_SEND_CHARS;
+        } else {
+            htmlLength = _lengthOfHtmlCode;
+        }
+
+        sprintf( _strToSendRecv, "AT+CIPSEND=%d,%d\r\n", _currentConnectionId, htmlLength );
         serialWiFi.WriteString( _strToSendRecv );
         _comExpectedResponse = responseOk;
+        _delay->Empezar( DELAY_5_SECONDS );
+        wifiCommands->Reset();
+        return WaitCipSend;
     });
 
+
     // TRANSICIONES WAIT CIPSEND
-    WaitCipSend->EstablecerTransiciones( new Transicion*[]{WaitCipSend2SendHtml, WaitCipSend2CipStatus, nullptr} );
-    // WaitCipSend -> SendHtml
-    WaitCipSend2SendHtml->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        //printf("WaitCipSend2SendHtml\r\n");
-        _delay->Empezar( DELAY_5_SECONDS );
-    });
-    // WaitCipSend -> CipStatus
-    WaitCipSend2CipStatus-> EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        //printf("WaitCipSend2CipStatus\r\n");
-        _delay->Empezar( DELAY_10_SECONDS );
+    WaitCipSend->EstablecerActualizacion([this, SendHtml, CipStatus,Error](){
+        Estado * nextState = nullptr;
+
+        if (_delay->Estado() != EstadoTemporizador::FINALIZADO ) {
+            switch(wifiCommands->ParseCipSendAsync( serialWiFi )) {
+            case ParseStatus::SUCCESSFUL_MATCH:
+                printf("WAIT CIP SEND SUCCESSFUL\r\n");
+                nextState = SendHtml;
+                break;
+            case ParseStatus::FAILED_NO_READ:
+                printf("WAIT CIP SEND ERROR\r\n");
+                nextState = Error;
+                break;
+            default: 
+            
+            
+            break;
+            }
+        } else {
+            nextState = CipStatus;
+        }
+        
+        return nextState;
     });
 
     // TRANSICIONES SEND HTML
-    SendHtml->EstablecerTransiciones( new Transicion*[]{SendHtml2WaitHtml, nullptr} );
-    // SendHtml -> WaitHtml
-    SendHtml2WaitHtml->EstablecerCondicion([](){
-        return true;
-    }).EstablecerAccion([this](){
-        _app->SendHtmlTo( this );
-        //serialWiFi.WriteString( htmlCode );
-        _comExpectedResponse = responseSendOk;
+    SendHtml->EstablecerActualizacion([this, WaitHtml, At](){
+        int htmlLength;
+        if ( _lengthOfHtmlCode > TCP_IP_MAX_SEND_CHARS ) {
+            htmlLength = TCP_IP_MAX_SEND_CHARS;
+        } else {
+            htmlLength = _lengthOfHtmlCode;
+        }
+
+        printf("hola\n");
+        _app->SendHtml( this , htmlLength);
+        _lengthOfHtmlCode -= htmlLength; 
+        //_currentConnectionId =0;
+        //_comExpectedResponse = responseSendOk;
+        wifiCommands->Reset();
+        printf("Saliendo SendHtml\r\n");
+        return WaitHtml;//WaitHtml;
     });
 
+    WaitHtml->EstablecerActualizacion([this, CipClose,CipSend, Error](){
+        Estado * nextState = nullptr;
+        switch( wifiCommands->WaitForCipSendOkAsync( serialWiFi ) ) {
+             case ParseStatus::SUCCESSFUL_MATCH:
+             
+                if ( _lengthOfHtmlCode == 0 ) {
+                    nextState = CipClose;
+                } else {
+                    nextState = CipSend; 
+                }
+                
+                break;
+            case ParseStatus::FAILED_NO_READ:
+                
+                nextState = Error;
+                break;
+            default: 
+            break;
 
-    // TRANSICIONES WAIT HTML
-    WaitHtml->EstablecerTransiciones( new Transicion*[]{WaitHtml2CipClose, WaitHtml2CipSend, nullptr} );
-    // WaitHtml -> CipClose
-    WaitHtml2CipClose->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        //printf("%s\r\n", lastResponse);
-        printf("HOLA\r\n");
-        _delay->Empezar( DELAY_5_SECONDS );
-    });
-    // WaitHtml -> CipSend
-    WaitHtml2CipSend->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
+        }
+        return nextState;
     });
 
     // TRANSICIONES SEND CIPCLOSE
-    CipClose->EstablecerTransiciones( new Transicion*[]{CipClose2WaitCipClose, nullptr} );
-    // CipClose -> WaitCipClose
-    CipClose2WaitCipClose->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        printf("CHAU\r\n");
-        sprintf( _strToSendRecv, "AT+CIPCLOSE=%c\r\n", _currentConnectionId );
+    CipClose->EstablecerActualizacion([this, WaitCipClose](){
+        sprintf( _strToSendRecv, "AT+CIPCLOSE=%d\r\n", _currentConnectionId );
         serialWiFi.WriteString( _strToSendRecv );
-        _comExpectedResponse = responseCipclose;
+        
         _delay->Empezar( DELAY_5_SECONDS );
+
+        wifiCommands->Reset();
+
+        return WaitCipClose;
     });
+
 
     // TRANSICIONES WAIT CIPCLOSE
-    WaitCipClose->EstablecerTransiciones( new Transicion*[] { WaitCipClose2CipStatus_1, WaitCipClose2CipStatus_2, nullptr } );
-    // WaitCipClose->CipStatus_1
-    WaitCipClose2CipStatus_1->EstablecerCondicion([this](){
-        return _isExpectedResponse();
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
+    WaitCipClose->EstablecerActualizacion([this, Error, CipStatus, CipClose](){
+        Estado * nextState = nullptr;
+        if ( !_delay->EstaFinalizado() ) {
+
+            switch( wifiCommands->WaitForOkAsync( serialWiFi ) ) {
+                case ParseStatus::SUCCESSFUL_MATCH:
+                    nextState = CipStatus;
+                    break;
+                case ParseStatus::FAILED_NO_READ:
+                    nextState = Error;
+                    break;
+                default: 
+                    break;
+            }
+        } else { 
+            nextState = CipClose;
+        }
+        
+        return nextState;
     });
 
-    // WaitCipClose->CipStatus2
-    WaitCipClose2CipStatus_2->EstablecerCondicion([this](){
-        return _delay->Estado() == EstadoTemporizador::FINALIZADO;
-    }).EstablecerAccion([this](){
-        _delay->Empezar( DELAY_5_SECONDS );
-    });
+    // Error
+    Error->EstablecerActualizacion([this, At](){
 
+        _delay->Empezar(DELAY_5_SECONDS );
+
+        return At;
+    }); 
 
 
     maquina->Logs( _logs );
@@ -840,7 +758,6 @@ void Wifi::ComInit(){
 
     //uartWifi.set_blocking(false);
     serialWiFi.SetBlocking( false );
-    
 
 }
 
@@ -861,10 +778,16 @@ void Wifi::ComRestart(){
     _maquina->Reiniciar();
 }
 
-void Wifi::SendHtml(const char* header, const char* content, const char* footer){
-    serialWiFi.WriteString( header );
+void Wifi::SendHtml( const char* content ){
+    
     serialWiFi.WriteString( content );
-    serialWiFi.WriteString( footer );
+
+}
+
+void Wifi::SendHtmlN( const char* content, int length ){
+    
+    serialWiFi.WriteStringN( content , length);
+
 }
 // PRIVATE METHODS
 /*
@@ -977,4 +900,30 @@ bool Wifi::_isOneOfTheseResponses( const char** responses, int* pos ) {
     }
     return moduleResponse;
 
+}
+
+void Wifi::_trimRoute() {
+    if (_route[0] == '\0') {
+        return;
+    }
+
+    int count = 0;
+
+    for (int i = 0; i < HTTP_MAX_HEADER_CHARS; i++) {
+        if (_route[i] == '\0') {
+            break;
+        }
+
+        if (_route[i] == ' ') {
+            count++;
+            if (count == 2) {
+                _route[i] = '\0'; 
+                break;
+            }
+        }
+    }
+}
+
+char * Wifi::Route() {
+    return _route;
 }

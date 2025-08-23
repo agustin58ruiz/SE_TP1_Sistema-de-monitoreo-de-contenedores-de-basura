@@ -30,5 +30,5 @@ EstadoTemporizador Temporizador::Estado() {
 }
 
 bool Temporizador::EstaFinalizado() {
-    return _estado == EstadoTemporizador::FINALIZADO;
+    return _estado == EstadoTemporizador::FINALIZADO || _estado == EstadoTemporizador::NO_EMPEZADO;
 }

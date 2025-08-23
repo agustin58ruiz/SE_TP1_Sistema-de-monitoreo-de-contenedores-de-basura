@@ -3,6 +3,8 @@
 
 #include "mbed.h"
 
+
+
 class Motor {
 
 private:
@@ -27,6 +29,10 @@ public:
     void Pausar();
     void Empezar();
     void Parar();
+    
+    void Avanzar();
+    void Retroceder();
+
     int PasosRestantes();
     void Pasos(int cantidadDePasos);
 };

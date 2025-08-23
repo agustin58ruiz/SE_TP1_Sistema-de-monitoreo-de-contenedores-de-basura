@@ -23,18 +23,20 @@ Motor::Motor(PinName Bit0, PinName Bit1, PinName Bit2,PinName Bit3) {
     *_control = 0b0000;
     _tiempoEntreBobina = 100000;
     _cantidadDePasosRestantes = 0;
+    _tickerMotor = new Ticker();
 }
 
 void Motor::_avanzarUnPaso(){
-    *_control = steps[_indice++];
-    _cantidadDePasosRestantes--;
-    if ( _indice > MAX_INDICE ) _indice=0;
+*_control = steps[_indice--];
+    //_cantidadDePasosRestantes++;
+    if ( _indice < 0 ) _indice=MAX_INDICE;
 }
 
 void Motor::_retrocederUnPaso(){
-    *_control = steps[_indice--];
-    _cantidadDePasosRestantes++;
-    if ( _indice < 0 ) _indice=MAX_INDICE;
+        *_control = steps[_indice++];
+    //_cantidadDePasosRestantes--;
+    if ( _indice > MAX_INDICE ) _indice=0;
+    
 }
 
 void Motor::EstablecerPPMPorPaso( unsigned int rpm ){
@@ -42,21 +44,25 @@ void Motor::EstablecerPPMPorPaso( unsigned int rpm ){
 }
 
 void Motor::_pasosCallbackAvanzar() {
+    _avanzarUnPaso();
+    /*
     if ( _cantidadDePasosRestantes != 0 ) {
         _avanzarUnPaso();
     } else {
         *_control = 0b0000;
         _tickerMotor->detach();
-    }
+    }*/
 }
 
 void Motor::_pasosCallbackRetroceder(){
-    if ( _cantidadDePasosRestantes != 0 ) {
+    
+    _retrocederUnPaso();
+    /*if ( _cantidadDePasosRestantes != 0 ) {
         _retrocederUnPaso();
     } else {
         *_control = 0b0000;
         _tickerMotor->detach();
-    }
+    }*/
 }
 
 void Motor::Pasos( int cantidadDePasos ) {
@@ -99,5 +105,17 @@ void Motor::Parar(){
         _indice = MAX_INDICE;
     }
     *_control = 0b0000;
+}
+
+void Motor::Avanzar() {
+    printf("Adentro de avanzar Motor\r\n");
+    _indice = MAX_INDICE;
+    _tickerMotor->attach(callback(this, &Motor::_pasosCallbackAvanzar), _tiempoEntreBobina);
+}
+
+void Motor::Retroceder() {
+    printf("Adentro de retroceder Motor\r\n");
+     _indice = 0;
+    _tickerMotor->attach(callback(this, &Motor::_pasosCallbackRetroceder), _tiempoEntreBobina);
 }
 

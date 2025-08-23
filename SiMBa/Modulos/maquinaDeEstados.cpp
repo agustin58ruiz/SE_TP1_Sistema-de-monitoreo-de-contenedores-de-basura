@@ -75,9 +75,10 @@ Estado::Estado(const char *nombre , TransicionesPtr_t transiciones): Transicione
     Nombre = nombre;
     this->MaquinaInterna = nullptr;
     _extraVars = nullptr;
+    Actualizacion = nullptr;
 }
 
-Estado::Estado(const char *nombre): Nombre(nombre), Transiciones(nullptr), MaquinaInterna(nullptr) {
+Estado::Estado(const char *nombre): Nombre(nombre), Transiciones(nullptr), MaquinaInterna(nullptr), Actualizacion(nullptr){
     _extraVars = nullptr;
 }
 
@@ -88,6 +89,15 @@ Estado &Estado::EstablecerTransiciones(TransicionesPtr_t transiciones) {
 
 void Estado::Evaluar(MaquinaDeEstados * maquina) {
     bool cambio = false;
+
+    if ( Actualizacion != nullptr ) {
+
+        Estado * estadoSiguiente = this->Actualizacion();
+        if ( estadoSiguiente != nullptr ){
+            maquina->ActualizarEstado( estadoSiguiente );
+        }
+        return;
+    }
     if ( Transiciones != nullptr ) {
         for( TransicionesPtr_t i = Transiciones; *i != nullptr && !cambio; i++ ) {
             Transicion* transicionPtr = *i;
@@ -115,6 +125,9 @@ void Estado::AsignarMaquinaInterna(MaquinaDeEstados * maquinaInterna) {
     this->MaquinaInterna = maquinaInterna;
 }
 
+void Estado::EstablecerActualizacion(ActualizacionFunc_t actualizacion) {
+    Actualizacion = actualizacion;
+}
 
 
 void * Estado::ObtenerVariable( int i ) {
@@ -146,7 +159,10 @@ void MaquinaDeEstados::ObtenerInformacion() {
 }
 
 void MaquinaDeEstados::Logs( bool logs ) {
-    _serial = new SerialPc();
+    if ( _serial != nullptr ) {
+        _serial = new SerialPc();
+    }
+        
     _logs = logs;
 }
 
@@ -158,7 +174,8 @@ void MaquinaDeEstados::EscribirLog( const char * logMensaje ) {
     if ( _serial != nullptr ) {
         _serial->Enviar( logMensaje );
     } else {
-        printf( "%s", logMensaje );
+        _serial = new SerialPc();
+        _serial->Enviar( logMensaje );
     }
 
 }

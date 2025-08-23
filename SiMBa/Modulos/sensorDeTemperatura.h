@@ -11,7 +11,7 @@ private:
     AnalogIn sensor;
     EstadoSensorDeTemperatura EstadoDeTemperatura;
     int Umbral;
-    int temperatura;
+    float temperatura;
 public: 
     SensorDeTemperatura(PinName pin);
     SensorDeTemperatura();
@@ -19,6 +19,7 @@ public:
     EstadoSensorDeTemperatura Estado();
     void ActualizarEstado();
     void ObtenerTemperatura( char* );
+    void ObtenerTemperaturaNumero( char* );
 };
 
 #endif

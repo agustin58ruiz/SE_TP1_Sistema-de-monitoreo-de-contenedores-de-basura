@@ -15,6 +15,8 @@ typedef std::function<void()> AccionFunc_t;
 class Estado;
 class MaquinaDeEstados;
 
+typedef std::function<Estado*()> ActualizacionFunc_t;
+
 class Transicion {
 public:
 
@@ -71,6 +73,8 @@ public:
     TransicionesPtr_t Transiciones;
     void **_extraVars;
     int _extraVarsLength;
+    
+    ActualizacionFunc_t Actualizacion;
 
     Estado(const char *, TransicionesPtr_t );
     Estado(const char *);
@@ -79,6 +83,8 @@ public:
     Estado &EstablecerTransiciones(TransicionesPtr_t);
     void ObtenerInformacion();
     void AsignarMaquinaInterna(MaquinaDeEstados *);
+
+    void EstablecerActualizacion(ActualizacionFunc_t);
     
     
     void BorrarVariables( );
@@ -90,6 +96,7 @@ private:
     Estado * EstadoInicial;
     bool _logs;
     SerialPc* _serial; 
+
 public:
     Estado * EstadoActual;
 
@@ -97,6 +104,7 @@ public:
 
     void Evaluar(void);
     void ActualizarEstado(Estado *);
+
     void ObtenerInformacion();
     void Logs(bool);
     bool Logs();

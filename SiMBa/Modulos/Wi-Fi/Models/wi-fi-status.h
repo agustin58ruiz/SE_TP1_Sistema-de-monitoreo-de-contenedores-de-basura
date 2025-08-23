@@ -3,6 +3,7 @@
 #include "wi-fi-constants.h"
 #include "uart.h"
 #include "tcp-ip-link.h"
+#include "link-queue.h"
 
 
 enum class WiFiConnectionState {
@@ -18,11 +19,31 @@ enum class WiFiConnectionState {
 
 class WiFiStatus {
 private: 
+    int _strIndex;
+    int _stepIndex;
+    int _number;
     WiFiConnectionState _state;
     TcpIpLink** _tcpIpLinks;
+    LinkQueue * _linkQueue;
+    char _ip[IP_MAX_LENGTH];
+    char _mac[MAC_MAX_LENGTH]; 
+
+    
+
 public:
     WiFiStatus();
     ParseStatus Parse( Uart& serial );
+    ParseStatus ParseAsync( Uart& serial );
+    ParseStatus ParseCipRecvLen( Uart& serial );
+    ParseStatus ParseCipRecvLenAsync( Uart& serial );
+
+    ParseStatus ParseCifsrAsync( Uart& serial );
+
+    int GetLink();
+    int GetLinkLenght(int link);
+    void ResetIndex();
+    char * Ip();
+    char * Mac();
     WiFiConnectionState GetState() const;
 };
 

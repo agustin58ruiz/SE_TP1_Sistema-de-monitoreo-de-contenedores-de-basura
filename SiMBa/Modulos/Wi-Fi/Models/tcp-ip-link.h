@@ -17,14 +17,16 @@ private:
     int _remotePort;
     int _localPort;
     TeType _tetype;
+    int _linkLength;
 
 
 public: 
     TcpIpLink(int linkId);
     
     ParseStatus Parse(Uart &serial);
-
+    void SetLength(int length);
     void Clear();
+    int GetLength();
 
 };
 

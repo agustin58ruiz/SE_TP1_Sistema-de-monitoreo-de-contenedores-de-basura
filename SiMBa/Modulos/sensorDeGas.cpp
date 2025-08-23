@@ -7,6 +7,7 @@ SensorDeGas::SensorDeGas(PinName pin, float umbral, float periodoActualizacion):
 }
 
 EstadoSensorDeGas SensorDeGas::Estado() {
+
     return EstadoDeGas;
 }
 
@@ -19,5 +20,6 @@ void SensorDeGas::ActualizarEstado() {
 }
 
 void SensorDeGas::_actualizacionCallback() {
+    
     ActualizarEstado();
 }

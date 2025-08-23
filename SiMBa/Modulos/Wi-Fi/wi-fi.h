@@ -5,6 +5,7 @@
 #include "temporizador.h"
 #include "app.h"
 #include "mbed.h"
+#include "link-queue.h"
 
 //=====[Declaration of public defines]=========================================
 
@@ -21,9 +22,10 @@ Temporizador * _delay;
 const char* _comExpectedResponse;
 int _strPositionIndex;
 char _receivedChar;
-char _currentConnectionId;
+int _currentConnectionId;
 int _lengthOfHtmlCode;
 char _strToSendRecv[STRING_2_SEND_MAX_LENGTH] = "";
+char _route[HTTP_MAX_HEADER_CHARS];
 bool _logs;
 
 bool _isExpectedResponse();
@@ -33,14 +35,17 @@ bool _isOneOfTheseResponses( const char** responses, int* pos );
 //void _comStringWrite( const char* str );
 void _readCallback();
 App* _app;
-
+void _trimRoute();
 public:
-Wifi();
+Wifi(App *app);
 void ComInit();
 void ComRestart();
 void ComUpdate();
 void Logs(bool mostrarLogs);
-void SendHtml( const char* header, const char* content, const char* footer );
+void SendHtml( const char* content );
+
+void SendHtmlN( const char* content, int length);
+char * Route();
 
 
 BufferedSerial* wifi;
