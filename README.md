@@ -280,7 +280,7 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">4.2 :gray_circle: La carga de la batería es por medio de un panel solar.</td>
+    <td class="tg-hrbo">4.2 ⚪ La carga de la batería es por medio de un panel solar.</td>
     <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
 </tbody></table>
