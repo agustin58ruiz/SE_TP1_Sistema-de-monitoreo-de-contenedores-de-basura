@@ -236,7 +236,7 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
   </tr>
   <tr>
-    <td class="tg-bw5o">1.4 ⚪ La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
+    <td class="tg-bw5o">1.4 ⚫ La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
     <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
   <tr>
