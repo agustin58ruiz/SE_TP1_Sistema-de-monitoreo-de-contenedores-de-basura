@@ -224,8 +224,8 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-x4od">1.1 :yellow_circle: El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
-    <td class="tg-0pky">Este requisito necesita mejorarse. Está implementado a medias.</td>
+    <td class="tg-x4od">1.1 :green_circle: El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
+    <td class="tg-0pky">Implementado.</td>
   </tr>
   <tr>
     <td class="tg-xzpz">1.2 :green_circle: El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
@@ -236,8 +236,8 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
   </tr>
   <tr>
-    <td class="tg-bw5o">1.4 :red_circle: La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
-    <td class="tg-0pky">No implementado.</td>
+    <td class="tg-bw5o">1.4 ⚪ La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
+    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
   <tr>
     <td class="tg-xzpz">1.5 :green_circle: El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
@@ -256,7 +256,7 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">El display se enciende bajo la presencia de un usuario.</td>
   </tr>
   <tr>
-    <td class="tg-bw5o">3.1 :gray_circle: El servicio web tiene usuario y contraseña.</td>
+    <td class="tg-bw5o">3.1 ⚫ El servicio web tiene usuario y contraseña.</td>
     <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
   <tr>
@@ -276,11 +276,11 @@ En esta sección se muestra el estado de implementación de los requisitos hasta
     <td class="tg-0pky">El servicio web ofrece la temperatura.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">4.1 :gray_circle: La alimentación es por medio de una batería de 5 V.</td>
+    <td class="tg-hrbo">4.1 ⚫ La alimentación es por medio de una batería de 5 V.</td>
     <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
   <tr>
-    <td class="tg-hrbo">4.2 ⚪ La carga de la batería es por medio de un panel solar.</td>
+    <td class="tg-hrbo">4.2 ⚫ La carga de la batería es por medio de un panel solar.</td>
     <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
   </tr>
 </tbody></table>
