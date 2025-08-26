@@ -61,8 +61,7 @@ EstadoTapa ActuadorTapa::Estado() {
     return EstadoDeTapa;
 }
 
+
 void ActuadorTapa::_actualizacionCallback() {
     ActualizarEstado();
 }
-
-    
