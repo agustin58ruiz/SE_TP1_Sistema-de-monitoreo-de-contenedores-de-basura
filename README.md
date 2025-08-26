@@ -211,11 +211,15 @@ En base a los requisitos se establecieron los siguientes casos de uso:
 | Flujo básico | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". |
 | Flujo alternativo | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". <br> 4. Un servidor llama a la api y detecta el estado. <br> 5. El servidor envía un mail al encargado de la recolección. <br> 6. El recolector se hacerca al contenedor, desbloquea al contenedor con la página web y recolecta la basura. |
 
+## 3. Video con la presentación del trabajo final
 
-## 3. Estado de los requisitos
+[![Campo Alt](https://img.youtube.com/vi/MNq_PzCt46s/0.jpg)](https://www.youtube.com/watch?v=MNq_PzCt46s)
+
+## 4. Estado de los requisitos
 
 ### 30/11
 En esta sección se muestra el estado de implementación de los requisitos hasta el momento. Se observa que gran parte de los requisitos corresponden a la implementación del servidor web para que sean realizados. El trabajo final depende de la implementación del módulo Wi-Fi. 
+
 
 <table class="tg"><thead>
   <tr>
