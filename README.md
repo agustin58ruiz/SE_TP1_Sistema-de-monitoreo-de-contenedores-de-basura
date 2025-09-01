@@ -3,289 +3,711 @@
 ## Alumno: Agustín Ruiz
 ## Fecha: 2. º cuatrimestre 2024
 
-## 1. Selección del proyecto a implementar
-Se proponen dos proyectos para la implementación de un sistema embebido. En primer lugar se propone un sistema de monitoreo de basura que permita llevar un registro en tiempo real del estado de los contenedores de basura. Por otro lado, se propone un sistema de monitoreo de la calidad del aire en una habitación de hospital para detectar la presencia de gases tóxicos y asegurar la asepsia del ambiente.
-
-### 1.1 Sistema de monitoreo de basura
-La recolección de basura en la Ciudad de Buenos Aires es compleja y requiere de una inversión en recursos elevada. La recolección de residuos se realiza de forma agendada en donde los recolectores realizan una ruta definida. Debido a que los contenedores no siempre están cargados, o están cargados de más, se propone un sistema de monitoreo para llevar un registro en tiempo real del estado de los contenedores. El sistema se compone de dos partes. Por un lado, un sistema embebido capaz de realizar un sondeo de los parámetros del contenedor tales como: capacidad, humedad, detección de gas, temperatura, presión, y también de accionar algunos mecanismos a implementar en el contendor como ventilación, bloqueo de la tapa, indicador de bateria. Por otro lado, se dispondrá de una central de datos que recepcionará todas las variables de los dispositivos que permitirá la implementación de rutas de recolección dinámicas, analisis de datos y utilización eficiente de los recursos. De esta forma se puede dar un mejor seguimiento al problema ambiental de la recolección de basura y una mejora en la eficacia de las políticas ambientales de la ciudad.
-
-Con este proyecto se busca mejorar la eficiencia de la recolección de basura y reducir los costos asociados a la misma. También se busca que se lleve un registro del estado los contenedores y se realice un seguimiento de las rutas de recolección que permitan una mejor utilización de los recursos. 
-
-### 1.2 Sistema de monitoreo de calidad del aire en una habitación de hospital
-
-La calidad del aire en una habitación de hospital es un factor crítico para la recuperación de los pacientes. La presencia de gases tóxicos puede ser un factor de riesgo para la salud de los pacientes. Se propone un sistema de monitoreo de la calidad del aire en una habitación de hospital que permita detectar la presencia de gases tóxicos y asegurar la asepsia del ambiente. El sistema se compone de un sistema embebido capaz de realizar un sondeo de los parámetros del aire tales como: concentración de oxígeno, concentración de dióxido de carbono, concentración de monóxido de carbono, concentración de ozono, concentración de dióxido de nitrógeno, concentración de dióxido de azufre, concentración de partículas en suspensión, temperatura y humedad. Por otro lado, se dispondrá de una central de datos que recepcionará todas las variables de los dispositivos que permitirá la implementación de políticas de control de calidad del aire en la habitación de hospital. De esta forma se puede dar un mejor seguimiento al problema de la calidad del aire en las habitaciones de hospital y una mejora en la eficacia de las políticas de asepsia en los hospitales. 
-
-Con este proyecto se busca mejorar la calidad de vida de los pacientes y reducir los riesgos de infección en los hospitales. 
-
-### 1.3 Evaluación de los proyectos
-
-Para evaluar los proyectos se propone una tabla de evaluación que permita ponderar los criterios de selección de los proyectos. Los criterios de selección son: disponibilidad del hardware, utilidad del proyecto y disponibilidad del tiempo. 
-El objetivo de la tabla de evaluación es decidir cuál de los dos proyectos es más conveniente para la implementación en función de los criterios de selección.
-Cada criterio se evaluará con una puntuación de 1 a 10, donde 1 es la peor puntuación y 10 es la mejor puntuación. El proyecto que obtenga la mayor puntuación ponderada será el proyecto seleccionado para la implementación.
-
-<table>
- <colgroup><col width="209" style="mso-width-source:userset;mso-width-alt:7643;width:157pt">
- <col width="82" style="mso-width-source:userset;mso-width-alt:2998;width:62pt">
- <col width="77" style="mso-width-source:userset;mso-width-alt:2816;width:58pt">
- <col width="74" style="mso-width-source:userset;mso-width-alt:2706;width:56pt">
- <col width="84" style="mso-width-source:userset;mso-width-alt:3072;width:63pt">
- </colgroup><tbody><tr height="39" style="mso-height-source:userset;height:29.25pt">
-  <td rowspan="2" height="77" class="xl69" width="209" style="height:57.75pt;
-  width:157pt">Proyectos<span style="mso-spacerun:yes">&nbsp;</span></td>
-  <td colspan="2" class="xl74" width="159" style="border-left:none;width:120pt">Sistema
-  de monitoreo de basura</td>
-  <td colspan="2" class="xl74" width="158" style="border-right:1.0pt solid black;
-  border-left:none;width:119pt">Sistema de monitoreo de calidad de aire</td>
- </tr>
- <tr height="38" style="mso-height-source:userset;height:28.5pt">
-  <td height="38" class="xl71" style="height:28.5pt;border-top:none;border-left:
-  none">Puntuación</td>
-  <td class="xl72" width="77" style="border-top:none;border-left:none;width:58pt">Puntuación
-  ponderada</td>
-  <td class="xl71" style="border-top:none;border-left:none">Puntuación</td>
-  <td class="xl73" width="84" style="border-top:none;border-left:none;width:63pt">Puntuación
-  ponderada</td>
- </tr>
- <tr height="20" style="mso-height-source:userset;height:15.0pt">
-  <td height="20" class="xl66" width="209" style="height:15.0pt;border-top:none;
-  width:157pt">Disponibilidad del hardware (10)</td>
-  <td class="xl65" style="border-top:none;border-left:none">10</td>
-  <td class="xl65" style="border-top:none;border-left:none">100</td>
-  <td class="xl65" style="border-top:none;border-left:none">6</td>
-  <td class="xl67" style="border-top:none;border-left:none">60</td>
- </tr>
- <tr height="20" style="height:15.0pt">
-  <td height="20" class="xl68" style="height:15.0pt;border-top:none">Utilidad del
-  proyecto (8)</td>
-  <td class="xl65" style="border-top:none;border-left:none">7</td>
-  <td class="xl65" style="border-top:none;border-left:none">70</td>
-  <td class="xl65" style="border-top:none;border-left:none">9</td>
-  <td class="xl67" style="border-top:none;border-left:none">90</td>
- </tr>
- <tr height="20" style="height:15.0pt">
-  <td height="20" class="xl68" style="height:15.0pt;border-top:none">Disponibilidad
-  del tiempo (7)</td>
-  <td class="xl65" style="border-top:none;border-left:none">9</td>
-  <td class="xl65" style="border-top:none;border-left:none">90</td>
-  <td class="xl65" style="border-top:none;border-left:none">5</td>
-  <td class="xl67" style="border-top:none;border-left:none">50</td>
- </tr>
- <tr height="21" style="height:15.75pt">
-  <td height="21" class="xl76" style="height:15.75pt;border-top:none">Total</td>
-  <td class="xl77" style="border-top:none;border-left:none">-</td>
-  <td class="xl77" style="border-top:none;border-left:none">260</td>
-  <td class="xl77" style="border-top:none;border-left:none">-</td>
-  <td class="xl78" style="border-top:none;border-left:none">200</td>
- </tr>
- <!--[if supportMisalignedColumns]-->
- <tr height="0" style="display:none">
-  <td width="209" style="width:157pt"></td>
-  <td width="82" style="width:62pt"></td>
-  <td width="77" style="width:58pt"></td>
-  <td width="74" style="width:56pt"></td>
-  <td width="84" style="width:63pt"></td>
- </tr>
- <!--[endif]-->
-</tbody></table>
-
-En función de la tabla de evaluación se seleccionó el proyecto de **sistema de monitoreo de basura** para la implementación de un sistema embebido.
-
-El proyecto seleccionado abarca el manejo de sensores y actuadores, el uso de Wi-Fi para la transimisión de datos y la implementación de una aplicación web para la visualización de los datos y control a distancia.
-
-A continuacion se muestra una imagen con el diagrama de bloques del sistema de monitoreo de basura.
-
-![Diagrama de bloques del sistema de monitoreo de basura]( Images/DiagramaEnBloquesTPFinal.png)
-
-## 2. Elicitación de requisitos y casos de uso
-
-El objetivo del proyecto es implementar un contenedor que incluya funcionalidades de monitoreo y control. El contenedor deberá ser capaz de detectar la presencia de un usuario, abrir la tapa, detectar la presencia de gas metano, cerrar la tapa, bloquear la tapa si esta lleno, y emitir una alarma auditiva si se detecta gas metano. El contenedor deberá ser controlado a distancia por medio de Wi-Fi o UART. El contenedor deberá tener un display que muestre el estado del contenedor y permita al usuario interactuar con el contenedor. El contenedor deberá tener una página web que permita al usuario controlar el contenedor y consultar el estado del contenedor. El contenedor deberá tener una api web que permita controlar el contenedor de forma programable. El contenedor deberá tener una batería de 5 V y un panel solar para la carga de la batería.
-
-A continuación se muestra una tabla comparativa entre el contenedor SiMBa y el contenedor de Colombraro de 120 L que es el producto más vendido del mercado.
+# Memoria del Trabajo Final: SiMBa (Sistama de Monitoreo de Basura)
 
 
-| Características             | SiMBa                  | Colombraro Contenedor 120L |
-|-----------------------------|------------------------|----------------------------|
-| Apertura de tapa automática | SI                     | No                         |
-| Interfaz de usuario         | Display - Sensor Pir   | No                         |
-| Capacidad                   | 120 l                  | 120 l                      |
-| Comunicación                | Wi-Fi y UART           | No                         |
-| Alimentación                | 12 V                   | No                         |
-| Métricas                    | Peso, temperatura, gas | Ninguna                    |
-| Control a distancia         | Si                     | No                         |
+**Universidad de Buenas Aires**
+**Facultad de Ingeniería**
+**86.65 Sistemas Embebidos**
 
-Se identificaron los siguientes grupos de requisitos:
+**Autor:** Agustín Ezequiel Ruiz
 
+**Padrón:** 99124
+
+**Profesores:** 
+Ariel Lutenberg, Jorge Graña y Juan Cruz
+
+*Este trabajo fue realizado en la Ciudad de Buenos Aires entre Agosto 2024 y Agosto de 2025.*
+
+## Resumen
+Este proyecto se trata de un sistema embebido para monitorear contenedores de basura para una recoleccion eficiente de los reciduos implementado con la placa de desarrollo STM32 Nucleo-F429ZI y la placa ESP-01. 
+El sistema monitorea variables como temperatura, estado de la tapa, y presencia de gases inflamables y actua automaticamente siguiendo una maquina de estados. 
+El dispositivo incluye conectividad mediante WiFi, lo que permite un control remoto y la posibilidad de realizar un monitoreo centralizado asi como tambien su control. 
+
+Este trabajo tiene como fundamento que los recursos son escasos y debe hacerce un uso eficiente de los mismos. Los camiones de basura pueden reducir las emisiones de gases de efecto invernadero si siguen rutas optimizadas. 
+
+
+## Tabla de Contenidos
+
+- [1. Introducción](#1-introducción-general)
+- [2. Introducción Específica](#capítulo-2-Introducción-específica)
+- [3. Diseño e Implementación](#capítulo-3-Diseño-e-implementación)
+- [4. Ensayos y resultados](#capítulo-4-Ensayos-y-resultados)
+- [5. Conclusiones](#capı́tulo-5-conclusiones)
+
+## Registro de versiones
+
+| **Revisión** | **Cambios realizados** |  **Fecha** |
+|:------------:|:----------------------:|:----------:|
+|       1      | Creación del documento | 11/07/2025 |
+|       2      |                        |            |
+|       3      |                        |            |
+
+## 1. Introducción general
+
+### 1.1. Objetivo
+Desarrollar un sistema embebido para optimizar la gestión y recolección de residuos a nivel municipal, reduciendo la emisión de gases de efecto invernadero y contribuyendo al cuidado del medioambiente.
+
+### 1.2. Introducción
+La recolección y el tratamiento de los residuos es un problema serio, ya que impacta de manera directa en la calidad de vida. La recolección de la basura puede mejorarse si, en lugar de seguir rutas estáticas, se implementaran rutas dinámicas generadas mediante algoritmos de grafos que permitan obtener un recorrido de recolección óptimo. Para que esto sea posible, es necesario conocer el estado de los contenedores de basura. El primer desafío a resolver es encontrar la forma de recopilar el estado de los contenedores y centralizar esos datos para la posterior generación de una ruta.
+
+El presente proyecto aborda esta problemática mediante el desarrollo de un sistema embebido que permite monitorear variables como capacidad, temperatura y presencia de gases inflamables, además de enviar dichas variables a un concentrador de datos que calcule una ruta de recolección óptima. Como agregado, también se propusieron controles adicionales sobre la tapa que, si bien no son necesarios para el recolector, sí lo son para el usuario.
+
+Este proyecto abarca distintos tópicos de la materia Sistemas Embebidos, tales como máquinas de estado, puertos de uso general, entradas analógicas, comunicación UART, comandos AT y conectividad WiFi mediante el módulo ESP-01.
+
+Con esta propuesta se busca mejorar el sistema de recolección de basura y, de este modo, optimizar los recursos.
+
+
+### 1.2. Análisis de sistemas similares en el mercado
+
+Se analizaron cuatro productos de monitoreo cardiaco. Se muestra la comparación de características en la Tabla 2.1.
+
+<table border="1" cellspacing="0" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Característica</th>
+            <th> [MAGENE H303](https://www.magene.com/en/sensors/52-h303-heart-rate-monitor.html)</th>
+            <th>[POLAR Verity Sense](https://www.polar.com/us-en/products/accessories/polar-verity-sense)</th>
+            <th>[WELLUE O2Ring](https://getwellue.com/pages/o2ring-oxygen-monitor)</th>
+            <th>[Wellue Oxiband](https://www.mercadolibre.com.ar/oximetro-de-pulso-wellue-oxiband-con-app-y-recordatorio/p/MLA50740493)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Tipo de sensor</td>
+            <td>Banda torácica con sensor ECG</td>
+            <td>Banda óptica para brazo (PPG)</td>
+            <td>Anillo con sensor óptico (PPG)</td>
+            <td>Sensor óptico PPG para SpO2 y pulso</td>
+        </tr>
+        <tr>
+            <td>Rango frecuencia cardíaca</td>
+            <td>30 - 240 bpm</td>
+            <td>30 - 220 bpm</td>
+            <td>No especificado (pulso y SpO2)</td>
+            <td>30 - 250 bpm</td>
+        </tr>
+        <tr>
+            <td>Duración batería</td>
+            <td>Hasta 1000 horas</td>
+            <td>Hasta 20 horas</td>
+            <td>Hasta 14 horas</td>
+            <td>Aproximadamente 8 horas</td>
+        </tr>
+        <tr>
+            <td>Tipo de batería</td>
+            <td>Pila botón CR2032</td>
+            <td>Batería recargable integrada</td>
+            <td>Batería recargable integrada</td>
+            <td>Batería recargable integrada</td>
+        </tr>
+        <tr>
+            <td>Conectividad inalámbrica</td>
+            <td>Bluetooth 4.2 y ANT+</td>
+            <td>Bluetooth 5.0</td>
+            <td>Bluetooth 4.0</td>
+            <td>Bluetooth 4.0</td>
+        </tr>
+        <tr>
+            <td>Impermeabilidad</td>
+            <td>IP67 (resistente al agua y polvo)</td>
+            <td>Resistente al agua (IPX7)</td>
+            <td>IP24 (resistente a salpicaduras)</td>
+            <td>No especificado</td>
+        </tr>
+        <tr>
+            <td>Display</td>
+            <td>No incluye display (se conecta a apps o dispositivos externos)</td>
+            <td>No incluye display (se conecta a apps)</td>
+            <td>No incluye display (datos en app)</td>
+            <td>Sí, display OLED integrado</td>
+        </tr>
+        <tr>
+            <td>Audio / alertas</td>
+            <td>No incluye</td>
+            <td>No incluye</td>
+            <td>Vibración para alertas</td>
+            <td>Alarmas sonoras y visuales</td>
+        </tr>
+        <tr>
+            <td>Precio aproximado</td>
+            <td>$30 - $40 USD</td>
+            <td>$90 - $120 USD</td>
+            <td>$150 - $200 USD</td>
+            <td>$600 - $800 USD</td>
+        </tr>
+        <tr>
+            <td>Uso principal</td>
+            <td>Monitoreo deportivo y fitness</td>
+            <td>Monitoreo deportivo y salud continua</td>
+            <td>Monitoreo médico de SpO2 y pulso</td>
+            <td>Monitoreo médico de SpO2 y frecuencia cardíaca</td>
+        </tr>
+    </tbody>
+</table>
+<p align="center"><em>Tabla 2.1: Comparación de productos de mercado</em></p>
+
+## Capítulo 2. Introducción específica
+
+### 2.1. Requisitos
+
+En la tabla 2.1 se muestran los requisitos del sistema desarrollado.
+
+| Grupo         | ID   | Descripción                                                                                                         |
+| :------------ | :----| :------------------------------------------------------------------------------------------------------------------|
+| Monitoreo       | 1.1   | El sistema sensará la frecuencia cardíaca en tiempo real mediante un sensor integrado al dispositivo.               |
+|                 | 1.2   | El sistema almacenará localmente los datos de frecuencia cardíaca para asegurar la continuidad en caso de desconexión.|
+| Visualización   | 2.1   | El dispositivo mostrará en su display local la frecuencia cardíaca en tiempo real, con valores numéricos. |
+|                 | 2.2   | La aplicación web y móvil permitirá visualizar la frecuencia cardíaca en tiempo real mediante valores numéricos actualizados cada cinco segundos, asegurando sincronización continua con el dispositivo. |
+|                 | 2.3   | La aplicación almacenará y mostrará datos históricos de frecuencia cardíaca, permitiendo al usuario consultar tendencias diarias, semanales y mensuales. |
+| Alertas         | 3.1   | El sistema debe detectar eventos anómalos (frecuencia fuera de rango) y generar alertas visuales y notificaciones. |
+|                 | 3.2   | El sistema enviará notificaciones inmediatas a la aplicacion web cuando se detecten anomalías.    |
+| Configuración   | 4.1   | El sistema permitirá configurar parámetros como umbrales de alerta y etiqueta de usuario desde la aplicación remota. |
+| Comunicación    | 5.1   |El sistema contará con una aplicación web accesible vía navegador desde dispositivos móviles y de escritorio. La aplicación permitirá monitorear datos en tiempo real y recibir notificaciones |
+| Proyecto        | 6.1   | El prototipo será acompañado de la lista de partes, el repositorio de código con su documentación, y un manual de uso. |
+
+<p align="center"><em>Tabla 2.1: Requisitos del proyecto</em></p>
+
+**Tabla 2.1: Requisitos del sistema automático.**
+
+### 2.2. Casos de uso
+En las tablas 2.2, 2.3 y 2.4 se presentan tres casos de uso del sistema representativos de su funcionalidad.
+
+| Elemento         | Definición                                                    |
+| :--------------- | :------------------------------------------------------------|
+| Causa            | Se quiere leer datos de pulso en tiempo real.                |
+| Precondición     | El sistema está iniciado y el sensor de pulso está activo.   |
+| Flujo básico     | Se debe presionar el botón de usuario para iniciar la lectura en tiempo real. El sistema muestra el pulso en el display y puerto serie, y lo transmite vía Wi-Fi. |
+| Flujo alternativo| Si no se presiona el botón, el sistema permanece en modo espera.  |
+
+<p align="center"><em>Tabla 2.2: Caso de uso 1: Lectura de datos de pulso en tiempo real</em></p>
+
+---
+
+
+| Elemento         | Definición                                                    |
+| :--------------- | :------------------------------------------------------------|
+| Causa            | El usuario desea revisar el historial y tendencias de la frecuencia cardíaca. |
+| Precondición     | El dispositivo ha estado registrando y sincronizando datos con la aplicación web. |
+| Flujo básico     | El usuario accede a la aplicación web, selecciona `Datos Historicos` y visualiza los reportes de datos históricos. |
+| Flujo alternativo| Si no hay datos almacenados, se muestra un mensaje indicando que no hay registros disponibles. |
+
+
+<p align="center"><em>Tabla 2.3: Caso de uso 2: Visualización y análisis de datos históricos</em></p>
+
+---
+
+
+| Elemento         | Definición                                                    |
+| :--------------- | :------------------------------------------------------------|
+| Causa            | El usuario quiere modificar parámetros  de forma remota. |
+| Precondición     | El dispositivo está conectado a la red Wi-Fi y sincronizado con la aplicación. |
+| Flujo básico     | El usuario accede a la aplicación, modifica parámetros (umbrales,  etiqueta de usuario). El dispositivo recibe y aplica los cambios automáticamente. |
+| Flujo alternativo| Si la conexión falla durante la actualización, el dispositivo mantiene la configuración anterior. |
+
+
+<p align="center"><em>Tabla 2.4: Caso de uso 3: Configuración de parámetros</em></p>
+
+
+### 2.3. Descripción de módulos utilizado
+
+En base a la arquitectura de control y los requisitos establecidos se decidió por utilizar los módulos que se
+describen a continuación.
+
+
+#### 2.3.2. Módulo del display grafico
+Para la implementación del HMI se utilizó el módulo display SSD1306 [2] con pantalla OLED de 0.96’ que se muestra en la figura 2.2.
+El comando gráfico del OLED se realiza a través de una comunicación I2C.
+
+<p align="center">
+    <img alt="" src="img/ssd1306.PNG" width="300">
+</p>
+
+<p align="center"><em>Figura 2.1: Modulo display OLED SSD1306</em></p>
+
+Para poder dibujar los caracteres en este display, se hizo uso de la definicion de variables proporcionada por la biblioteca Lexus2k [4].
+
+#### 2.3.3. Módulo Wi-Fi
+Para la implementación de la comunicación con la computadora de supervisión a través de un navegador web
+se utiliza el módulo Wi-Fi ESP12F incluido en la placa NODEMCU ESP8266 [2] de la figura 2.3.
+Este módulo se comunica con el microcontrolador a través de una interfaz UART y la configuración del mismo
+se realiza a través de comandos AT.
+
+<p align="center">
+    <img alt="" src="img/nodemcu.jpg" width="300">
+</p>
+
+
+<p align="center"><em>Figura 2.2: Modulo Wi-Fi NodeMCU ESP8266</em></p>
+
+#### 2.3.4.  Sensor de pulso cardiaco.
+El modulo HW-827 [1] mostrado en la figura 2.3 es un sensor óptico que permite medir la frecuencia cardíaca 
+utilizando un LED infrarrojo y un fotodiodo. Detecta los cambios en la intensidad de la luz reflejada por 
+el flujo sanguíneo en el dedo del usuario, generando señales analógicas que pueden procesarse para calcular 
+el ritmo cardíaco.
+
+<p align="center">
+    <img alt="" src="img/hw827.png">
+</p>
+
+<p align="center"><em>Figura 2.3:Sensor de pulso cardiaco</em></p>
+
+
+## Capítulo 3. Diseño e implementación
+
+### 3.1.Hardware
+
+#### 3.1.1. Diagrama en bloques
+
+En la Figura 3.1 se muestra un diagrama del hardware del sistema desarrollado.
+
+<p align="center">
+    <img alt="" src="img/dbloquesf.png">
+</p>
+<p align="center"><em>Figura 3.1: Diagrama en bloque del sistema</em></p>
+
+
+#### 3.1.2. Lista de señales
+En la tabla 3.1 se listan las señales del sistema, indicando la conexión de los puertos de la placa NUCLEO-
+F429ZI a los módulos de hardware.
+
+<table style="width: 415px;">
+<thead>
+<tr style="height: 23px;">
+<th style="height: 23px; width: 202px;" colspan="2">Pin del m&oacute;dulo de hardware</th>
+<th style="height: 23px; width: 208px;" colspan="2">Pin de la placa Nucleo-F429ZI</th>
+</tr>
+</thead>
+<tbody>
+<tr style="height: 23px;">
+<td style="height: 92px; width: 132.467px;" rowspan="4">SSD1306</td>
+<td style="height: 23px; width: 69.5333px;">SCL</td>
+<td style="height: 23px; width: 69px;">PB_8</td>
+<td style="height: 23px; width: 139px;">I2C1_SCL</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69.5333px;">SDA</td>
+<td style="height: 23px; width: 69px;">PB_9</td>
+<td style="height: 23px; width: 139px;">I2C1_SDA</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69.5333px;">VCC</td>
+<td style="height: 23px; width: 69px;">3V3</td>
+<td style="height: 23px; width: 139px;">3V3</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69.5333px;">GND</td>
+<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 139px;">GND</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 69.5px; width: 132.467px;" rowspan="3">HW-827</td>
+<td style="height: 23px; width: 69.5333px;">VCC</td>
+<td style="height: 23px; width: 69px;">3V3</td>
+<td style="height: 23px; width: 139px;">3V3</td>
+</tr>
+<tr style="height: 23.5px;">
+<td style="height: 23.5px; width: 69.5333px;">SIGNAL</td>
+<td style="height: 23.5px; width: 69px;">PA_3</td>
+<td style="height: 23.5px; width: 139px;">A0</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69.5333px;">GND</td>
+<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 139px;">GND</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 92px; width: 132.467px;" rowspan="4">NODEMCU8266</td>
+<td style="height: 23px; width: 69.5333px;">TX</td>
+<td style="height: 23px; width: 69px;">PE_9</td>
+<td style="height: 23px; width: 139px;">&nbsp;UART7_RX</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69.5333px;">RX</td>
+<td style="height: 23px; width: 69px;">PE_8</td>
+<td style="height: 23px; width: 139px;">&nbsp;UART7_TX</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69.5333px;">VIN</td>
+<td style="height: 23px; width: 69px;">5V</td>
+<td style="height: 23px; width: 139px;">5V</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69.5333px;">GND</td>
+<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 139px;">&nbsp;GND</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p align="center"><em>Tabla 3.1: Lista de señales del sistema</em></p>
+
+### 3.2. Firmware
+
+#### 3.2.1. Repositorio
+Todo el código del proyecto se encuentra en el repositorio git en [3].
+
+#### 3.2.2. Tecnologı́a
+El sistema se encuentra implementado en C++ utilizando Mbed. El firmware presenta un archivo main.cpp el cual lo único que realiza es llamar a las funciones inicio de sistema, y en el lazo principal, la funcion de actualizacion del sistema.
+
+#### 3.2.3. Estructura del repositorio
+
+
+| Directorio/Archivo        | Contenido principal                                          |
+|-------------------|--------------------------------------------------------------|
+| `SE_1c2025_TP1/`            | Archivos fuente del proyecto                                 |
+| `SE_1c2025_TP1/modules/button/`       | Control de botón de usuario con maquina de estados      |
+| `SE_1c2025_TP11/modules/display/`    | Funciones gráficas para el display SSD1306                   |
+| `SE_1c2025_TP1/modules/heart_monitor_system/` | Lógica principal y configuración del sistema     |
+| `SE_1c2025_TP1/modules/pulse_sensor/`    | Funciones de control de sensor de pulso cardiaco         |
+| `SE_1c2025_TP1/modules/serial_com/`    | Funciones de escritura por puerto serie                 |
+| `SE_1c2025_TP1/modules/wifi_com/`    | Funciones de control de modulo Wi-Fi por puerto serie                 |
+| `SE_1c2025_TP1/modules/data_history/`    | Funciones para guardar registros historicos       |
+| `SE_1c2025_TP1/main.cpp`    | Archivo principal de ejecución          |
+| `SE_1c2025_TP1/mbed_app.json`    | Archivo de configuracion para el compilador     |
+
+<p align="center"><em>Tabla 3.2: Estructura de directorios y modulos</em></p>
+
+
+| Nombre de elemento        | Tipo                          |      Descripción   |
+|-------------------|-----------------------|---------------------------------------|
+| hw827         | Objeto AnalogIn      | Se usa para leer la etrada analogica A0 de la placa Nucleo donde se conecta el HW-827.      |
+| bpm         | Variable float      | Se usa guardar valores finales calculados de bpm (usa valor anterior).      |
+| bpm_actual         | Variable float      | Se usa guardar el valor calculado actual de bpm.      |
+| intervals         | Variable uint32      | Guarda los ultimos cuatro valores de intervalos entre pulsos.     |
+
+<p align="center"><em>Tabla 3.3: Objetos y Variables del modulo pulse_sensor</em></p>
+
+
+| Nombre de elemento        | Tipo                          |      Descripción   |
+|-------------------|-----------------------|---------------------------------------|
+| i2c         | Objeto I2C      | Se usa para la comunicacion I2C donde se conecta el SSD1306.      |
+
+<p align="center"><em>Tabla 3.4: Objetos y Variables del modulo display</em></p>
+
+
+| Nombre de elemento        | Tipo                          |      Descripción   |
+|-------------------|-----------------------|---------------------------------------|
+| wifiComState_t         | Typedef      | Se usa para informar el estado de la maquina de estados de comunicacion Wi-Fi.      |
+| uartWifi         | Objeto UnbufferedSerial      | Se usa para la comunicacion serie del modulo NODEMCU8266      |
+
+<p align="center"><em>Tabla 3.5: Objetos y Variables del modulo wifi_com</em></p>
+
+
+| Nombre de elemento        | Tipo                          |      Descripción   |
+|-------------------|-----------------------|---------------------------------------|
+| buttonState_t         | Typedef      | Se usa para informar el estado de la maquina de estados de pulsado de boton.      |
+| button         | Objeto DigitalIn      | Se usa para detectar estado del boton de usuario BUTTON1     |
+
+<p align="center"><em>Tabla 3.6: Objetos y Variables del modulo button</em></p>
+
+
+A partir de la tabla 3.7 a tabla 3.12 se presentan las funciones publicas de cada modulo.
+
+| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
+|-------------------|-----------------------|---------------------------------------|
+| heartMonitorSystemInit()         | Inicializa todos los modulos y configuración inicial del sistema.      | main.cpp   |
+| heartMonitorSystemUpdate()        | Se encarga la logica del programando llamando a funciones de actualización.      | main.cpp   |
+
+<p align="center"><em>Tabla 3.7: Funciones publicas del modulo heart_monitor_system</em></p>
+
+
+| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
+|-------------------|-----------------------|---------------------------------------|
+| readBPM()         | Calcula un valor de lectura de pulso cardiaco      | heart_monitor_system.cpp   |
+| getBPM()        | Entrega el valor obtenido del ultimo calculo de pulso cardiaco      | heart_monitor_system.cpp y wifi_com.cpp   |
+
+<p align="center"><em>Tabla 3.8: Funciones publicas del modulo pulse_sensor</em></p>
+
+
+| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
+|-------------------|-----------------------|---------------------------------------|
+| ssd1306_init()         | Inicializa el display OLED SSD1306      | heart_monitor_system.cpp   |
+| ssd1306_clear_display()        | Borra toda la pantalla del display      | heart_monitor_system.cpp   |
+| ssd1306_print()        | Imprime caracteres en display considerando posicion    | heart_monitor_system.cpp   |
+| ssd1306_clear_display_middle()       | Borra parte media o central del display (lectura de BPM)     | heart_monitor_system.cpp   |
+| ssd1306_clear_top_rows()        | Borra parte superior del display (alertas)      | heart_monitor_system.cpp  |
+
+<p align="center"><em>Tabla 3.9: Funciones publicas del modulo display</em></p>
+
+
+
+| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
+|-------------------|-----------------------|---------------------------------------|
+| debounceButtonInit()         | Inicia el  estado inicial del boton de usuario      | heart_monitor_system.cpp   |
+| debounceButtonUpdate()        | Actualiza estado de boton mediante una maquina de estados      | heart_monitor_system.cpp   |
+
+<p align="center"><em>Tabla 3.10: Funciones publicas del modulo button</em></p>
+
+
+| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
+|-------------------|-----------------------|---------------------------------------|
+| addRegisterData()         | Agrega una lectura al registro de lecturas con fecha y hora     | heart_monitor_system.cpp   |
+
+<p align="center"><em>Tabla 3.11: Funciones publicas del modulo data_history</em></p>
+
+
+| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
+|-------------------|-----------------------|---------------------------------------|
+| wifiComInit()         | Inicia el modulo Wi-Fi mediante comandos AT      | heart_monitor_system.cpp   |
+| wifiComUpdate()      | Actualiza la conexion Wi-Fi mediante una maquina de estados      | heart_monitor_system.cpp   |
+
+<p align="center"><em>Tabla 3.12: Objetos y Variables del modulo wifi_com</em></p>
+
+#### 3.2.6. Arquitectura
+En la figura 3.3 se muestra el diagrama de flujo del firmware.
+
+<p align="center">
+    <img alt="" src="img/dflujo_f.png">
+</p> 
+
+<p align="center"><em>Figura 3.3: Diagrama de flujo principal del firmware</em></p>
+
+## Capítulo 4. Ensayos y resultados
+
+### 4.1. Pruebas funcionales del hardware
+Las pruebas funcionales del hardware se realizaron por módulos.
+
+### 4.1.1. Módulo Wi-Fi NODEMCU8266
+Se cargo el firmware AT en el modulo. Luego por conexion USB y comunicacion por el puerto serie se constato el correcto envio de comandos y sus respuestas. Ademas, mediante esos comandos se estableció conexion con la red usada por defecto.
+
+### 4.1.2. Módulo Sesor de pulso HW-827
+El estudio inició con la toma de una medida de la señal analógica a través de un osciloscopio, con el propósito de analizar tanto los niveles como el comportamiento de dicha señal durante la lectura de pulsos. Para ello, se procedió a la conexión de la señal a los 3,3 V y GND de la placa núcleo, evidenciándose la presencia de picos de amplitud asociados a la detección de pulsos, junto con la observación de ruido de interferencia superpuesto en la señal. 
+Posteriormente, se llevó a cabo un experimento adicional empleando la placa núcleo junto con el software SerialPlot. A través de esta herramienta, se lograron determinar la frecuencia de muestreo óptima, los umbrales de detección y los filtros necesarios para asegurar una correcta lectura de pulsos.
+
+### 4.1.3. Modulo Display OLED SSD1306
+
+Para este caso se evaluaron las funciones desarrolladas de escritura y borrado, visualizando la pantalla del display. Se constato que los datos en la pantalla fueran los correctos y luego el borrado de pantalla.
+
+### 4.1.8. Pruebas de integracion
+Las pruebas de integración realizadas se encuentran en formato de video en el siguiente enlace:
+
+[![Video del sistema de monitoreo de frecuencia cardiaca](https://img.youtube.com/vi/oUoDiP93NxQ/0.jpg)](https://www.youtube.com/watch?v=oUoDiP93NxQ)
+
+
+Donde se verificó:
+* Disposición del hardware.
+* Lógica del funcionamiento del sistema.
+* Comandos por puerto serie.
+* Monitoreo mediante el servidor web.
+* Alertas de umbrales.
+* Registro de datos historicos.
+
+### 4.1.9. Cumplimiento de requisitos
+En la tabla 4.1 se presenta la evaluación del cumplimiento de los requisitos iniciales de la tabla 2.1. Se evaluó
+a el estado actual de cada uno indicando en verde aquellos que ya fueron cumplidos y en rojo los requerimientos
+no cumplidos.
+
+
+| Grupo         | ID   | Descripción                                                                                                         | Estado |
+| :------------ | :----| :------------------------------------------------------------------------------------------------------------------|---------------|
+| Monitoreo       | 1.1   | El sistema sensará la frecuencia cardíaca en tiempo real mediante un sensor integrado al dispositivo.               |  🟢         |
+|                 | 1.2   | El sistema almacenará localmente los datos de frecuencia cardíaca para asegurar la continuidad en caso de desconexión.|  🟢         |
+| Visualización   | 2.1   | El dispositivo mostrará en su display local la frecuencia cardíaca en tiempo real, con valores numéricos. |  🟢         |
+|                 | 2.2   | La aplicación web y móvil permitirá visualizar la frecuencia cardíaca en tiempo real mediante valores numéricos actualizados cada cinco segundos, asegurando sincronización continua con el dispositivo. |  🟢         |
+|                 | 2.3   | La aplicación almacenará y mostrará datos históricos de frecuencia cardíaca, permitiendo al usuario consultar tendencias diarias, semanales y mensuales. |  🟢         |
+| Alertas         | 3.1   | El sistema debe detectar eventos anómalos (frecuencia fuera de rango) y generar alertas visuales, y notificaciones. |  🟢         |
+|                 | 3.2   | El sistema enviará notificaciones inmediatas a la aplicacion web cuando se detecten anomalías.    |  🟢         |
+| Configuración   | 4.1   | El sistema permitirá configurar parámetros como umbrales de alerta y etiqueta de usuario desde la aplicación remota. |  🟢         |
+| Comunicación    | 5.1   | El sistema contará con una aplicación web accesible vía navegador desde dispositivos móviles y de escritorio. La aplicación permitirá monitorear datos en tiempo real y recibir notificaciones |  🟢         |
+| Proyecto        | 6.1   | El prototipo será acompañado de la lista de partes, el repositorio de código con su documentación, y un manual de uso. |  🟢         |
+
+<p align="center"><em>Tabla 4.1: Estado de requisitos.</em></p>
+
+
+
+### 4.1.10. Comparación con otros sistemas similares
+
+En la Tabla 4.2 se puede observar la continuación del análisis de la Sección 1.2, donde se puede ver ahora sumado 
+a la comparación al sistema de monitoreo realizado.
+
+<table border="1" cellspacing="0" cellpadding="5">
+<thead>
+<tr>
+<th>Caracter&iacute;stica</th>
+<th>[MAGENE H303](https://www.magene.com/en/sensors/52-h303-heart-rate-monitor.html)</th>
+<th>[POLAR Verity Sense](https://www.polar.com/us-en/products/accessories/polar-verity-sense)</th>
+<th>[WELLUE O2Ring](https://getwellue.com/pages/o2ring-oxygen-monitor)</th>
+<th>&nbsp;</th>
+<th>[Wellue Oxiband](https://www.mercadolibre.com.ar/oximetro-de-pulso-wellue-oxiband-con-app-y-recordatorio/p/MLA50740493)</th>
+<th>Sistema de monitoreo de frecuencia cardiaca (Este proyecto)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de sensor</td>
+<td>Banda tor&aacute;cica con sensor ECG</td>
+<td>Banda &oacute;ptica para brazo (PPG)</td>
+<td>Anillo con sensor &oacute;ptico (PPG)</td>
+<td>&nbsp;</td>
+<td>Sensor &oacute;ptico PPG para SpO2 y pulso</td>
+<td>&Oacute;ptico</td>
+</tr>
+<tr>
+<td>Rango frecuencia card&iacute;aca</td>
+<td>30 - 240 bpm</td>
+<td>30 - 220 bpm</td>
+<td>No especificado (pulso y SpO2)</td>
+<td>&nbsp;</td>
+<td>30 - 250 bpm</td>
+<td>30 - 220 bpm</td>
+</tr>
+<tr>
+<td>Duraci&oacute;n bater&iacute;a</td>
+<td>Hasta 1000 horas</td>
+<td>Hasta 20 horas</td>
+<td>Hasta 14 horas</td>
+<td>&nbsp;</td>
+<td>Aproximadamente 8 horas</td>
+<td>&nbsp;-</td>
+</tr>
+<tr>
+<td>Tipo de bater&iacute;a</td>
+<td>Pila bot&oacute;n CR2032</td>
+<td>Bater&iacute;a recargable integrada</td>
+<td>Bater&iacute;a recargable integrada</td>
+<td>&nbsp;</td>
+<td>Bater&iacute;a recargable integrada</td>
+<td>&nbsp;-</td>
+</tr>
+<tr>
+<td>Conectividad inal&aacute;mbrica</td>
+<td>Bluetooth 4.2 y ANT+</td>
+<td>Bluetooth 5.0</td>
+<td>Bluetooth 4.0</td>
+<td>&nbsp;</td>
+<td>Bluetooth 4.0</td>
+<td>Wi-Fi</td>
+</tr>
+<tr>
+<td>Impermeabilidad</td>
+<td>IP67 (resistente al agua y polvo)</td>
+<td>Resistente al agua (IPX7)</td>
+<td>IP24 (resistente a salpicaduras)</td>
+<td>&nbsp;</td>
+<td>No especificado</td>
+<td>&nbsp;-</td>
+</tr>
+<tr>
+<td>Display</td>
+<td>No incluye display (se conecta a apps o dispositivos externos)</td>
+<td>No incluye display (se conecta a apps)</td>
+<td>No incluye display (datos en app)</td>
+<td>&nbsp;</td>
+<td>S&iacute;, display OLED integrado</td>
+<td>&nbsp;S&iacute;, display OLED integrado</td>
+</tr>
+<tr>
+<td>Audio / alertas</td>
+<td>No incluye</td>
+<td>No incluye</td>
+<td>Vibraci&oacute;n para alertas</td>
+<td>&nbsp;</td>
+<td>Alarmas sonoras y visuales</td>
+<td>Alertas visuales</td>
+</tr>
+<tr>
+<td>Precio aproximado</td>
+<td>$30 - $40 USD</td>
+<td>$90 - $120 USD</td>
+<td>$150 - $200 USD</td>
+<td>&nbsp;</td>
+<td>$600 - $800 USD</td>
+<td>$30 - $52 USD</td>
+</tr>
+<tr>
+<td>Uso principal</td>
+<td>Monitoreo deportivo y fitness</td>
+<td>Monitoreo deportivo y salud continua</td>
+<td>Monitoreo m&eacute;dico de SpO2 y pulso</td>
+<td>&nbsp;</td>
+<td>Monitoreo m&eacute;dico de SpO2 y frecuencia card&iacute;aca</td>
+<td>Monitoreo de salud hogareño.</td>
+</tr>
+</tbody>
+</table>
+<p align="center"><em>Tabla 4.2: Comparación de características de productos analizados previamente y este proyecto</em></p>
+
+### 4.2. Documentación del desarrollo realizado
+
+<p align="center">
 <table><thead>
   <tr>
-    <th>Grupo de requisitos</th>
-    <th>Id</th>
-    <th>Descripción</th>
+    <th>Elemento</th>
+    <th>Referencia</th>
   </tr></thead>
 <tbody>
   <tr>
-    <td rowspan="5">1. Control</td>
-    <td>1.1</td>
-    <td>El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
+    <td>Presentación del proyecto</td>
+    <td>Capı́tulo 1</td>
   </tr>
   <tr>
-    <td>1.2</td>
-    <td>El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
+    <td>Listado de requisitos</td>
+    <td>Tabla 2.1</td>
   </tr>
   <tr>
-    <td>1.3</td>
-    <td>El sistema deberá cerrar la tapa si esta en ausencia de un usuario.</td>
+    <td>Casos de uso del proyecto</td>
+    <td>Tablas 2.2 a 2.4</td>
   </tr>
   <tr>
-    <td>1.4</td>
-    <td>La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
+    <td>Diagrama en bloques del sistema</td>
+    <td>Figura 3.1</td>
   </tr>
   <tr>
-    <td>1.5</td>
-    <td>El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
+    <td>Lista de señales</td>
+    <td>Tabla 3.1</td>
   </tr>
   <tr>
-    <td rowspan="3">2. Interacción con el usuario</td>
-    <td>2.1</td>
-    <td>El usuario puede controlar el contenedor desde una pagina web.</td>
+    <td>Implementación del hardware</td>
+    <td>Sección 3.1</td>
   </tr>
   <tr>
-    <td>2.2</td>
-    <td>El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
+    <td>Módulos de software</td>
+    <td>Sección 3.2</td>
   </tr>
   <tr>
-    <td>2.3</td>
-    <td>El display se enciende solo bajo la presencia de un usuario.</td>
+    <td>Repositorio</td>
+    <td>[5]</td>
   </tr>
   <tr>
-    <td rowspan="5">3. El servicio web</td>
-    <td>3.1</td>
-    <td>El servicio web tiene usuario y contraseña.</td>
+    <td>Cumplimiento de requisitos</td>
+    <td>Tabla 4.1</td>
   </tr>
   <tr>
-    <td>3.2</td>
-    <td>El servicio web puede ser accedido desde un browser.</td>
+    <td>Conclusiones finales</td>
+    <td>Capı́tulo 5</td>
   </tr>
-  <tr>
-    <td>3.3</td>
-    <td>El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
-  </tr>
-  <tr>
-    <td>3.4</td>
-    <td>El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
-  </tr>
-  <tr>
-    <td>3.5</td>
-    <td>El servicio web ofrece métricas del estado del contenedor.</td>
-  </tr>
-  <tr>
-    <td rowspan="2">4. Alimentación</td>
-    <td>4.1</td>
-    <td>La alimentación es por medio de una batería de 5 V.</td>
-  </tr>
-  <tr>
-    <td>4.2</td>
-    <td>La carga de la batería es por medio de un panel solar.</td>
-  </tr>
-</tbody></table>
+</tbody>
+</table>
+</p>
+<p align="center"><em>Tabla 4.3: Elementos del sumario del sistema automático para el sistema de monitoreo de frecuencia cardiaca</em></p>
 
-En base a los requisitos se establecieron los siguientes casos de uso:
+## Capı́tulo 5 Conclusiones
 
-| Elemento | Definición |
-|----------|------------|
-| Disparador | El usuario se acerca al contenedor |
-| Precondición | El contenedor esta cerrado |
-| Flujo básico | 1. El contenedor detecta la presencia del usuario. <br> 2. El contenedor abre la tapa. <br> 3. El usuario deposita la basura. <br> 4. El usuario se aleja del contenedor. <br> 5. El contenedor cierra la tapa. |
-| Flujo alternativo | 1. El contenedor detecta la presencia del usuario. <br> 2. El display indica al usuario que esta lleno. <br> 3. El usuario lee el display. <br> 4. El usuario se aleja del contenedor. |
+### 5.1. Resultados obtenidos
+El desarrollo del sistema de monitoreo de frecuencia cardíaca permitió cumplir con los objetivos planteados inicialmente. Se logró la integración exitosa de un sensor óptico de pulso, un display OLED para la visualización en tiempo real de los latidos por minuto (BPM), y un módulo de conectividad Wi-Fi para la transmisión, tanto de lecturas en tiempo real, alertas y datos históricos, en una plataforma remota.
 
-| Elemento | Definición |
-|----------|------------|
-| Disparador | El contenedor detecta gas metano |
-| Precondición | El contenedor esta cerrado |
-| Flujo básico | 1. El contenedor detecta gas metano. <br> 2. El contenedor emite una alarma auditiva. <br> 3. La página web cambia el estado del contenedor a "Alerta". |
-| Flujo alternativo | 1. El contenedor detecta gas metano. <br> 2. El contenedor emite una alarma auditiva. <br> 3. La página web cambia el estado del contenedor a "Alerta". <br> 4. Un servidor llama a la api y detecta la alerta. <br> 5. El servidor envía un mail al encargado de la recolección. |
+El sistema mostró una lectura estable del pulso en tiempo real durante las pruebas. La implementación de umbrales configurables permitió activar alertas cuando la frecuencia cardíaca superó o descendió de ciertos valores establecidos, lo que demuestra su potencial como herramienta preventiva o de monitoreo continuo en contextos personales o deportivos.
 
-| Elemento | Definición |
-|----------|------------|
-| Disparador | El contenedor se llenó |
-| Precondición | El contenedor esta cerrado |
-| Flujo básico | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". |
-| Flujo alternativo | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". <br> 4. Un servidor llama a la api y detecta el estado. <br> 5. El servidor envía un mail al encargado de la recolección. <br> 6. El recolector se hacerca al contenedor, desbloquea al contenedor con la página web y recolecta la basura. |
+Además, se logró un registro automático de los datos, lo cual facilita su análisis posterior y el seguimiento de patrones a lo largo del tiempo. La interfaz en el display OLED resultó clara y funcional para la visualización inmediata del estado del usuario.
 
-## 3. Video con la presentación del trabajo final
+### 5.1. Proximos pasos
 
-[![Campo Alt](https://img.youtube.com/vi/MNq_PzCt46s/0.jpg)](https://www.youtube.com/watch?v=MNq_PzCt46s)
+Si bien el sistema ha demostrado un buen funcionamiento, se identificaron oportunidades de mejora y expansión que podrían implementarse en futuras iteraciones del proyecto:
 
-## 4. Estado de los requisitos
+1. Agregar una conectividad Bluetooth para tener mayor control y configuracion de redes Wi-Fi.
+2. Incorporar el uso de baterias para tener un sistema portable.
+1. Mejora de la precisión del sensor: Evaluar la integración de sensores ópticos más avanzados o de múltiples canales para reducir interferencias y mejorar la fiabilidad de las mediciones en distintos tipos de piel y condiciones de movimiento.
+2. Almacenamiento en la nube y análisis inteligente: Incorporar servicios en la nube para almacenamiento seguro, y aplicar algoritmos de análisis de datos para detectar anomalías o tendencias relevantes en la frecuencia cardíaca del usuario.
 
-### 30/11
-En esta sección se muestra el estado de implementación de los requisitos hasta el momento. Se observa que gran parte de los requisitos corresponden a la implementación del servidor web para que sean realizados. El trabajo final depende de la implementación del módulo Wi-Fi. 
+    
+## Bibliografı́a
+[1]  WORLD FAMOUS ELECTRONICS llc. [HW-827 Datasheet.](https://media.digikey.com/pdf/Data%20Sheets/Pulse%20Sensor%20PDFs/Pulse_Sensor.pdf)
 
+[2] SOLOMON SYSTECH SEMICONDUCTOR TECHNICAL DATA. [SSD1306 Datasheet.](https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf)
 
-<table class="tg"><thead>
-  <tr>
-    <th class="tg-fymr">Requisito</th>
-    <th class="tg-fymr">Comentarios</th>
-  </tr></thead>
-<tbody>
-  <tr>
-    <td class="tg-x4od">1.1 :green_circle: El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
-    <td class="tg-0pky">Implementado.</td>
-  </tr>
-  <tr>
-    <td class="tg-xzpz">1.2 :green_circle: El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
-    <td class="tg-0pky">Implementado.</td>
-  </tr>
-  <tr>
-    <td class="tg-xzpz">1.3 :green_circle: El sistema deberá cerrar la tapa si esta en ausencia de un usuario.</td>
-    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
-  </tr>
-  <tr>
-    <td class="tg-bw5o">1.4 ⚫ La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
-    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
-  </tr>
-  <tr>
-    <td class="tg-xzpz">1.5 :green_circle: El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
-    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
-  </tr>
-  <tr>
-    <td class="tg-xzpz">2.1 :green_circle: El usuario puede controlar el contenedor desde una pagina web.</td>
-    <td class="tg-0pky">Implementado.</td>
-  </tr>
-  <tr>
-    <td class="tg-xzpz">2.2 :green_circle: El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
-    <td class="tg-0pky">Implementado.</td>
-  </tr>
-  <tr>
-    <td class="tg-8eqh">2.3 :green_circle: El display se enciende solo bajo la presencia de un usuario.</td>
-    <td class="tg-0pky">El display se enciende bajo la presencia de un usuario.</td>
-  </tr>
-  <tr>
-    <td class="tg-bw5o">3.1 ⚫ El servicio web tiene usuario y contraseña.</td>
-    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
-  </tr>
-  <tr>
-    <td class="tg-bw5o">3.2 :green_circle: El servicio web puede ser accedido desde un browser.</td>
-    <td class="tg-0pky">Se implementó un servicio web con un home desde donde se pueden acceder a algunas acciones del tacho de basura.</td>
-  </tr>
-  <tr>
-    <td class="tg-hrbo">3.3 :green_circle: El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
-    <td class="tg-0pky">Con el servicio web se puede controlar la tapa.</td>
-  </tr>
-  <tr>
-    <td class="tg-hrbo">3.4 :green_circle: El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
-    <td class="tg-0pky">Se agregó la posibilidad de realizar acciones sobre el contenedor mediante una api web que actualmente incluye control sobre la tapa.</td>
-  </tr>
-  <tr>
-    <td class="tg-hrbo">3.5 :green_circle: El servicio web ofrece métricas del estado del contenedor.</td>
-    <td class="tg-0pky">El servicio web ofrece la temperatura.</td>
-  </tr>
-  <tr>
-    <td class="tg-hrbo">4.1 ⚫ La alimentación es por medio de una batería de 5 V.</td>
-    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
-  </tr>
-  <tr>
-    <td class="tg-hrbo">4.2 ⚫ La carga de la batería es por medio de un panel solar.</td>
-    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
-  </tr>
-</tbody></table>
+[3] Espressif Systems. [ESP8266 Datasheet.](https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf) 
 
+[4] Lexus2k.[Bibliotecas y drivers de Displays.](https://github.com/lexus2k/ssd1306)
+
+<a id="ref5">[5]</a>. Sergio Aguirre. Repositorio de proyecto. [Sistema de monitoreo de frecuencia cardiaca.](https://github.com/seragu9/SE_1c2025_TP1/tree/TPFinal/)
