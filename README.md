@@ -321,9 +321,9 @@ Motor a pasos utilizado como actuador de la tapa para abrir y cerrar.
 En la Figura 3.1 se muestra un diagrama del hardware del sistema desarrollado.
 
 <p align="center">
-    <img alt="" src="img/dbloquesf.png">
+    <img alt="" src="Images/DiagramaEnBloques.svg">
 </p>
-<p align="center"><em>Figura 3.1: Diagrama en bloque del sistema</em></p>
+<p align="center"><em>Figura 7: Diagrama en bloques del sistema</em></p>
 
 
 #### 3.1.2. Lista de señales
