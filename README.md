@@ -251,7 +251,7 @@ describen a continuación.
 Este es el microcontrolador principal utilizado en el proyecto. Se programó con el lenguaje C++ y el framework MBed-OS. Este módulo superó ampliamente los requerimientos del proyecto gracias a su gran cantidad de puertos y caracteristicas disponibles de prototipado.
 
 <p align="center">
-    <img alt="" src="img/ssd1306.PNG" width="300">
+    <img alt="" src="Images/nucleoFZ.jpg" width="300">
 </p>
 
 <p align="center"><em>Figura 1: Placa Núcleo F429ZI</em></p>
