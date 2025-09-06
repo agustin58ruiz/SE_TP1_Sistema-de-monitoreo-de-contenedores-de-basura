@@ -318,7 +318,7 @@ Motor a pasos utilizado como actuador de la tapa para abrir y cerrar.
 
 #### 3.1.1. Diagrama en bloques
 
-En la Figura 3.1 se muestra un diagrama del hardware del sistema desarrollado.
+En la Figura 7 se muestra un diagrama del hardware del sistema desarrollado.
 
 <p align="center">
     <img alt="" src="Images/DiagramaEnBloques.svg">
@@ -333,73 +333,117 @@ F429ZI a los módulos de hardware.
 <table style="width: 415px;">
 <thead>
 <tr style="height: 23px;">
-<th style="height: 23px; width: 202px;" colspan="2">Pin del m&oacute;dulo de hardware</th>
+<th style="height: 23px; width: 201px;" colspan="2">Pin del m&oacute;dulo de hardware</th>
 <th style="height: 23px; width: 208px;" colspan="2">Pin de la placa Nucleo-F429ZI</th>
+<th style="height: 23px; width: 159.549px;" colspan="3">Fuente de Alimentacion</th>
 </tr>
 </thead>
 <tbody>
 <tr style="height: 23px;">
-<td style="height: 92px; width: 132.467px;" rowspan="4">SSD1306</td>
-<td style="height: 23px; width: 69.5333px;">SCL</td>
+<td style="height: 92.1945px; width: 132px;" rowspan="4">Display 1602</td>
+<td style="height: 23px; width: 69px;">SCL</td>
 <td style="height: 23px; width: 69px;">PB_8</td>
 <td style="height: 23px; width: 139px;">I2C1_SCL</td>
+<td style="height: 23px; width: 139px;">&nbsp;-</td>
+</tr>
+<tr style="height: 23.1945px;">
+<td style="height: 23.1945px; width: 69px;">SDA</td>
+<td style="height: 23.1945px; width: 69px;">PB_9</td>
+<td style="height: 23.1945px; width: 139px;">I2C1_SDA</td>
+<td style="height: 23.1945px; width: 139px;">-&nbsp;</td>
 </tr>
 <tr style="height: 23px;">
-<td style="height: 23px; width: 69.5333px;">SDA</td>
-<td style="height: 23px; width: 69px;">PB_9</td>
-<td style="height: 23px; width: 139px;">I2C1_SDA</td>
+<td style="height: 23px; width: 69px;">VCC</td>
+<td style="height: 23px; width: 69px;">-</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">&nbsp;5V</td>
 </tr>
 <tr style="height: 23px;">
-<td style="height: 23px; width: 69.5333px;">VCC</td>
-<td style="height: 23px; width: 69px;">3V3</td>
-<td style="height: 23px; width: 139px;">3V3</td>
-</tr>
-<tr style="height: 23px;">
-<td style="height: 23px; width: 69.5333px;">GND</td>
 <td style="height: 23px; width: 69px;">GND</td>
-<td style="height: 23px; width: 139px;">GND</td>
-</tr>
-<tr style="height: 23px;">
-<td style="height: 69.5px; width: 132.467px;" rowspan="3">HW-827</td>
-<td style="height: 23px; width: 69.5333px;">VCC</td>
-<td style="height: 23px; width: 69px;">3V3</td>
-<td style="height: 23px; width: 139px;">3V3</td>
-</tr>
-<tr style="height: 23.5px;">
-<td style="height: 23.5px; width: 69.5333px;">SIGNAL</td>
-<td style="height: 23.5px; width: 69px;">PA_3</td>
-<td style="height: 23.5px; width: 139px;">A0</td>
-</tr>
-<tr style="height: 23px;">
-<td style="height: 23px; width: 69.5333px;">GND</td>
-<td style="height: 23px; width: 69px;">GND</td>
-<td style="height: 23px; width: 139px;">GND</td>
-</tr>
-<tr style="height: 23px;">
-<td style="height: 92px; width: 132.467px;" rowspan="4">NODEMCU8266</td>
-<td style="height: 23px; width: 69.5333px;">TX</td>
-<td style="height: 23px; width: 69px;">PE_9</td>
-<td style="height: 23px; width: 139px;">&nbsp;UART7_RX</td>
-</tr>
-<tr style="height: 23px;">
-<td style="height: 23px; width: 69.5333px;">RX</td>
-<td style="height: 23px; width: 69px;">PE_8</td>
-<td style="height: 23px; width: 139px;">&nbsp;UART7_TX</td>
-</tr>
-<tr style="height: 23px;">
-<td style="height: 23px; width: 69.5333px;">VIN</td>
-<td style="height: 23px; width: 69px;">5V</td>
-<td style="height: 23px; width: 139px;">5V</td>
-</tr>
-<tr style="height: 23px;">
-<td style="height: 23px; width: 69.5333px;">GND</td>
-<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 69px;">-</td>
+<td style="height: 23px; width: 139px;">-</td>
 <td style="height: 23px; width: 139px;">&nbsp;GND</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 69px; width: 132px;" rowspan="3">Sensor PIR</td>
+<td style="height: 23px; width: 69px;">VCC</td>
+<td style="height: 23px; width: 69px;">5V</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">&nbsp;5V</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69px;">SIGNAL</td>
+<td style="height: 23px; width: 69px;">PE_13</td>
+<td style="height: 23px; width: 139px;">Digital - PullDown</td>
+<td style="height: 23px; width: 139px;">&nbsp;-</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">&nbsp;</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 92px; width: 132px;" rowspan="3">LM-35 (Temperatura)</td>
+<td style="height: 23px; width: 69px;">Out</td>
+<td style="height: 23px; width: 69px;">A1</td>
+<td style="height: 23px; width: 139px;">&nbsp;Analog In</td>
+<td style="height: 23px; width: 139px;">&nbsp;</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69px;">VIN</td>
+<td style="height: 23px; width: 69px;">-</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">&nbsp;5V</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 69px;">-</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">GND</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 92px; width: 132px;" rowspan="3">MQ-2 (Sensor de gas)</td>
+<td style="height: 23px; width: 69px;">Out</td>
+<td style="height: 23px; width: 69px;">A0</td>
+<td style="height: 23px; width: 139px;">&nbsp;Analog In</td>
+<td style="height: 23px; width: 139px;">&nbsp;</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69px;">VIN</td>
+<td style="height: 23px; width: 69px;">-</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">&nbsp;5V</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 69px;">-</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">GND</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 92px; width: 132px;" rowspan="3">Motor a pasos 28BYJ-48</td>
+<td style="height: 23px; width: 69px;">In1-In4</td>
+<td style="height: 23px; width: 69px;">D4-D7</td>
+<td style="height: 23px; width: 139px;">&nbsp;Bus Digital Out 4bits</td>
+<td style="height: 23px; width: 139px;">&nbsp;-</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69px;">VIN</td>
+<td style="height: 23px; width: 69px;">-</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">&nbsp;12V</td>
+</tr>
+<tr style="height: 23px;">
+<td style="height: 23px; width: 69px;">GND</td>
+<td style="height: 23px; width: 69px;">-</td>
+<td style="height: 23px; width: 139px;">-</td>
+<td style="height: 23px; width: 139px;">GND</td>
 </tr>
 </tbody>
 </table>
 <p>&nbsp;</p>
-<p align="center"><em>Tabla 3.1: Lista de señales del sistema</em></p>
+<p align="center"><em>Tabla 3.1: Lista de se&ntilde;ales del sistema</em></p>
 
 ### 3.2. Firmware
 
