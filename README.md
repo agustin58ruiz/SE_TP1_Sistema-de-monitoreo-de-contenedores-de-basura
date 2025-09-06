@@ -60,7 +60,7 @@ Con esta propuesta se busca mejorar el sistema de recolección de basura y, de e
 
 ### 1.2. Análisis de sistemas similares en el mercado
 
-Se analizaron cuatro contenedores de basura. Se muestra la comparación de características en la Tabla 2.1.
+Se analizaron cinco contenedores de basura. Se muestra la comparación de características en la Tabla 1.
 
 <table style="height: 359px; width: 1313px;" border="1" cellspacing="0" cellpadding="5">
 <thead>
@@ -68,6 +68,7 @@ Se analizaron cuatro contenedores de basura. Se muestra la comparación de carac
 <th style="height: 52px; width: 85px;">Caracter&iacute;stica</th>
 <th style="height: 52px; width: 268px;">[Tacho inteligente de 10L](https://www.mercadolibre.com.ar/tacho-cesto-de-basura-inteligente-10-litros-con-sensor-color-blanco/p/MLA53137335)</th>
 <th style="height: 52px; width: 200px;">[Cesto de basura inteligente](https://articulo.mercadolibre.com.ar/MLA-1508280537-tacho-cesto-de-residuos-blanco-apertura-automatica-de-15-lts-_JM)</th>
+<th style="height: 52px; width: 200px;">[Contenedor Bigbelly Smart](<a href="https://bigbelly.com/products/bigbelly-smart">https://bigbelly.com/products/bigbelly-smart</a>)</th>
 <th style="height: 52px; width: 245.469px;">[Contenedor bilateral - OMBU](https://ombuhigieneurbana.com.ar/contenedor-carga-bilateral.php)</th>
 <th style="height: 52px; width: 289.531px;">[Contenedor Carga Trasera - OMBU](https://ombuhigieneurbana.com.ar/contenedor-carga-trasera.php)</th>
 </tr>
@@ -77,6 +78,7 @@ Se analizaron cuatro contenedores de basura. Se muestra la comparación de carac
 <td style="height: 1px; width: 85px;">Capacidad</td>
 <td style="height: 1px; width: 268px;">10 Litros</td>
 <td style="height: 1px; width: 200px;">15 Litros</td>
+<td style="height: 1px; width: 200px;">178 Litros</td>
 <td style="height: 1px; width: 245.469px;">40/90/150 Litros</td>
 <td style="height: 1px; width: 289.531px;">800/1200L</td>
 </tr>
@@ -84,6 +86,7 @@ Se analizaron cuatro contenedores de basura. Se muestra la comparación de carac
 <td style="height: 39px; width: 85px;">Conectividad</td>
 <td style="height: 39px; width: 268px;">No posee.</td>
 <td style="height: 39px; width: 200px;">No posee.</td>
+<td style="height: 39px; width: 200px;">LoraWAN - WIFI</td>
 <td style="height: 39px; width: 245.469px;">No Posee</td>
 <td style="height: 39px; width: 289.531px;">No posee.</td>
 </tr>
@@ -91,6 +94,7 @@ Se analizaron cuatro contenedores de basura. Se muestra la comparación de carac
 <td style="height: 13px; width: 85px;">Apertura</td>
 <td style="height: 13px; width: 268px;">Con sensor, sin contacto.</td>
 <td style="height: 13px; width: 200px;">Con sensor, sin contacto.</td>
+<td style="height: 13px; width: 200px;">Con pie. Tapa Lateral</td>
 <td style="height: 13px; width: 245.469px;">Dos tapas laterales. Descarga de residuos inferior.</td>
 <td style="height: 13px; width: 289.531px;">Una tapa superior.&nbsp;</td>
 </tr>
@@ -98,6 +102,7 @@ Se analizaron cuatro contenedores de basura. Se muestra la comparación de carac
 <td style="height: 13px; width: 85px;">Fuente de alimentaci&oacute;n</td>
 <td style="height: 13px; width: 268px;">4 Pilas AA</td>
 <td style="height: 13px; width: 200px;">2 Pilas AA</td>
+<td style="height: 13px; width: 200px;">Panel Solar y bater&iacute;a recargable.&nbsp;</td>
 <td style="height: 13px; width: 245.469px;">No posee.</td>
 <td style="height: 13px; width: 289.531px;">No posee.</td>
 </tr>
@@ -105,6 +110,7 @@ Se analizaron cuatro contenedores de basura. Se muestra la comparación de carac
 <td style="height: 26px; width: 85px;">Usos</td>
 <td style="height: 26px; width: 268px;">Privado, adentro de una casa.</td>
 <td style="height: 26px; width: 200px;">Privado, adentro de una casa.</td>
+<td style="height: 26px; width: 200px;">P&uacute;blico. Sistema de recolecci&oacute;n de residuos. Peque&ntilde;os reciduos (latas, bolsas de comida, m&aacute;x 5 Litros) por el tama&ntilde;o de la tapa.&nbsp;</td>
 <td style="height: 26px; width: 245.469px;">P&uacute;blico-urbano. Sistema de recolecci&oacute;n de residuos.</td>
 <td style="height: 26px; width: 289.531px;">P&uacute;blico-urbano. Sistema de recolecci&oacute;n de residuos.</td>
 </tr>
@@ -112,80 +118,128 @@ Se analizaron cuatro contenedores de basura. Se muestra la comparación de carac
 <td style="height: 13px; width: 85px;">Caracter&iacute;sticas Extras</td>
 <td style="height: 13px; width: 268px;">Pl&aacute;stico, posee led indicador. tapa extra&iacute;ble.</td>
 <td style="height: 13px; width: 200px;">Pl&aacute;stico, posee led indicador. tapa extra&iacute;ble.</td>
+<td style="height: 13px; width: 200px;">Antiband&aacute;lico, materiales reforzados. Sistema de monitoreo del estado del contenedor en tiempo real.&nbsp;</td>
 <td style="height: 13px; width: 245.469px;">Reforzado, met&aacute;lico, adaptable con sistema antiband&aacute;lico. Dise&ntilde;ado para sistemas de recolecci&oacute;n de basura.</td>
 <td style="height: 13px; width: 289.531px;">Reforzado, met&aacute;lico. Utilidad campos, barrios cerrados, municipios. Alta capacidad.&nbsp;&nbsp;</td>
 </tr>
-<tr style="height: 26.9167px;">
-<td style="height: 26.9167px; width: 85px;">Imagenes</td>
-<td style="height: 26.9167px; width: 268px;">&nbsp;</td>
-<td style="height: 26.9167px; width: 200px;">&nbsp;</td>
-<td style="height: 26.9167px; width: 245.469px;">&nbsp;</td>
-<td style="height: 26.9167px; width: 289.531px;">&nbsp;</td>
-</tr>
 </tbody>
 </table>
-<p align="center"><em>Tabla 2.1: Comparaci&oacute;n de productos de mercado</em></p>
+<p align="center"><em>Tabla 1: Comparaci&oacute;n de productos de mercado</em></p>
 
 ## Capítulo 2. Introducción específica
 
 ### 2.1. Requisitos
 
-En la tabla 2.1 se muestran los requisitos del sistema desarrollado.
+En la tabla 2 se muestran los requisitos del sistema desarrollado.
 
-| Grupo         | ID   | Descripción                                                                                                         |
-| :------------ | :----| :------------------------------------------------------------------------------------------------------------------|
-| Monitoreo       | 1.1   | El sistema sensará la frecuencia cardíaca en tiempo real mediante un sensor integrado al dispositivo.               |
-|                 | 1.2   | El sistema almacenará localmente los datos de frecuencia cardíaca para asegurar la continuidad en caso de desconexión.|
-| Visualización   | 2.1   | El dispositivo mostrará en su display local la frecuencia cardíaca en tiempo real, con valores numéricos. |
-|                 | 2.2   | La aplicación web y móvil permitirá visualizar la frecuencia cardíaca en tiempo real mediante valores numéricos actualizados cada cinco segundos, asegurando sincronización continua con el dispositivo. |
-|                 | 2.3   | La aplicación almacenará y mostrará datos históricos de frecuencia cardíaca, permitiendo al usuario consultar tendencias diarias, semanales y mensuales. |
-| Alertas         | 3.1   | El sistema debe detectar eventos anómalos (frecuencia fuera de rango) y generar alertas visuales y notificaciones. |
-|                 | 3.2   | El sistema enviará notificaciones inmediatas a la aplicacion web cuando se detecten anomalías.    |
-| Configuración   | 4.1   | El sistema permitirá configurar parámetros como umbrales de alerta y etiqueta de usuario desde la aplicación remota. |
-| Comunicación    | 5.1   |El sistema contará con una aplicación web accesible vía navegador desde dispositivos móviles y de escritorio. La aplicación permitirá monitorear datos en tiempo real y recibir notificaciones |
-| Proyecto        | 6.1   | El prototipo será acompañado de la lista de partes, el repositorio de código con su documentación, y un manual de uso. |
-
-<p align="center"><em>Tabla 2.1: Requisitos del proyecto</em></p>
+<table>
+<thead>
+<tr style="height: 13px;">
+<th style="height: 13px;">Grupo de requisitos</th>
+<th style="height: 13px;">Id</th>
+<th style="height: 13px;">Descripci&oacute;n</th>
+</tr>
+</thead>
+<tbody>
+<tr style="height: 13px;">
+<td style="height: 65px;" rowspan="5">1. Control</td>
+<td style="height: 13px;">1.1</td>
+<td style="height: 13px;">El sistema deber&aacute; bloquear la tapa si el contenedor esta lleno.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">1.2</td>
+<td style="height: 13px;">El sistema deber&aacute; abrir la tapa si detecta la presencia de un usuario.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">1.3</td>
+<td style="height: 13px;">El sistema deber&aacute; cerrar la tapa si esta en ausencia de un usuario.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">1.4</td>
+<td style="height: 13px;">La tapa deber&aacute; poder desbloquearse por medio de Wi-Fi o UART</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">1.5</td>
+<td style="height: 13px;">El contenedor deber&aacute; encender una alarma auditiva si se detecta gas metano.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 39px;" rowspan="3">2. Interacci&oacute;n con el usuario</td>
+<td style="height: 13px;">2.1</td>
+<td style="height: 13px;">El usuario puede controlar el contenedor desde una pagina web.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">2.2</td>
+<td style="height: 13px;">El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">2.3</td>
+<td style="height: 13px;">El display se enciende solo bajo la presencia de un usuario.</td>
+</tr>
+<tr style="height: 13.6528px;">
+<td style="height: 65.6528px;" rowspan="4">3. El servicio web</td>
+<td style="height: 13.6528px;">3.1</td>
+<td style="height: 13.6528px;">El servicio web puede ser accedido desde un browser.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">3.2</td>
+<td style="height: 13px;">El servicio web ofrece un men&uacute; de acciones para controlar el contenedor.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">3.3</td>
+<td style="height: 13px;">El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">3.4</td>
+<td style="height: 13px;">El servicio web ofrece m&eacute;tricas del estado del contenedor.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 26px;" rowspan="2">4. Alimentaci&oacute;n</td>
+<td style="height: 13px;">4.1</td>
+<td style="height: 13px;">La alimentaci&oacute;n es por medio de una bater&iacute;a de 5 V.</td>
+</tr>
+<tr style="height: 13px;">
+<td style="height: 13px;">4.2</td>
+<td style="height: 13px;">La carga de la bater&iacute;a es por medio de un panel solar.</td>
+</tr>
+</tbody>
+</table>
+<p align="center"><em>Tabla 2: Requisitos del proyecto</em></p>
 
 **Tabla 2.1: Requisitos del sistema automático.**
 
 ### 2.2. Casos de uso
-En las tablas 2.2, 2.3 y 2.4 se presentan tres casos de uso del sistema representativos de su funcionalidad.
-
-| Elemento         | Definición                                                    |
-| :--------------- | :------------------------------------------------------------|
-| Causa            | Se quiere leer datos de pulso en tiempo real.                |
-| Precondición     | El sistema está iniciado y el sensor de pulso está activo.   |
-| Flujo básico     | Se debe presionar el botón de usuario para iniciar la lectura en tiempo real. El sistema muestra el pulso en el display y puerto serie, y lo transmite vía Wi-Fi. |
-| Flujo alternativo| Si no se presiona el botón, el sistema permanece en modo espera.  |
-
-<p align="center"><em>Tabla 2.2: Caso de uso 1: Lectura de datos de pulso en tiempo real</em></p>
+En las tablas 3, 4 y 5 se presentan tres casos de uso del sistema representativos de su funcionalidad.
 
 ---
 
-
-| Elemento         | Definición                                                    |
-| :--------------- | :------------------------------------------------------------|
-| Causa            | El usuario desea revisar el historial y tendencias de la frecuencia cardíaca. |
-| Precondición     | El dispositivo ha estado registrando y sincronizando datos con la aplicación web. |
-| Flujo básico     | El usuario accede a la aplicación web, selecciona `Datos Historicos` y visualiza los reportes de datos históricos. |
-| Flujo alternativo| Si no hay datos almacenados, se muestra un mensaje indicando que no hay registros disponibles. |
-
-
-<p align="center"><em>Tabla 2.3: Caso de uso 2: Visualización y análisis de datos históricos</em></p>
+| Elemento | Definición |
+|----------|------------|
+| Disparador | El usuario se acerca al contenedor |
+| Precondición | El contenedor esta cerrado |
+| Flujo básico | 1. El contenedor detecta la presencia del usuario. <br> 2. El contenedor abre la tapa. <br> 3. El usuario deposita la basura. <br> 4. El usuario se aleja del contenedor. <br> 5. El contenedor cierra la tapa. |
+| Flujo alternativo | 1. El contenedor detecta la presencia del usuario. <br> 2. El display indica al usuario que esta lleno. <br> 3. El usuario lee el display. <br> 4. El usuario se aleja del contenedor. |
+<p align="center"><em>Tabla 3: Caso de uso 1: Un usuario arroja un residuo.</em></p>
 
 ---
 
+| Elemento | Definición |
+|----------|------------|
+| Disparador | El contenedor detecta gas metano |
+| Precondición | El contenedor esta cerrado |
+| Flujo básico | 1. El contenedor detecta gas metano. <br> 2. El contenedor emite una alarma auditiva. <br> 3. La página web cambia el estado del contenedor a "Alerta". |
+| Flujo alternativo | 1. El contenedor detecta gas metano. <br> 2. El contenedor emite una alarma auditiva. <br> 3. La página web cambia el estado del contenedor a "Alerta". <br> 4. Un servidor llama a la api y detecta la alerta. <br> 5. El servidor envía un mail al encargado de la recolección. |
 
-| Elemento         | Definición                                                    |
-| :--------------- | :------------------------------------------------------------|
-| Causa            | El usuario quiere modificar parámetros  de forma remota. |
-| Precondición     | El dispositivo está conectado a la red Wi-Fi y sincronizado con la aplicación. |
-| Flujo básico     | El usuario accede a la aplicación, modifica parámetros (umbrales,  etiqueta de usuario). El dispositivo recibe y aplica los cambios automáticamente. |
-| Flujo alternativo| Si la conexión falla durante la actualización, el dispositivo mantiene la configuración anterior. |
+<p align="center"><em>Tabla 4: Caso de uso 2: Gas Metano.</em></p>
 
+---
 
-<p align="center"><em>Tabla 2.4: Caso de uso 3: Configuración de parámetros</em></p>
+| Elemento | Definición |
+|----------|------------|
+| Disparador | El contenedor se llenó |
+| Precondición | El contenedor esta cerrado |
+| Flujo básico | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". |
+| Flujo alternativo | 1. El contenedor detecta que esta lleno. <br> 2. El contenedor bloquea la tapa. <br> 3. La página web cambia el estado del contenedor a "Lleno". <br> 4. Un servidor llama a la api y detecta el estado. <br> 5. El servidor envía un mail al encargado de la recolección. <br> 6. El recolector se hacerca al contenedor, desbloquea al contenedor con la página web y recolecta la basura. |
+<p align="center"><em>Tabla 5: Caso de uso 3: Contenedor lleno.</em></p>
 
 
 ### 2.3. Descripción de módulos utilizado
