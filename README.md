@@ -247,10 +247,17 @@ En las tablas 3, 4 y 5 se presentan tres casos de uso del sistema representativo
 En base a la arquitectura de control y los requisitos establecidos se decidió por utilizar los módulos que se
 describen a continuación.
 
+#### 2.3.1. Placa Nucleo F429ZI
+Este es el microcontrolador principal utilizado en el proyecto. Se programó con el lenguaje C++ y el framework MBed-OS. Este módulo superó ampliamente los requerimientos del proyecto gracias a su gran cantidad de puertos y caracteristicas disponibles de prototipado.
+
+<p align="center">
+    <img alt="" src="img/ssd1306.PNG" width="300">
+</p>
+
+<p align="center"><em>Figura 1: Placa Núcleo F429ZI</em></p>
 
 #### 2.3.2. Módulo del display grafico
-Para la implementación del HMI se utilizó el módulo display SSD1306 [2] con pantalla OLED de 0.96’ que se muestra en la figura 2.2.
-El comando gráfico del OLED se realiza a través de una comunicación I2C.
+Para la presentación de información al usuario se utilizó un display 1602 azul junto con un módulo I2C para recibir los datos desde la placa. 
 
 <p align="center">
     <img alt="" src="img/ssd1306.PNG" width="300">
@@ -258,13 +265,8 @@ El comando gráfico del OLED se realiza a través de una comunicación I2C.
 
 <p align="center"><em>Figura 2.1: Modulo display OLED SSD1306</em></p>
 
-Para poder dibujar los caracteres en este display, se hizo uso de la definicion de variables proporcionada por la biblioteca Lexus2k [4].
-
 #### 2.3.3. Módulo Wi-Fi
-Para la implementación de la comunicación con la computadora de supervisión a través de un navegador web
-se utiliza el módulo Wi-Fi ESP12F incluido en la placa NODEMCU ESP8266 [2] de la figura 2.3.
-Este módulo se comunica con el microcontrolador a través de una interfaz UART y la configuración del mismo
-se realiza a través de comandos AT.
+Para la implementación del servidor web se utilizó la ESP01. La pagina web se almacenó en la placa núcleo. La comunicación con la placa principal se dió por medio de una conexión UART y comandos AT.
 
 <p align="center">
     <img alt="" src="img/nodemcu.jpg" width="300">
@@ -273,17 +275,41 @@ se realiza a través de comandos AT.
 
 <p align="center"><em>Figura 2.2: Modulo Wi-Fi NodeMCU ESP8266</em></p>
 
-#### 2.3.4.  Sensor de pulso cardiaco.
-El modulo HW-827 [1] mostrado en la figura 2.3 es un sensor óptico que permite medir la frecuencia cardíaca 
-utilizando un LED infrarrojo y un fotodiodo. Detecta los cambios en la intensidad de la luz reflejada por 
-el flujo sanguíneo en el dedo del usuario, generando señales analógicas que pueden procesarse para calcular 
-el ritmo cardíaco.
+#### 2.3.4.  Sensor presencia (Sensor PIR)
+El modulo HC-Sr501 se utilizó para detectar la presencia de un usuario. Al acercar la mano, el sensor devulve un estado alto. 
 
 <p align="center">
     <img alt="" src="img/hw827.png">
 </p>
 
-<p align="center"><em>Figura 2.3:Sensor de pulso cardiaco</em></p>
+<p align="center"><em>Figura 2.2: sensor PIR.</em></p>
+
+#### 2.3.5.  Sensor de gas MQ-2
+Este sensor se utilizó para detectar la presencia de gas. 
+
+<p align="center">
+    <img alt="" src="img/hw827.png">
+</p>
+
+<p align="center"><em>Figura 2.2: sensor PIR.</em></p>
+
+#### 2.3.5.  Sensor de temperatura LM-35
+Este sensor se utilizó para obtener la temperatura del ambiente. Se añado un circuito para amplificar la salida del sensor y ajustarla a un valor que puediera ser mejor interpretado por la placa núcleo. 
+
+<p align="center">
+    <img alt="" src="img/hw827.png">
+</p>
+
+<p align="center"><em>Figura 2.2: sensor PIR.</em></p>
+
+#### 2.3.6.  Motor a pasos 28BYJ-48
+Motor a pasos utilizado como actuador de la tapa para abrir y cerrar. 
+
+<p align="center">
+    <img alt="" src="img/hw827.png">
+</p>
+
+<p align="center"><em>Figura 2.2: sensor PIR.</em></p>
 
 
 ## Capítulo 3. Diseño e implementación
