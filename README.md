@@ -251,7 +251,7 @@ describen a continuación.
 Este es el microcontrolador principal utilizado en el proyecto. Se programó con el lenguaje C++ y el framework MBed-OS. Este módulo superó ampliamente los requerimientos del proyecto gracias a su gran cantidad de puertos y caracteristicas disponibles de prototipado.
 
 <p align="center">
-    <img alt="" src="Images/nucleoFZ.jpg" width="300">
+    <img alt="" src="Images/nucleoFZ.jpg" width="600">
 </p>
 
 <p align="center"><em>Figura 1: Placa Núcleo F429ZI</em></p>
@@ -260,56 +260,56 @@ Este es el microcontrolador principal utilizado en el proyecto. Se programó con
 Para la presentación de información al usuario se utilizó un display 1602 azul junto con un módulo I2C para recibir los datos desde la placa. 
 
 <p align="center">
-    <img alt="" src="img/ssd1306.PNG" width="300">
+    <img alt="" src="Images/Display.png" width="600">
 </p>
 
-<p align="center"><em>Figura 2.1: Modulo display OLED SSD1306</em></p>
+<p align="center"><em>Figura 2: Modulo display 1602 con módulo I2C.</em></p>
 
 #### 2.3.3. Módulo Wi-Fi
 Para la implementación del servidor web se utilizó la ESP01. La pagina web se almacenó en la placa núcleo. La comunicación con la placa principal se dió por medio de una conexión UART y comandos AT.
 
 <p align="center">
-    <img alt="" src="img/nodemcu.jpg" width="300">
+    <img alt="" src="Images/Esp01.jpg" width="300">
 </p>
 
 
-<p align="center"><em>Figura 2.2: Modulo Wi-Fi NodeMCU ESP8266</em></p>
+<p align="center"><em>Figura 3: Modulo Wi-Fi ESP01 - ESP8266</em></p>
 
 #### 2.3.4.  Sensor presencia (Sensor PIR)
 El modulo HC-Sr501 se utilizó para detectar la presencia de un usuario. Al acercar la mano, el sensor devulve un estado alto. 
 
 <p align="center">
-    <img alt="" src="img/hw827.png">
+    <img alt="" src="Images/sensorPIR.png">
 </p>
 
-<p align="center"><em>Figura 2.2: sensor PIR.</em></p>
+<p align="center"><em>Figura 4: sensor PIR.</em></p>
 
 #### 2.3.5.  Sensor de gas MQ-2
 Este sensor se utilizó para detectar la presencia de gas. 
 
 <p align="center">
-    <img alt="" src="img/hw827.png">
+    <img alt="" src="Images/Mq2.jpg">
 </p>
 
-<p align="center"><em>Figura 2.2: sensor PIR.</em></p>
+<p align="center"><em>Figura 5: sensor PIR.</em></p>
 
 #### 2.3.5.  Sensor de temperatura LM-35
 Este sensor se utilizó para obtener la temperatura del ambiente. Se añado un circuito para amplificar la salida del sensor y ajustarla a un valor que puediera ser mejor interpretado por la placa núcleo. 
 
 <p align="center">
-    <img alt="" src="img/hw827.png">
+    <img alt="" src="Images/TL35.webp">
 </p>
 
-<p align="center"><em>Figura 2.2: sensor PIR.</em></p>
+<p align="center"><em>Figura 5: sensor PIR.</em></p>
 
 #### 2.3.6.  Motor a pasos 28BYJ-48
 Motor a pasos utilizado como actuador de la tapa para abrir y cerrar. 
 
 <p align="center">
-    <img alt="" src="img/hw827.png">
+    <img alt="" src="Images/Motorapasos.jpg">
 </p>
 
-<p align="center"><em>Figura 2.2: sensor PIR.</em></p>
+<p align="center"><em>Figura 6: sensor PIR.</em></p>
 
 
 ## Capítulo 3. Diseño e implementación
