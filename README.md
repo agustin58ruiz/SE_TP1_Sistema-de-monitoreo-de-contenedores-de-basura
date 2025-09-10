@@ -205,7 +205,7 @@ En la tabla 2 se muestran los requisitos del sistema desarrollado.
 </table>
 <p align="center"><em>Tabla 2: Requisitos del proyecto</em></p>
 
-**Tabla 2.1: Requisitos del sistema automático.**
+**Tabla 2: Requisitos del sistema automático.**
 
 ### 2.2. Casos de uso
 En las tablas 3, 4 y 5 se presentan tres casos de uso del sistema representativos de su funcionalidad.
@@ -728,19 +728,19 @@ a la comparación al sistema de monitoreo realizado.
   </tr>
   <tr>
     <td>Listado de requisitos</td>
-    <td>Tabla 2.1</td>
+    <td>Tabla 2</td>
   </tr>
   <tr>
     <td>Casos de uso del proyecto</td>
-    <td>Tablas 2.2 a 2.4</td>
+    <td>Tablas 3 a 5</td>
   </tr>
   <tr>
     <td>Diagrama en bloques del sistema</td>
-    <td>Figura 3.1</td>
+    <td>Figura 8</td>
   </tr>
   <tr>
     <td>Lista de señales</td>
-    <td>Tabla 3.1</td>
+    <td>Tabla 6</td>
   </tr>
   <tr>
     <td>Implementación del hardware</td>
@@ -756,7 +756,7 @@ a la comparación al sistema de monitoreo realizado.
   </tr>
   <tr>
     <td>Cumplimiento de requisitos</td>
-    <td>Tabla 4.1</td>
+    <td>Tabla 12</td>
   </tr>
   <tr>
     <td>Conclusiones finales</td>
