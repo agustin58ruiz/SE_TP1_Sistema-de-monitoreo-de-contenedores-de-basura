@@ -559,7 +559,7 @@ Donde se verificó:
 * Funcionamiento del display.
 
 ### 4.1.9. Cumplimiento de requisitos
-En la tabla 4.1 se presenta la evaluación del cumplimiento de los requisitos iniciales de la tabla 2.1. Se evaluó
+En la tabla 12 se presenta la evaluación del cumplimiento de los requisitos iniciales de la tabla 1. Se evaluó
 a el estado actual de cada uno indicando en verde aquellos que ya fueron cumplidos y en rojo los requerimientos
 no cumplidos.
 
@@ -632,121 +632,86 @@ no cumplidos.
   </tr>
 </tbody></table>
 
-<p align="center"><em>Tabla 4.1: Estado de requisitos.</em></p>
+<p align="center"><em>Tabla 12: Estado de requisitos.</em></p>
 
 
 
 ### 4.1.10. Comparación con otros sistemas similares
 
-En la Tabla 4.2 se puede observar la continuación del análisis de la Sección 1.2, donde se puede ver ahora sumado 
+En la Tabla 13 se puede observar la continuación del análisis de la Sección 1.2, donde se puede ver ahora sumado 
 a la comparación al sistema de monitoreo realizado.
 
-<table border="1" cellspacing="0" cellpadding="5">
+<table style="height: 359px; width: 1313px;" border="1" cellspacing="0" cellpadding="5">
 <thead>
-<tr>
-<th>Caracter&iacute;stica</th>
-<th>[MAGENE H303](https://www.magene.com/en/sensors/52-h303-heart-rate-monitor.html)</th>
-<th>[POLAR Verity Sense](https://www.polar.com/us-en/products/accessories/polar-verity-sense)</th>
-<th>[WELLUE O2Ring](https://getwellue.com/pages/o2ring-oxygen-monitor)</th>
-<th>&nbsp;</th>
-<th>[Wellue Oxiband](https://www.mercadolibre.com.ar/oximetro-de-pulso-wellue-oxiband-con-app-y-recordatorio/p/MLA50740493)</th>
-<th>Sistema de monitoreo de frecuencia cardiaca (Este proyecto)</th>
+<tr style="height: 52px;">
+<th style="height: 52px; width: 85px;">Caracter&iacute;stica</th>
+<th style="height: 52px; width: 268px;">[SiMBA](Contenedor del proyecto)</th>
+<th style="height: 52px; width: 268px;">[Tacho inteligente de 10L](https://www.mercadolibre.com.ar/tacho-cesto-de-basura-inteligente-10-litros-con-sensor-color-blanco/p/MLA53137335)</th>
+<th style="height: 52px; width: 200px;">[Cesto de basura inteligente](https://articulo.mercadolibre.com.ar/MLA-1508280537-tacho-cesto-de-residuos-blanco-apertura-automatica-de-15-lts-_JM)</th>
+<th style="height: 52px; width: 200px;">[Contenedor Bigbelly Smart](<a href="https://bigbelly.com/products/bigbelly-smart">https://bigbelly.com/products/bigbelly-smart</a>)</th>
+<th style="height: 52px; width: 245.469px;">[Contenedor bilateral - OMBU](https://ombuhigieneurbana.com.ar/contenedor-carga-bilateral.php)</th>
+<th style="height: 52px; width: 289.531px;">[Contenedor Carga Trasera - OMBU](https://ombuhigieneurbana.com.ar/contenedor-carga-trasera.php)</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>Tipo de sensor</td>
-<td>Banda tor&aacute;cica con sensor ECG</td>
-<td>Banda &oacute;ptica para brazo (PPG)</td>
-<td>Anillo con sensor &oacute;ptico (PPG)</td>
-<td>&nbsp;</td>
-<td>Sensor &oacute;ptico PPG para SpO2 y pulso</td>
-<td>&Oacute;ptico</td>
+<tr style="height: 1px;">
+<td style="height: 1px; width: 85px;">Capacidad</td>
+<td style="height: 1px; width: 268px;">60 Litros</td>
+<td style="height: 1px; width: 268px;">10 Litros</td>
+<td style="height: 1px; width: 200px;">15 Litros</td>
+<td style="height: 1px; width: 200px;">178 Litros</td>
+<td style="height: 1px; width: 245.469px;">40/90/150 Litros</td>
+<td style="height: 1px; width: 289.531px;">800/1200L</td>
 </tr>
-<tr>
-<td>Rango frecuencia card&iacute;aca</td>
-<td>30 - 240 bpm</td>
-<td>30 - 220 bpm</td>
-<td>No especificado (pulso y SpO2)</td>
-<td>&nbsp;</td>
-<td>30 - 250 bpm</td>
-<td>30 - 220 bpm</td>
+<tr style="height: 39px;">
+<td style="height: 39px; width: 85px;">Conectividad</td>
+<td style="height: 39px; width: 268px;">WiFi</td>
+<td style="height: 39px; width: 268px;">No posee.</td>
+<td style="height: 39px; width: 200px;">No posee.</td>
+<td style="height: 39px; width: 200px;">LoraWAN - WIFI</td>
+<td style="height: 39px; width: 245.469px;">No Posee</td>
+<td style="height: 39px; width: 289.531px;">No posee.</td>
 </tr>
-<tr>
-<td>Duraci&oacute;n bater&iacute;a</td>
-<td>Hasta 1000 horas</td>
-<td>Hasta 20 horas</td>
-<td>Hasta 14 horas</td>
-<td>&nbsp;</td>
-<td>Aproximadamente 8 horas</td>
-<td>&nbsp;-</td>
+<tr style="height: 13px;">
+<td style="height: 13px; width: 85px;">Apertura</td>
+<td style="height: 13px; width: 268px;">Tapa Superior, sensor de movimiento</td>
+<td style="height: 13px; width: 268px;">Con sensor, sin contacto.</td>
+<td style="height: 13px; width: 200px;">Con sensor, sin contacto.</td>
+<td style="height: 13px; width: 200px;">Con pie. Tapa Lateral</td>
+<td style="height: 13px; width: 245.469px;">Dos tapas laterales. Descarga de residuos inferior.</td>
+<td style="height: 13px; width: 289.531px;">Una tapa superior.&nbsp;</td>
 </tr>
-<tr>
-<td>Tipo de bater&iacute;a</td>
-<td>Pila bot&oacute;n CR2032</td>
-<td>Bater&iacute;a recargable integrada</td>
-<td>Bater&iacute;a recargable integrada</td>
-<td>&nbsp;</td>
-<td>Bater&iacute;a recargable integrada</td>
-<td>&nbsp;-</td>
+<tr style="height: 13px;">
+<td style="height: 13px; width: 85px;">Fuente de alimentaci&oacute;n</td>
+<td style="height: 13px; width: 268px;">Fuente de 5, 9 y 12 V</td>
+<td style="height: 13px; width: 268px;">4 Pilas AA</td>
+<td style="height: 13px; width: 200px;">2 Pilas AA</td>
+<td style="height: 13px; width: 200px;">Panel Solar y bater&iacute;a recargable.&nbsp;</td>
+<td style="height: 13px; width: 245.469px;">No posee.</td>
+<td style="height: 13px; width: 289.531px;">No posee.</td>
 </tr>
-<tr>
-<td>Conectividad inal&aacute;mbrica</td>
-<td>Bluetooth 4.2 y ANT+</td>
-<td>Bluetooth 5.0</td>
-<td>Bluetooth 4.0</td>
-<td>&nbsp;</td>
-<td>Bluetooth 4.0</td>
-<td>Wi-Fi</td>
+<tr style="height: 26px;">
+<td style="height: 26px; width: 85px;">Usos</td>
+<td style="height: 26px; width: 268px;">P&uacute;blico, sistema de recolecci&oacute;n de basura.</td>
+<td style="height: 26px; width: 268px;">Privado, adentro de una casa.</td>
+<td style="height: 26px; width: 200px;">Privado, adentro de una casa.</td>
+<td style="height: 26px; width: 200px;">P&uacute;blico. Sistema de recolecci&oacute;n de residuos. Peque&ntilde;os reciduos (latas, bolsas de comida, m&aacute;x 5 Litros) por el tama&ntilde;o de la tapa.&nbsp;</td>
+<td style="height: 26px; width: 245.469px;">P&uacute;blico-urbano. Sistema de recolecci&oacute;n de residuos.</td>
+<td style="height: 26px; width: 289.531px;">P&uacute;blico-urbano. Sistema de recolecci&oacute;n de residuos.</td>
 </tr>
-<tr>
-<td>Impermeabilidad</td>
-<td>IP67 (resistente al agua y polvo)</td>
-<td>Resistente al agua (IPX7)</td>
-<td>IP24 (resistente a salpicaduras)</td>
-<td>&nbsp;</td>
-<td>No especificado</td>
-<td>&nbsp;-</td>
-</tr>
-<tr>
-<td>Display</td>
-<td>No incluye display (se conecta a apps o dispositivos externos)</td>
-<td>No incluye display (se conecta a apps)</td>
-<td>No incluye display (datos en app)</td>
-<td>&nbsp;</td>
-<td>S&iacute;, display OLED integrado</td>
-<td>&nbsp;S&iacute;, display OLED integrado</td>
-</tr>
-<tr>
-<td>Audio / alertas</td>
-<td>No incluye</td>
-<td>No incluye</td>
-<td>Vibraci&oacute;n para alertas</td>
-<td>&nbsp;</td>
-<td>Alarmas sonoras y visuales</td>
-<td>Alertas visuales</td>
-</tr>
-<tr>
-<td>Precio aproximado</td>
-<td>$30 - $40 USD</td>
-<td>$90 - $120 USD</td>
-<td>$150 - $200 USD</td>
-<td>&nbsp;</td>
-<td>$600 - $800 USD</td>
-<td>$30 - $52 USD</td>
-</tr>
-<tr>
-<td>Uso principal</td>
-<td>Monitoreo deportivo y fitness</td>
-<td>Monitoreo deportivo y salud continua</td>
-<td>Monitoreo m&eacute;dico de SpO2 y pulso</td>
-<td>&nbsp;</td>
-<td>Monitoreo m&eacute;dico de SpO2 y frecuencia card&iacute;aca</td>
-<td>Monitoreo de salud hogareño.</td>
+<tr style="height: 13px;">
+<td style="height: 13px; width: 85px;">Caracter&iacute;sticas Extras</td>
+<td style="height: 13px; width: 268px;">Sensor de temperatura, sensor de gas.</td>
+<td style="height: 13px; width: 268px;">Pl&aacute;stico, posee led indicador. tapa extra&iacute;ble.</td>
+<td style="height: 13px; width: 200px;">Pl&aacute;stico, posee led indicador. tapa extra&iacute;ble.</td>
+<td style="height: 13px; width: 200px;">Antiband&aacute;lico, materiales reforzados. Sistema de monitoreo del estado del contenedor en tiempo real.&nbsp;</td>
+<td style="height: 13px; width: 245.469px;">Reforzado, met&aacute;lico, adaptable con sistema antiband&aacute;lico. Dise&ntilde;ado para sistemas de recolecci&oacute;n de basura.</td>
+<td style="height: 13px; width: 289.531px;">Reforzado, met&aacute;lico. Utilidad campos, barrios cerrados, municipios. Alta capacidad.&nbsp;&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<p align="center"><em>Tabla 4.2: Comparación de características de productos analizados previamente y este proyecto</em></p>
+<p align="center"><em>Tabla 13: Comparación de características de productos analizados previamente y este proyecto</em></p>
+
 
 ### 4.2. Documentación del desarrollo realizado
 
