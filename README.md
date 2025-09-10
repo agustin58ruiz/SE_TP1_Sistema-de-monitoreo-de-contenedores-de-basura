@@ -715,57 +715,27 @@ a la comparación al sistema de monitoreo realizado.
 
 ### 4.2. Documentación del desarrollo realizado
 
-<p align="center">
-<table><thead>
-  <tr>
-    <th>Elemento</th>
-    <th>Referencia</th>
-  </tr></thead>
-<tbody>
-  <tr>
-    <td>Presentación del proyecto</td>
-    <td>Capı́tulo 1</td>
-  </tr>
-  <tr>
-    <td>Listado de requisitos</td>
-    <td>Tabla 2</td>
-  </tr>
-  <tr>
-    <td>Casos de uso del proyecto</td>
-    <td>Tablas 3 a 5</td>
-  </tr>
-  <tr>
-    <td>Diagrama en bloques del sistema</td>
-    <td>Figura 8</td>
-  </tr>
-  <tr>
-    <td>Lista de señales</td>
-    <td>Tabla 6</td>
-  </tr>
-  <tr>
-    <td>Implementación del hardware</td>
-    <td>Sección 3.1</td>
-  </tr>
-  <tr>
-    <td>Módulos de software</td>
-    <td>Sección 3.2</td>
-  </tr>
-  <tr>
-    <td>Repositorio</td>
-    <td>[5]</td>
-  </tr>
-  <tr>
-    <td>Cumplimiento de requisitos</td>
-    <td>Tabla 12</td>
-  </tr>
-  <tr>
-    <td>Conclusiones finales</td>
-    <td>Capı́tulo 5</td>
-  </tr>
-</tbody>
-</table>
-</p>
-<p align="center"><em>Tabla 4.3: Elementos del sumario del sistema automático para el sistema de monitoreo de frecuencia cardiaca</em></p>
+| Elemento                           | Referencia         |
+|-------------------------------------|--------------------|
+| Presentación del proyecto           | Capítulo 1         |
+| Listado de requisitos               | Tabla 2            |
+| Casos de uso del proyecto           | Tablas 3 a 5       |
+| Análisis de sistemas similares      | Tabla 1, Tabla 13  |
+| Descripción de módulos utilizados   | Sección 2.3        |
+| Diagrama en bloques del sistema     | Figura 7           |
+| Lista de señales                    | Tabla 6            |
+| Implementación del hardware         | Sección 3.1        |
+| Módulos de software                 | Sección 3.2        |
+| Estructura del repositorio          | Tabla 7            |
+| Cumplimiento de requisitos          | Tabla 12           |
+| Comparación con otros sistemas      | Tabla 13           |
+| Conclusiones finales                | Capítulo 5         |
+| Bibliografía                        | Sección Bibliografía|
+
+<p align="center"><em>Tabla 14: Elementos del sumario del sistema automático para el sistema de monitoreo de basura</em></p>
+
+
+
 
 ## Capı́tulo 5 Conclusiones
 
