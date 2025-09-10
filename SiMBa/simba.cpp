@@ -9,31 +9,34 @@
 #include "actuadorTapa.h"
 #include "actuadorAlarma.h"
 #include "display.h"
-#include "motor.h"
+//#include "motor.h"
 
 #include "maquinaDeEstados.h"
 #include "simba.h"
 
 // Definicion de Macros
-#define MOTOR_PASOS 1024
-#define MOTOR_PPM 5000
+//#define MOTOR_PASOS 1024
+//#define MOTOR_PPM 5000
 #define TIEMPO_ESPERA_SEC 30
+#define SEGUNDOS_5 5
 #define SIMBA_DESPEDIDA "SiMBa - Adios!"
 #define BACKLIGHT_TEMPORIZADOR_SEC 30 
 
 // Definicion de sensores usados por el programa
-static ActuadorTapa tapa;
+static ActuadorTapa tapa(0.001);
 static SensorDeNivel capacidad;
-static SensorDeGas sensorDeGas(A0, 0.5, 0.001);
+static SensorDeGas sensorDeGas(A0, 0.3, 0.001);
 static SensorDeTemperatura sensorDeTemperatura(33);
 static Display display;
 static ActuadorAlarma alarma;
 static SensorDePresencia sensorPir(D3, PullDown);
-static Motor motor(D4,D5,D6,D7);
-static Temporizador espera(TIEMPO_ESPERA_SEC);
+//static Motor motor(D4,D5,D6,D7);
+static Temporizador espera = Temporizador();
 
 Simba::Simba() {
     maquina = nullptr;
+    _logs = false;
+    _modoManual = false;
 }
 
 void Simba::IniciarMaquinaDeEstados() {
@@ -49,6 +52,8 @@ void Simba::IniciarMaquinaDeEstados() {
     Estado* TapaCerrada = new Estado( "TAPA_CERRADA" );
     Estado* CerrandoTapa = new Estado( "CERRANDO_TAPA" );
 
+    Estado* ControlManual = new Estado( "CONTROL_MANUAL" );
+
     // ------------- DEFINICION DE SUBESTADOS --------------
     Estado* PirInicio = new Estado( "PIR_INICIO" );
     Estado* PirPersonaDetectada = new Estado( "PIR_PERSONA_DETECTADA" );
@@ -61,52 +66,39 @@ void Simba::IniciarMaquinaDeEstados() {
     MaquinaDeEstados* pirMaquina = new MaquinaDeEstados(PirInicio);
 
     // ---------------- TRANSICIONES---------------------
-    Transicion* InicioActualizaciones      = new Transicion( nullptr ); 
-    Transicion* Inicio2TapaDestrabada      = new Transicion( TapaDestrabada );
-    Transicion* Inicio2PresenciaDeGas      = new Transicion( PresenciaDeGas );
+    
 
-    Transicion* TapaTrabadaActualizaciones = new Transicion( nullptr ); 
-    Transicion* TapaTrabada2TapaDestrabada = new Transicion( TapaDestrabada );
-    Transicion* TapaTrabada2PresenciaDeGas = new Transicion( PresenciaDeGas );
 
-    Transicion* TapaDestrabadaActualizaciones = new Transicion( nullptr ); 
-    Transicion* TapaDestrabada2AbriendoTapa = new Transicion( AbriendoTapa );
-    Transicion* TapaDestrabada2TapaTrabada = new Transicion( TapaTrabada );
-    Transicion* TapaDestrabada2PresenciaDeGas = new Transicion( PresenciaDeGas );
+    Transicion* PresenciaDeGasActualizaciones = new TransicionSimple ( nullptr );
+    Transicion* PresenciaDeGas2TapaDestrabada = new TransicionSimple( TapaDestrabada );
+    Transicion* PresenciaDeGas2TapaTrabada = new TransicionSimple( TapaTrabada );
 
-    Transicion* PresenciaDeGasActualizaciones = new Transicion ( nullptr );
-    Transicion* PresenciaDeGas2TapaDestrabada = new Transicion( TapaDestrabada );
-    Transicion* PresenciaDeGas2TapaTrabada = new Transicion( TapaTrabada );
+    Transicion* AbriendoTapa2TapaAbierta = new TransicionSimple( TapaAbierta );
+    Transicion* AbriendoTapa2CerrandoTapa = new TransicionSimple( CerrandoTapa );
 
-    Transicion* AbriendoTapa2TapaAbierta = new Transicion( TapaAbierta );
-    Transicion* AbriendoTapa2CerrandoTapa = new Transicion( CerrandoTapa );
+    Transicion* TapaAbierta2CerrandoTapa = new TransicionSimple( CerrandoTapa );
 
-    Transicion* TapaAbierta2CerrandoTapa = new Transicion( CerrandoTapa );
-
-    Transicion* Cualquiera2PresenciaDeGas = new Transicion( PresenciaDeGas );
+    Transicion* Cualquiera2PresenciaDeGas = new TransicionSimple( PresenciaDeGas );
   
-    Transicion* CerrandoTapa2AbriendoTapa = new Transicion( AbriendoTapa );
-    Transicion* CerrandoTapa2TapaCerrada = new Transicion( TapaCerrada );
+    Transicion* CerrandoTapa2AbriendoTapa = new TransicionSimple( AbriendoTapa );
+    Transicion* CerrandoTapa2TapaCerrada = new TransicionSimple( TapaCerrada );
 
-    Transicion* TapaCerrada2TapaDestrabada = new Transicion( TapaDestrabada );
-    Transicion* TapaCerrada2AbriendoTapa = new Transicion( AbriendoTapa );
+    Transicion* TapaCerrada2TapaDestrabada = new TransicionSimple( TapaDestrabada );
+    Transicion* TapaCerrada2AbriendoTapa = new TransicionSimple( AbriendoTapa );
 
     // ----------- TRANSICIONES DE SUBESTADOS -----------
 
     // Sensor PIR
-    Transicion* PirInicio2PirPersonaDetectada = new Transicion( PirPersonaDetectada );
-    Transicion* PirInicio2PirPersonaNoDetectada = new Transicion( PirPersonaNoDetectada );
-    Transicion* PirPersonaDetectada2PirPersonaNoDetectada =  new Transicion( PirPersonaNoDetectada );
-    Transicion* PirPersonaNoDetectada2PirPersonaDetectada = new Transicion( PirPersonaDetectada );
+    Transicion* PirInicio2PirPersonaDetectada = new TransicionSimple( PirPersonaDetectada );
+    Transicion* PirInicio2PirPersonaNoDetectada = new TransicionSimple( PirPersonaNoDetectada );
+    Transicion* PirPersonaDetectada2PirPersonaNoDetectada =  new TransicionSimple( PirPersonaNoDetectada );
+    Transicion* PirPersonaNoDetectada2PirPersonaDetectada = new TransicionSimple( PirPersonaDetectada );
     
 
     // TRANSICIONES INICIO **********************************************************
-    TransicionesPtr_t transicionesInicio = new Transicion*[]{InicioActualizaciones ,Inicio2PresenciaDeGas, Inicio2TapaDestrabada,nullptr};
-    
-    // Inicio Actualizacion
-    InicioActualizaciones->EstablecerCondicion([](){
-        // Esta actualizacion ocurre solo una vez, por eso esta el display aca. 
-        // Mas adelante se puede incluir un atributo que contenga una accion que ocurra una sola vez. 
+
+    Inicio->EstablecerActualizacion([PresenciaDeGas, TapaDestrabada](){
+        Estado * nextState = nullptr;
         sensorDeTemperatura.ActualizarEstado();
         tapa.ActualizarEstado();
         capacidad.ActualizarEstado();
@@ -117,79 +109,143 @@ void Simba::IniciarMaquinaDeEstados() {
         display.CharPositionWrite(0,1);
         display.StringWrite( "Iniciando..." );
         display.EstablecerCountdown(BACKLIGHT_TEMPORIZADOR_SEC);
-        motor.EstablecerPPMPorPaso(MOTOR_PPM);
-        
-        return false; // La actualizacion siempre devuelve false
-    }).EstablecerAccion([](){});
+        //motor.EstablecerPPMPorPaso(MOTOR_PPM);
 
-    // Inicio -> PresenciaDeGas
-    Inicio2PresenciaDeGas->EstablecerCondicion([](){
-        return sensorDeGas.Estado() == EstadoSensorDeGas::SATURADO;
-    }).EstablecerAccion([](){
-        tapa.TrabarTapa();
-        alarma.Activar();
-        display.Flush();
+        if ( sensorDeGas.Estado() == EstadoSensorDeGas::SATURADO ) {
+            tapa.TrabarTapa();
+            alarma.Activar();
+            display.Flush();
+            nextState = PresenciaDeGas;
+        } else {
+            display.Flush();
+            display.ActivarCountdownBacklight();
+            tapa.CerrarTapa();
+            nextState = TapaDestrabada;
+        }
+        return nextState;
+
     });
 
-    // Inicio -> TapaDestrabada
-    Inicio2TapaDestrabada->EstablecerCondicion([](){
-        return true;
-    }).EstablecerAccion([](){
-        display.Flush();
-        display.ActivarCountdownBacklight();
-    });
+    // CONTROL MANUAL 
 
-    // TRANSICIONES TAPA_DESTRABADA ***********************************************
-    TransicionesPtr_t transicionesTapaDestrabada = new Transicion*[]{TapaDestrabadaActualizaciones, TapaDestrabada2AbriendoTapa, TapaDestrabada2TapaTrabada, TapaDestrabada2PresenciaDeGas, nullptr};
-    TapaDestrabadaActualizaciones->EstablecerCondicion([](){   
+    ControlManual->EstablecerActualizacion([this, Inicio](){
+        Estado * nextState = nullptr;
         sensorDeTemperatura.ActualizarEstado();
         capacidad.ActualizarEstado();
-        tapa.ActualizarEstado();
 
-        display.CharPositionWrite(0,0);
-        display.StringWrite( "Estado Normal" );
-        display.CharPositionWrite(0,1);
-        display.StringWrite( "Temp: " );
-        display.CharPositionWrite(6,1);
-        char temperatura[17]; 
-        sensorDeTemperatura.ObtenerTemperatura(temperatura);
-        display.StringWrite(temperatura);
-        return false;
-    }).EstablecerAccion([](){});
-    
-    // TapaDestrabada -> AbriendoTapa
-    TapaDestrabada2AbriendoTapa->EstablecerCondicion([](){
-        return sensorPir.Estado() == EstadoPresencia::USUARIO_DETECTADO;
-    }).EstablecerAccion([](){
-        display.Flush();
-        display.CharPositionWrite(0,0);
-        display.StringWrite( "Abriendo Tapa" );
-        display.CharPositionWrite(0,1);
-        display.StringWrite( "ESPERE!" );
-        display.DesactivarCountdownBacklight();
-        display.Backlight();
-        motor.Pasos(MOTOR_PASOS);
-        motor.Empezar();
+
+        if ( espera.EstaFinalizado() ) {
+            display.Backlight();
+            display.CharPositionWrite(0,0);
+            display.StringWrite( "Control Manual" );
+            display.CharPositionWrite(0,1);
+            display.StringWrite( "Temp: " );
+            display.CharPositionWrite(6,1);
+            char temperatura[17]; 
+            sensorDeTemperatura.ObtenerTemperatura(temperatura);
+            display.StringWrite(temperatura);
+            
+            espera.Empezar(SEGUNDOS_5);
+
+        }
+
+        if ( _modoManual == false ) { nextState =  Inicio; }
+
+        return nextState; 
+    });
+    // TRANSICIONES TAPA_DESTRABADA ***********************************************
+
+    TapaDestrabada->EstablecerActualizacion([this,ControlManual, AbriendoTapa, TapaTrabada,  PresenciaDeGas](){
+        Estado * nextState  = nullptr;
+        
+        sensorDeTemperatura.ActualizarEstado();
+        capacidad.ActualizarEstado();
+
+
+        if ( espera.EstaFinalizado() ) {
+            
+            display.CharPositionWrite(0,0);
+            display.StringWrite( "Estado Normal" );
+            display.CharPositionWrite(0,1);
+            display.StringWrite( "Temp: " );
+            display.CharPositionWrite(6,1);
+            char temperatura[17]; 
+            sensorDeTemperatura.ObtenerTemperatura(temperatura);
+            display.StringWrite(temperatura);
+            
+            espera.Empezar(SEGUNDOS_5);
+
+        }
+
+
+        if ( _modoManual == true ) { 
+            nextState = ControlManual; 
+        }
+        else if ( sensorPir.Estado() == EstadoPresencia::USUARIO_DETECTADO ) {
+            
+            display.Flush();
+            display.CharPositionWrite(0,0);
+            display.StringWrite( "Abriendo Tapa" );
+            display.CharPositionWrite(0,1);
+            display.StringWrite( "ESPERE!" );
+            display.DesactivarCountdownBacklight();
+            display.Backlight();
+            tapa.AbrirTapa();
+            //motor.Pasos(MOTOR_PASOS);
+            //motor.Empezar();
+
+            nextState = AbriendoTapa;
+        } else if ( capacidad.Estado() == EstadoContenedor::CONTENEDOR_LLENO && sensorDeGas.Estado() == EstadoSensorDeGas::NORMAL ) {
+            
+            display.Flush();
+            tapa.TrabarTapa();
+
+            nextState = TapaTrabada;
+        } else if ( sensorDeGas.Estado() == EstadoSensorDeGas::SATURADO ) {
+            
+            display.Flush();
+            tapa.TrabarTapa();
+
+            nextState = PresenciaDeGas;
+        }
+
+
+        return nextState;
+
     });
 
-    // TapaDestrabada -> TapaTrabada
-    TapaDestrabada2TapaTrabada->EstablecerCondicion([](){
-        return capacidad.Estado() == EstadoContenedor::CONTENEDOR_LLENO && sensorDeGas.Estado() == EstadoSensorDeGas::NORMAL;
-    }).EstablecerAccion([](){
-        display.Flush();
-        tapa.TrabarTapa();  
-    });
 
-    // TapaDestrabada -> PresenciaDeGas
-    TapaDestrabada2PresenciaDeGas->EstablecerCondicion([](){
-        return sensorDeGas.Estado() == EstadoSensorDeGas::SATURADO;
-    }).EstablecerAccion([](){
-        display.Flush();
-        tapa.TrabarTapa();
-    });
 
     // TRANSICIONES TAPA TRABADA **********************************************
-    TransicionesPtr_t transicionesTapaTrabada = new Transicion*[]{TapaTrabadaActualizaciones,TapaTrabada2TapaDestrabada, TapaTrabada2PresenciaDeGas,nullptr};
+    TapaTrabada->EstablecerActualizacion([this, TapaDestrabada, ControlManual, PresenciaDeGas](){
+        Estado * nextState = nullptr;
+
+        tapa.ActualizarEstado();
+        capacidad.ActualizarEstado();
+        sensorDeTemperatura.ActualizarEstado();
+
+        display.CharPositionWrite(0,0);
+        display.StringWrite( "Estado Bloqueado" );
+        display.CharPositionWrite(0,1);
+        display.StringWrite( "LLENO!" );
+
+        if ( _modoManual == true ) { 
+            printf("ENTRANDO EN CONTROL MANUAL \r\n");
+            nextState = ControlManual; 
+        } else if (capacidad.Estado() == EstadoContenedor::CONTENEDOR_CON_ESPACIO && sensorDeGas.Estado() != EstadoSensorDeGas::SATURADO) {
+            tapa.DestrabarTapa();
+            display.Flush();
+            nextState = TapaDestrabada;
+        } else if (sensorDeGas.Estado() == EstadoSensorDeGas::SATURADO) {
+            display.Flush();
+            nextState = PresenciaDeGas;
+        }
+
+        return nextState;
+    });
+
+
+   /* TransicionesPtr_t transicionesTapaTrabada = new Transicion*[]{TapaTrabadaActualizaciones,TapaTrabada2TapaDestrabada, TapaTrabada2PresenciaDeGas,nullptr};
 
     // TapaTrabada Actualizaciones
     TapaTrabadaActualizaciones->EstablecerCondicion([](){
@@ -219,7 +275,7 @@ void Simba::IniciarMaquinaDeEstados() {
          return sensorDeGas.Estado() == EstadoSensorDeGas::SATURADO;
     }).EstablecerAccion([](){
         display.Flush();
-    });
+    });*/
 
     // TRANSICIONES PRESENCIA DE GAS *******************************************
     
@@ -264,9 +320,10 @@ void Simba::IniciarMaquinaDeEstados() {
     // AbriendoTapa -> TapaAbierta
     AbriendoTapa2TapaAbierta->EstablecerCondicion([](){
 
-        return motor.PasosRestantes() == 0;
+        //return motor.PasosRestantes() == 0;
+        return tapa.Estado() == EstadoTapa::TAPA_ABIERTA;
     }).EstablecerAccion([](){
-        motor.Pasos(0);
+        //motor.Pasos(0);
         display.Flush();
         display.CharPositionWrite(0, 0);
         display.StringWrite( "Tapa Abierta" );
@@ -278,9 +335,10 @@ void Simba::IniciarMaquinaDeEstados() {
     AbriendoTapa2CerrandoTapa->EstablecerCondicion([](){
         return sensorPir.Estado() == EstadoPresencia::USUARIO_NO_DETECTADO;
     }).EstablecerAccion([](){
-        motor.Pausar();
-        int pasos = motor.PasosRestantes()-MOTOR_PASOS;
-        motor.Pasos(pasos);
+        //motor.Pausar();
+        //int pasos = motor.PasosRestantes()-MOTOR_PASOS;
+        //motor.Pasos(pasos);
+        tapa.CerrarTapa();
         
         display.Flush();
         display.CharPositionWrite(0, 0);
@@ -288,7 +346,7 @@ void Simba::IniciarMaquinaDeEstados() {
         display.CharPositionWrite(0,1);
         display.StringWrite( "Gracias!" );
         display.Backlight();
-        motor.Empezar(); 
+        //motor.Empezar(); 
     });
 
 
@@ -304,9 +362,10 @@ void Simba::IniciarMaquinaDeEstados() {
         display.StringWrite( "Cerrando Tapa" );
         display.CharPositionWrite(0,1);
         display.StringWrite( "Gracias!" );
-        motor.Pasos(-MOTOR_PASOS);
-        espera.Empezar();
-        motor.Empezar();
+        //motor.Pasos(-MOTOR_PASOS);
+        tapa.CerrarTapa();
+        espera.Empezar( TIEMPO_ESPERA_SEC );
+        //motor.Empezar();
     });
 
     
@@ -323,9 +382,10 @@ void Simba::IniciarMaquinaDeEstados() {
         display.CharPositionWrite(0,1);
         display.StringWrite( "ESPERE!" );
         display.Backlight();
-        motor.Pasos(MOTOR_PASOS);
+        //motor.Pasos(MOTOR_PASOS);
+        tapa.AbrirTapa();
         espera.Parar();
-        motor.Empezar();
+        //motor.Empezar();
     });
 
     // TapaCerrada -> TapaDestraba
@@ -342,31 +402,35 @@ void Simba::IniciarMaquinaDeEstados() {
 
     // CerrandoTapa -> TapaCerrada
     CerrandoTapa2TapaCerrada->EstablecerCondicion([](){
-        return motor.PasosRestantes() == 0;
+        //return motor.PasosRestantes() == 0;
+        return tapa.Estado() == EstadoTapa::TAPA_CERRADA;
     }).EstablecerAccion([](){
         display.Flush();
         display.CharPositionWrite(0,0);
         display.StringWrite( "Tapa Cerrada" );
         display.CharPositionWrite(0,1);
         display.StringWrite( "Gracias!" );
-        espera.Empezar();
+        espera.Empezar( TIEMPO_ESPERA_SEC );
     });
     
     // CerrandoTapa -> AbriendoTapa
     CerrandoTapa2AbriendoTapa->EstablecerCondicion([](){
         return sensorPir.Estado()== EstadoPresencia::USUARIO_DETECTADO;
     }).EstablecerAccion([](){
-        motor.Pausar();
-        int pasos = motor.PasosRestantes()+MOTOR_PASOS;
-        motor.Pasos(pasos);
+        //motor.Pausar();
+        //int pasos = motor.PasosRestantes()+MOTOR_PASOS;
+        //motor.Pasos(pasos);
         
+        
+
         display.Flush();
         display.CharPositionWrite(0,0);
         display.StringWrite( "Abriendo Tapa" );
         display.CharPositionWrite(0,1);
         display.StringWrite( "ESPERE!" );
         display.Backlight();
-        motor.Empezar();  
+        //motor.Empezar();  
+        tapa.AbrirTapa();
     });
 
     // ------------- TRANSICIONES SUBESTADOS ------------------
@@ -421,9 +485,7 @@ void Simba::IniciarMaquinaDeEstados() {
     });
 
     // ------- Establecer Tranciciones ----------
-    Inicio->EstablecerTransiciones( transicionesInicio );
-    TapaTrabada->EstablecerTransiciones( transicionesTapaTrabada );
-    TapaDestrabada->EstablecerTransiciones( transicionesTapaDestrabada );
+
     PresenciaDeGas->EstablecerTransiciones( transicionesPresenciaDeGas );
     AbriendoTapa->EstablecerTransiciones( transicionesAbriendoTapa );
     CerrandoTapa->EstablecerTransiciones( transicionesCerrandoTapa );
@@ -439,6 +501,8 @@ void Simba::IniciarMaquinaDeEstados() {
 
     // Asignar maquina interna
     TapaTrabada->AsignarMaquinaInterna( pirMaquina );
+    maquina->Logs( _logs );
+    pirMaquina->Logs( _logs );
     this->maquina = maquina; 
 };
 
@@ -451,3 +515,47 @@ void Simba::ObtenerInformacion(){
     maquina->ObtenerInformacion();
 }
 
+void Simba::Logs(bool mostrarLogs) {
+    _logs = mostrarLogs;
+    if ( maquina != nullptr ) {
+        maquina->Logs( _logs );
+    }
+}
+
+void Simba::ObtenerTemperatura(char * strOut) {
+    sensorDeTemperatura.ObtenerTemperaturaNumero(strOut);
+}
+
+void Simba::AbrirTapa() {
+    printf("MODO MANUAL ACTIVADO\r\n");
+    tapa.AbrirTapa();
+    //motor.Pasos(MOTOR_PASOS);
+    //motor.Empezar();
+    
+}
+
+void Simba::CerrarTapa() {
+    //motor.Pasos(-MOTOR_PASOS);
+    //motor.Empezar();
+    tapa.CerrarTapa();
+}
+
+void Simba::ActivarModoManual() {
+    printf("MODO MANUAL ACTIVADO\r\n");
+    _modoManual = true; 
+}
+
+void Simba::DesactivarModoManual() {
+    printf("MODO MANUAL DESACTIVADO\r\n");
+    _modoManual = false; 
+}
+
+void Simba::ApagarAlarma() {
+    alarma.Desactivar();
+    
+}
+
+void Simba::EncenderAlarma() {
+    alarma.Activar();
+    
+}

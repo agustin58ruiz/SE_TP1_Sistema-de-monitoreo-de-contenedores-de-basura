@@ -1,0 +1,23 @@
+#ifndef CONSTANTS__H
+#define CONSTANTS__H
+
+#define TCP_IP_MAX_LINKS 5
+#define TCP_IP_LINK_0 0
+#define TCP_IP_LINK_1 1
+#define TCP_IP_LINK_2 2
+#define TCP_IP_LINK_3 3
+#define TCP_IP_LINK_4 4
+
+#define IPV6_MAX_STRING_CHARS 45
+#define TCP_IP_PORT_MAX_STRING_CHARS 5
+
+#define TCP_IP_MAX_SEND_CHARS 1024
+
+#define WIFI_MAX_SSID_CHARS 32
+#define HTTP_MAX_HEADER_CHARS 128
+#define AT_MAX_ITERATION_READ 25
+
+#define IP_MAX_LENGTH (15 + 1)
+#define MAC_MAX_LENGTH (17 + 1)
+
+#endif

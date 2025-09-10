@@ -9,13 +9,13 @@ class Temporizador {
 private:
     EstadoTemporizador _estado;
     Ticker * _ticker;
-    float _segundosTemporizador;
     void _callback();
 public:
-    Temporizador(float segundos);
+    Temporizador();
     EstadoTemporizador Estado();
-    void Empezar();
+    void Empezar(float segundos);
     void Parar();
+    bool EstaFinalizado();
 };
 
 #endif
