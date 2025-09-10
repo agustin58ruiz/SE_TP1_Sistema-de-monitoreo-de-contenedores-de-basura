@@ -807,7 +807,7 @@ a la comparación al sistema de monitoreo realizado.
 ### 5.1. Resultados obtenidos
 El desarrollo de este sistema embebido para un contenedor de basura permitió cumplir con los objetivos iniciales. Se aprendió a como implementar un sistema embebido a partir de unos requisitos dados por un cliente y compararlos contra las soluciones ya existentes. 
 
-Se logró controlar características básicas de la placa tales como puertos analógicos y digitales, coneccion I2C e uart. También se aprendió a programar la interacción entre la Nucleo FZ421 con la ESP01 por medio de los comandos UART. No menos importante, se aprendió la importancia de la modularización del código y cómo implementar una máquina de estado para asegurar que el sistema se no bloqueante ya que debe funcionan en un loop y cada paso debe ser rapido para que el ciclo completo lo sea también. 
+Se logró controlar características básicas de la placa tales como puertos analógicos y digitales, coneccion I2C e uart. También se aprendió a programar la interacción entre la Nucleo FZ421 con la ESP01 por medio de los comandos AT. No menos importante, se aprendió la importancia de la modularización del código y cómo implementar una máquina de estado para asegurar que el sistema se no bloqueante ya que debe funcionan en un loop y cada paso debe ser rapido para que el ciclo completo lo sea también. 
 
 Con respecto al proyecto, es una buena inicitiva que hace más eficiente la utilización de recursos para la recolección y tratamiento de reciduos. Un sistema centralizado con monitoreo de contenedores puede resultar útil para trazar rutas dinámicas en la recolección de basura, y también mejorar la detección temprana de incidentes tales como incendios o bandalismo. 
 
