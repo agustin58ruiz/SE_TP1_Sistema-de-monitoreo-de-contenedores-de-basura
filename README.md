@@ -805,23 +805,25 @@ a la comparación al sistema de monitoreo realizado.
 ## Capı́tulo 5 Conclusiones
 
 ### 5.1. Resultados obtenidos
-El desarrollo de este sistema embebido para un contenedor de basura permitió cumplir con los objetivos iniciales. Se aprendió a como implementar un sistema embebido a partir de unos requisitos dados por un cliente y compararlos contra las soluciones ya existentes. 
+El desarrollo de este sistema embebido para un contenedor de basura permitió cumplir con los objetivos iniciales. Se aprendió cómo implementar un sistema embebido a partir de unos requisitos dados por un cliente y compararlos contra las soluciones ya existentes.
 
-Se logró controlar características básicas de la placa tales como puertos analógicos y digitales, coneccion I2C e uart. También se aprendió a programar la interacción entre la Nucleo FZ421 con la ESP01 por medio de los comandos AT. No menos importante, se aprendió la importancia de la modularización del código y cómo implementar una máquina de estado para asegurar que el sistema se no bloqueante ya que debe funcionan en un loop y cada paso debe ser rapido para que el ciclo completo lo sea también. 
+Se logró controlar características básicas de la placa, tales como puertos analógicos y digitales, conexión I2C y UART. También se aprendió a programar la interacción entre la Nucleo FZ421 con la ESP01 por medio de los comandos AT. No menos importante, se aprendió la importancia de la modularización del código y cómo implementar una máquina de estado para asegurar que el sistema sea no bloqueante, ya que debe funcionar en un loop y cada paso debe ser rápido para que el ciclo completo lo sea también.
 
-Con respecto al proyecto, es una buena inicitiva que hace más eficiente la utilización de recursos para la recolección y tratamiento de reciduos. Un sistema centralizado con monitoreo de contenedores puede resultar útil para trazar rutas dinámicas en la recolección de basura, y también mejorar la detección temprana de incidentes tales como incendios o bandalismo. 
+Con respecto al proyecto, es una buena iniciativa que hace más eficiente la utilización de recursos para la recolección y tratamiento de residuos. Un sistema centralizado con monitoreo de contenedores puede resultar útil para trazar rutas dinámicas en la recolección de basura, y también mejorar la detección temprana de incidentes tales como incendios o vandalismo.
 
-En particular, se logró controlar un sistema embebido de forma remota con una página web y tambien se logro el control por medio de una máquina de estados que tomaba lecturas de los sensores disponibles y cambia el estado del sistema por medio de actuadores tales como el display, el motor, o una alarma. 
+En particular, se logró controlar un sistema embebido de forma remota con una página web y también se logró el control por medio de una máquina de estados que tomaba lecturas de los sensores disponibles y cambiaba el estado del sistema por medio de actuadores tales como el display, el motor o una alarma.
 
 ### 5.1. Proximos pasos
 
-Este sistema no está completo. Si bien funciona asi como está, para que sea de utilidad comercial hay que trabajar sobre los siguientes puntos:
+Este sistema no está completo. Si bien funciona así como está, para que sea de utilidad comercial hay que trabajar sobre los siguientes puntos:
 
-1. Definir un sistema de negocio claro para este producto, el sistema debe proporcionar herramientas que mejoren un sistema actual. La recolección de basura se puede mejorar si se hace foco en los contenedores que mas rápido se cargan. Aquí es necesario implementar un sistema centralizado de monitoreo y control para ofrecer al usuario una reducción en los costos de recolección
-2. Agregar un sistema de conección más adecuado para este problema. LoRaWAN podría ser una alternativa superadora ya que consume menos energía que el WiFi y tiene un alcance mayor.
-3. Quitar el servidor web del dispositivo y convertirlo a una api liviana, dejando un servidor web para recolectar el estador de todos los contenedores conectados a la red. 
-4. Estudiar el sistema de alimentación para este proyecto. En principo puede ser un panel solar conectado a una bateria. Si el contenedor apunta a un usuario urbano, quizás la apertura de tapa no sea necesaria, y de esta forma se puede reducir el consumo energetico quitando el motor. 
+1. Definir un sistema de negocio claro para este producto. El sistema debe proporcionar herramientas que mejoren un sistema actual. La recolección de basura se puede mejorar si se hace foco en los contenedores que más rápido se cargan. Aquí es necesario implementar un sistema centralizado de monitoreo y control para ofrecer al usuario una reducción en los costos de recolección.
 
+2. Agregar un sistema de conexión más adecuado para este problema. LoRaWAN podría ser una alternativa superadora, ya que consume menos energía que el WiFi y tiene un alcance mayor.
+
+3. Quitar el servidor web del dispositivo y convertirlo a una API liviana, dejando un servidor web para recolectar el estado de todos los contenedores conectados a la red.
+
+4. Estudiar el sistema de alimentación para este proyecto. En principio, puede ser un panel solar conectado a una batería. Si el contenedor apunta a un usuario urbano, quizás la apertura de tapa no sea necesaria, y de esta forma se puede reducir el consumo energético quitando el motor.
     
 ## Bibliografı́a
 
