@@ -512,32 +512,39 @@ El sistema se encuentra implementado en C++ utilizando Mbed. El firmware present
 
 
 #### 3.2.6. Arquitectura
-En la figura 3.3 se muestra el diagrama de flujo del firmware.
+En la figura 8 se muestra el diagrama de flujo del firmware.
 
 <p align="center">
     <img alt="" src="Images/TP3_DiagramaDeEstados.png">
 </p> 
 
-<p align="center"><em>Figura 3.3: Diagrama de flujo principal del firmware</em></p>
+<p align="center"><em>Figura 8: Diagrama de flujo principal del firmware</em></p>
 
 ## Capítulo 4. Ensayos y resultados
 
 ### 4.1. Pruebas funcionales del hardware
 Las pruebas funcionales del hardware se realizaron por módulos.
 
-### 4.1.1. Módulo Wi-Fi NODEMCU8266
-Se cargo el firmware AT en el modulo. Luego por conexion USB y comunicacion por el puerto serie se constato el correcto envio de comandos y sus respuestas. Ademas, mediante esos comandos se estableció conexion con la red usada por defecto.
+### 4.1.1. Módulo Wi-Fi
+Para las pruebas de este módulo, se encendió el prototipo y luego se accedio a su pagina web por medio de su IP y protocolo HTTP. Ya en la página, se testeo la temperatura, y la funciones remotas que poseia este dispositivo. 
+Las pruebas resultaron exitosas a excepción de una leve retardo debido a que se perdian unas respuestas a comandos at para consultar el estado del servidor. 
+Esto permitió validar que el dispositivo se conectara a la red e iniciara una conección real con la pc.
 
-### 4.1.2. Módulo Sesor de pulso HW-827
-El estudio inició con la toma de una medida de la señal analógica a través de un osciloscopio, con el propósito de analizar tanto los niveles como el comportamiento de dicha señal durante la lectura de pulsos. Para ello, se procedió a la conexión de la señal a los 3,3 V y GND de la placa núcleo, evidenciándose la presencia de picos de amplitud asociados a la detección de pulsos, junto con la observación de ruido de interferencia superpuesto en la señal. 
-Posteriormente, se llevó a cabo un experimento adicional empleando la placa núcleo junto con el software SerialPlot. A través de esta herramienta, se lograron determinar la frecuencia de muestreo óptima, los umbrales de detección y los filtros necesarios para asegurar una correcta lectura de pulsos.
+### 4.1.2. Módulo Display
+Para este caso se buscó que el display se encendiera cuando se tenia que encender y cambiara los caracteres en función del estado actual del dispositivo. Este modulo no tuvo ninguna falla y se comportó como se esperaba mostrando los mensajes correctos, encendiendo y apagando la luz y cambiando los caracteres a medida que asi lo requiriera el dispositivo. 
 
-### 4.1.3. Modulo Display OLED SSD1306
+### 4.1.3. Módulo Sensor PIR
+Aquí la prueba consistió en pasar la mano por ensima del sensor y mostrar que efectivamente el dispositivo cambiaba su estado abriendo la tapa. 
 
-Para este caso se evaluaron las funciones desarrolladas de escritura y borrado, visualizando la pantalla del display. Se constato que los datos en la pantalla fueran los correctos y luego el borrado de pantalla.
+### 4.1.4. Módulo Sensor Temperatura
+Para el senser de temperatura, primero se calibro la salida del integrado LM 35  con un ampificador seguido y luego se hizo el ajuste fino con una variable float variando hasta hacerla coincidir con un termometro de ambiente. 
+Se obtuvo el resultado deseado. 
 
-### 4.1.8. Pruebas de integracion
-Las pruebas de integración realizadas se encuentran en formato de video en el siguiente enlace:
+### 4.1.4. Módulo Sensor Gas
+Esta prueba consistió en acercar el gas de un encendedor y verificar que el sistema reaccionaba como se esperaba. 
+
+### 4.1.5. Pruebas de integrados
+Se realizó una prueba de integración en donde se verificó el funcionamiento de todos los sensores y actuadores implicados. 
 
 [![Campo Alt](https://img.youtube.com/vi/MNq_PzCt46s/0.jpg)](https://www.youtube.com/watch?v=MNq_PzCt46s)
 
@@ -545,10 +552,11 @@ Las pruebas de integración realizadas se encuentran en formato de video en el s
 Donde se verificó:
 * Disposición del hardware.
 * Lógica del funcionamiento del sistema.
-* Comandos por puerto serie.
 * Monitoreo mediante el servidor web.
-* Alertas de umbrales.
-* Registro de datos historicos.
+* Apertura y cierre de la tapa.
+* Sensor de temperatura.
+* Sensor de gas.
+* Funcionamiento del display.
 
 ### 4.1.9. Cumplimiento de requisitos
 En la tabla 4.1 se presenta la evaluación del cumplimiento de los requisitos iniciales de la tabla 2.1. Se evaluó
@@ -797,20 +805,22 @@ a la comparación al sistema de monitoreo realizado.
 ## Capı́tulo 5 Conclusiones
 
 ### 5.1. Resultados obtenidos
-El desarrollo del sistema de monitoreo de frecuencia cardíaca permitió cumplir con los objetivos planteados inicialmente. Se logró la integración exitosa de un sensor óptico de pulso, un display OLED para la visualización en tiempo real de los latidos por minuto (BPM), y un módulo de conectividad Wi-Fi para la transmisión, tanto de lecturas en tiempo real, alertas y datos históricos, en una plataforma remota.
+El desarrollo de este sistema embebido para un contenedor de basura permitió cumplir con los objetivos iniciales. Se aprendió a como implementar un sistema embebido a partir de unos requisitos dados por un cliente y compararlos contra las soluciones ya existentes. 
 
-El sistema mostró una lectura estable del pulso en tiempo real durante las pruebas. La implementación de umbrales configurables permitió activar alertas cuando la frecuencia cardíaca superó o descendió de ciertos valores establecidos, lo que demuestra su potencial como herramienta preventiva o de monitoreo continuo en contextos personales o deportivos.
+Se logró controlar características básicas de la placa tales como puertos analógicos y digitales, coneccion I2C e uart. También se aprendió a programar la interacción entre la Nucleo FZ421 con la ESP01 por medio de los comandos UART. No menos importante, se aprendió la importancia de la modularización del código y cómo implementar una máquina de estado para asegurar que el sistema se no bloqueante ya que debe funcionan en un loop y cada paso debe ser rapido para que el ciclo completo lo sea también. 
 
-Además, se logró un registro automático de los datos, lo cual facilita su análisis posterior y el seguimiento de patrones a lo largo del tiempo. La interfaz en el display OLED resultó clara y funcional para la visualización inmediata del estado del usuario.
+Con respecto al proyecto, es una buena inicitiva que hace más eficiente la utilización de recursos para la recolección y tratamiento de reciduos. Un sistema centralizado con monitoreo de contenedores puede resultar útil para trazar rutas dinámicas en la recolección de basura, y también mejorar la detección temprana de incidentes tales como incendios o bandalismo. 
+
+En particular, se logró controlar un sistema embebido de forma remota con una página web y tambien se logro el control por medio de una máquina de estados que tomaba lecturas de los sensores disponibles y cambia el estado del sistema por medio de actuadores tales como el display, el motor, o una alarma. 
 
 ### 5.1. Proximos pasos
 
-Si bien el sistema ha demostrado un buen funcionamiento, se identificaron oportunidades de mejora y expansión que podrían implementarse en futuras iteraciones del proyecto:
+Este sistema no está completo. Si bien funciona asi como está, para que sea de utilidad comercial hay que trabajar sobre los siguientes puntos:
 
-1. Agregar una conectividad Bluetooth para tener mayor control y configuracion de redes Wi-Fi.
-2. Incorporar el uso de baterias para tener un sistema portable.
-1. Mejora de la precisión del sensor: Evaluar la integración de sensores ópticos más avanzados o de múltiples canales para reducir interferencias y mejorar la fiabilidad de las mediciones en distintos tipos de piel y condiciones de movimiento.
-2. Almacenamiento en la nube y análisis inteligente: Incorporar servicios en la nube para almacenamiento seguro, y aplicar algoritmos de análisis de datos para detectar anomalías o tendencias relevantes en la frecuencia cardíaca del usuario.
+1. Definir un sistema de negocio claro para este producto, el sistema debe proporcionar herramientas que mejoren un sistema actual. La recolección de basura se puede mejorar si se hace foco en los contenedores que mas rápido se cargan. Aquí es necesario implementar un sistema centralizado de monitoreo y control para ofrecer al usuario una reducción en los costos de recolección
+2. Agregar un sistema de conección más adecuado para este problema. LoRaWAN podría ser una alternativa superadora ya que consume menos energía que el WiFi y tiene un alcance mayor.
+3. Quitar el servidor web del dispositivo y convertirlo a una api liviana, dejando un servidor web para recolectar el estador de todos los contenedores conectados a la red. 
+4. Estudiar el sistema de alimentación para este proyecto. En principo puede ser un panel solar conectado a una bateria. Si el contenedor apunta a un usuario urbano, quizás la apertura de tapa no sea necesaria, y de esta forma se puede reducir el consumo energetico quitando el motor. 
 
     
 ## Bibliografı́a
