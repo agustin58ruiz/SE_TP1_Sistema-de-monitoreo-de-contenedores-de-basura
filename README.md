@@ -327,7 +327,7 @@ En la Figura 7 se muestra un diagrama del hardware del sistema desarrollado.
 
 
 #### 3.1.2. Lista de señales
-En la tabla 3.1 se listan las señales del sistema, indicando la conexión de los puertos de la placa NUCLEO-
+En la tabla 6 se listan las señales del sistema, indicando la conexión de los puertos de la placa NUCLEO-
 F429ZI a los módulos de hardware.
 
 <table style="width: 415px;">
@@ -443,12 +443,12 @@ F429ZI a los módulos de hardware.
 </tbody>
 </table>
 <p>&nbsp;</p>
-<p align="center"><em>Tabla 3.1: Lista de se&ntilde;ales del sistema</em></p>
+<p align="center"><em>Tabla 6: Lista de se&ntilde;ales del sistema</em></p>
 
 ### 3.2. Firmware
 
 #### 3.2.1. Repositorio
-Todo el código del proyecto se encuentra en el repositorio git en [3].
+Todo el código del proyecto se encuentra en el repositorio git en [4].
 
 #### 3.2.2. Tecnologı́a
 El sistema se encuentra implementado en C++ utilizando Mbed. El firmware presenta un archivo main.cpp el cual lo único que realiza es llamar a las funciones inicio de sistema, y en el lazo principal, la funcion de actualizacion del sistema.
@@ -458,110 +458,64 @@ El sistema se encuentra implementado en C++ utilizando Mbed. El firmware present
 
 | Directorio/Archivo        | Contenido principal                                          |
 |-------------------|--------------------------------------------------------------|
-| `SE_1c2025_TP1/`            | Archivos fuente del proyecto                                 |
-| `SE_1c2025_TP1/modules/button/`       | Control de botón de usuario con maquina de estados      |
-| `SE_1c2025_TP11/modules/display/`    | Funciones gráficas para el display SSD1306                   |
-| `SE_1c2025_TP1/modules/heart_monitor_system/` | Lógica principal y configuración del sistema     |
-| `SE_1c2025_TP1/modules/pulse_sensor/`    | Funciones de control de sensor de pulso cardiaco         |
-| `SE_1c2025_TP1/modules/serial_com/`    | Funciones de escritura por puerto serie                 |
-| `SE_1c2025_TP1/modules/wifi_com/`    | Funciones de control de modulo Wi-Fi por puerto serie                 |
-| `SE_1c2025_TP1/modules/data_history/`    | Funciones para guardar registros historicos       |
-| `SE_1c2025_TP1/main.cpp`    | Archivo principal de ejecución          |
-| `SE_1c2025_TP1/mbed_app.json`    | Archivo de configuracion para el compilador     |
+| `/`            | Archivos fuente del proyecto.                                 |
+| `/Images/`       | Imagenes y diagramas del proyecto.      |
+| `/SiMBa/`    | Módulos principales del sistema embebido, lógica de control y organización del código fuente. |
+| `/SiMBa/simba.cpp` | Lógica principal y configuración del sistema, inicialización de módulos, gestión de la máquina de estados y flujo principal del programa.     |
+| `/SiMBa/Modulos`    | Módulos de actuadores y sensores, cada uno encapsula la lógica para interactuar con un componente específico (motores, sensores, display, etc.).         |
+| `/SiMBa/Modulos/PCCom`    | Funciones para comunicación y escritura por puerto serie con la PC, útil para depuración y monitoreo desde el ordenador.                |
+| `/SiMBa/Modulos/WebFramework`    |Definiciones de la página web embebida; en views se definen todas las vistas del proyecto y el comportamiento de la API para interacción remota. |
+| `/SiMBa/Modulos/Wi-Fi`    | Módulo con la maquina de estados del modulo Wifi|
+| `/main.cpp`    | Archivo principal de ejecución          |
+| `/mbed_app.json`    | Archivo de configuracion para el compilador     |
 
-<p align="center"><em>Tabla 3.2: Estructura de directorios y modulos</em></p>
-
-
-| Nombre de elemento        | Tipo                          |      Descripción   |
-|-------------------|-----------------------|---------------------------------------|
-| hw827         | Objeto AnalogIn      | Se usa para leer la etrada analogica A0 de la placa Nucleo donde se conecta el HW-827.      |
-| bpm         | Variable float      | Se usa guardar valores finales calculados de bpm (usa valor anterior).      |
-| bpm_actual         | Variable float      | Se usa guardar el valor calculado actual de bpm.      |
-| intervals         | Variable uint32      | Guarda los ultimos cuatro valores de intervalos entre pulsos.     |
-
-<p align="center"><em>Tabla 3.3: Objetos y Variables del modulo pulse_sensor</em></p>
+<p align="center"><em>Tabla 7: Estructura de directorios y modulos</em></p>
 
 
 | Nombre de elemento        | Tipo                          |      Descripción   |
 |-------------------|-----------------------|---------------------------------------|
-| i2c         | Objeto I2C      | Se usa para la comunicacion I2C donde se conecta el SSD1306.      |
+| machine       | Objeto Maquina de estados      | Contiene una instancia del objeto ´maquina de estados´ utilizado para la definicion de los estados, las transiciones e inicialización de los sensores y actuadores utilizados.      |
+<p align="center"><em>Tabla 8: Objetos y Variables del modulo simba.cpp</em></p>
 
-<p align="center"><em>Tabla 3.4: Objetos y Variables del modulo display</em></p>
+| Nombre de elemento        | Tipo                          |      Descripción   |
+|-------------------|-----------------------|---------------------------------------|
+| machine       | Objeto Maquina de estados      | Contiene una instancia del objeto ´maquina de estados´ utilizado para la definicion de los estados, las transiciones e inicialización de los sensores y actuadores utilizados.      |
+<p align="center"><em>Tabla 9: Objetos y Variables del modulo wi-fi.cpp</em></p>
+
+| Nombre de elemento        | Tipo                          |      Descripción   |
+|-------------------|-----------------------|---------------------------------------|
+| actuadorAlarma.cpp       | Objeto DigitalOut     | Es una salida digital que controla una alarma.|
+| actuadorTapa.cpp       | Dos objetos digital In y un digital out     | Monitorea el estado de la tapa y actua sobre el motor a pasos. |
+| display.cpp       | Objeto i2c     | Actua sobre el display, ya sea su iluminación y los caracteres que muestra.|
+| maquinaDeEstados.cpp       | Objeto nuevo maquina de estados      | Mini framework para definir una maquina de estados. |
+| motor.cpp       | Objeto Bus Digital Out      | Es una salida que actua sobre un motor a pasos. |
+| sensorDeGas.cpp       | Objeto analog In      | Sirve para monitorear el estado del sensor de gas.|
+| sensorDeNivel.cpp       | Objeto Digital In     | Lee el estado de un switch utilizado para detectar si el tacho está lleno o vacío.|
+| sensorDePresencia.cpp       | Objeto Digital In     | Es una entrada que monitorea el estado de un sensor pir para indicar si hay un usuario conectado.|
+| sensorDeTemperatura.cpp       | Objeto Analog In      | Es una entrada que monitorea la temperatura del tacho. |
+| temporizador.cpp       | Objeto Ticker      | Clase con métodos para definir temporizadores. |
+| uart.cpp       | Objeto Serial Bus     | Clase con métodos para transmitir con la uart. |
+
+<p align="center"><em>Tabla 10: Carpeta módulos</em></p>
 
 
 | Nombre de elemento        | Tipo                          |      Descripción   |
 |-------------------|-----------------------|---------------------------------------|
-| wifiComState_t         | Typedef      | Se usa para informar el estado de la maquina de estados de comunicacion Wi-Fi.      |
-| uartWifi         | Objeto UnbufferedSerial      | Se usa para la comunicacion serie del modulo NODEMCU8266      |
-
-<p align="center"><em>Tabla 3.5: Objetos y Variables del modulo wifi_com</em></p>
-
-
-| Nombre de elemento        | Tipo                          |      Descripción   |
-|-------------------|-----------------------|---------------------------------------|
-| buttonState_t         | Typedef      | Se usa para informar el estado de la maquina de estados de pulsado de boton.      |
-| button         | Objeto DigitalIn      | Se usa para detectar estado del boton de usuario BUTTON1     |
-
-<p align="center"><em>Tabla 3.6: Objetos y Variables del modulo button</em></p>
+| Views     | Clases varias      | Definen el esqueleto de una pagina web. |
+| app.cpp       | Objeto       | Define una aplicación web.|
+| routes.cpp       | Objeto      | Define el ruteo de la aplicación. |
 
 
-A partir de la tabla 3.7 a tabla 3.12 se presentan las funciones publicas de cada modulo.
-
-| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
-|-------------------|-----------------------|---------------------------------------|
-| heartMonitorSystemInit()         | Inicializa todos los modulos y configuración inicial del sistema.      | main.cpp   |
-| heartMonitorSystemUpdate()        | Se encarga la logica del programando llamando a funciones de actualización.      | main.cpp   |
-
-<p align="center"><em>Tabla 3.7: Funciones publicas del modulo heart_monitor_system</em></p>
-
-
-| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
-|-------------------|-----------------------|---------------------------------------|
-| readBPM()         | Calcula un valor de lectura de pulso cardiaco      | heart_monitor_system.cpp   |
-| getBPM()        | Entrega el valor obtenido del ultimo calculo de pulso cardiaco      | heart_monitor_system.cpp y wifi_com.cpp   |
-
-<p align="center"><em>Tabla 3.8: Funciones publicas del modulo pulse_sensor</em></p>
-
-
-| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
-|-------------------|-----------------------|---------------------------------------|
-| ssd1306_init()         | Inicializa el display OLED SSD1306      | heart_monitor_system.cpp   |
-| ssd1306_clear_display()        | Borra toda la pantalla del display      | heart_monitor_system.cpp   |
-| ssd1306_print()        | Imprime caracteres en display considerando posicion    | heart_monitor_system.cpp   |
-| ssd1306_clear_display_middle()       | Borra parte media o central del display (lectura de BPM)     | heart_monitor_system.cpp   |
-| ssd1306_clear_top_rows()        | Borra parte superior del display (alertas)      | heart_monitor_system.cpp  |
-
-<p align="center"><em>Tabla 3.9: Funciones publicas del modulo display</em></p>
+<p align="center"><em>Tabla 11: Carpeta WebFramework</em></p>
 
 
 
-| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
-|-------------------|-----------------------|---------------------------------------|
-| debounceButtonInit()         | Inicia el  estado inicial del boton de usuario      | heart_monitor_system.cpp   |
-| debounceButtonUpdate()        | Actualiza estado de boton mediante una maquina de estados      | heart_monitor_system.cpp   |
-
-<p align="center"><em>Tabla 3.10: Funciones publicas del modulo button</em></p>
-
-
-| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
-|-------------------|-----------------------|---------------------------------------|
-| addRegisterData()         | Agrega una lectura al registro de lecturas con fecha y hora     | heart_monitor_system.cpp   |
-
-<p align="center"><em>Tabla 3.11: Funciones publicas del modulo data_history</em></p>
-
-
-| Nombre de la función        | Descripción                          |      Archivo que lo usa   |
-|-------------------|-----------------------|---------------------------------------|
-| wifiComInit()         | Inicia el modulo Wi-Fi mediante comandos AT      | heart_monitor_system.cpp   |
-| wifiComUpdate()      | Actualiza la conexion Wi-Fi mediante una maquina de estados      | heart_monitor_system.cpp   |
-
-<p align="center"><em>Tabla 3.12: Objetos y Variables del modulo wifi_com</em></p>
 
 #### 3.2.6. Arquitectura
 En la figura 3.3 se muestra el diagrama de flujo del firmware.
 
 <p align="center">
-    <img alt="" src="img/dflujo_f.png">
+    <img alt="" src="Images/TP3_DiagramaDeEstados.png">
 </p> 
 
 <p align="center"><em>Figura 3.3: Diagrama de flujo principal del firmware</em></p>
@@ -585,7 +539,7 @@ Para este caso se evaluaron las funciones desarrolladas de escritura y borrado, 
 ### 4.1.8. Pruebas de integracion
 Las pruebas de integración realizadas se encuentran en formato de video en el siguiente enlace:
 
-[![Video del sistema de monitoreo de frecuencia cardiaca](https://img.youtube.com/vi/oUoDiP93NxQ/0.jpg)](https://www.youtube.com/watch?v=oUoDiP93NxQ)
+[![Campo Alt](https://img.youtube.com/vi/MNq_PzCt46s/0.jpg)](https://www.youtube.com/watch?v=MNq_PzCt46s)
 
 
 Donde se verificó:
@@ -602,18 +556,73 @@ a el estado actual de cada uno indicando en verde aquellos que ya fueron cumplid
 no cumplidos.
 
 
-| Grupo         | ID   | Descripción                                                                                                         | Estado |
-| :------------ | :----| :------------------------------------------------------------------------------------------------------------------|---------------|
-| Monitoreo       | 1.1   | El sistema sensará la frecuencia cardíaca en tiempo real mediante un sensor integrado al dispositivo.               |  🟢         |
-|                 | 1.2   | El sistema almacenará localmente los datos de frecuencia cardíaca para asegurar la continuidad en caso de desconexión.|  🟢         |
-| Visualización   | 2.1   | El dispositivo mostrará en su display local la frecuencia cardíaca en tiempo real, con valores numéricos. |  🟢         |
-|                 | 2.2   | La aplicación web y móvil permitirá visualizar la frecuencia cardíaca en tiempo real mediante valores numéricos actualizados cada cinco segundos, asegurando sincronización continua con el dispositivo. |  🟢         |
-|                 | 2.3   | La aplicación almacenará y mostrará datos históricos de frecuencia cardíaca, permitiendo al usuario consultar tendencias diarias, semanales y mensuales. |  🟢         |
-| Alertas         | 3.1   | El sistema debe detectar eventos anómalos (frecuencia fuera de rango) y generar alertas visuales, y notificaciones. |  🟢         |
-|                 | 3.2   | El sistema enviará notificaciones inmediatas a la aplicacion web cuando se detecten anomalías.    |  🟢         |
-| Configuración   | 4.1   | El sistema permitirá configurar parámetros como umbrales de alerta y etiqueta de usuario desde la aplicación remota. |  🟢         |
-| Comunicación    | 5.1   | El sistema contará con una aplicación web accesible vía navegador desde dispositivos móviles y de escritorio. La aplicación permitirá monitorear datos en tiempo real y recibir notificaciones |  🟢         |
-| Proyecto        | 6.1   | El prototipo será acompañado de la lista de partes, el repositorio de código con su documentación, y un manual de uso. |  🟢         |
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-fymr">Requisito</th>
+    <th class="tg-fymr">Comentarios</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-x4od">1.1 :green_circle: El sistema deberá bloquear la tapa si el contenedor esta lleno.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.2 :green_circle: El sistema deberá abrir la tapa si detecta la presencia de un usuario.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.3 :green_circle: El sistema deberá cerrar la tapa si esta en ausencia de un usuario.</td>
+    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">1.4 ⚫ La tapa deberá poder desbloquearse por medio de Wi-Fi o UART</td>
+    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">1.5 :green_circle: El contenedor deberá encender una alarma auditiva si se detecta gas metano.</td>
+    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">Implementado.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">2.1 :green_circle: El usuario puede controlar el contenedor desde una pagina web.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-xzpz">2.2 :green_circle: El usuario puede consultar el estado desde una pagina web, o consultar el display del contenedor.</td>
+    <td class="tg-0pky">Implementado.</td>
+  </tr>
+  <tr>
+    <td class="tg-8eqh">2.3 :green_circle: El display se enciende solo bajo la presencia de un usuario.</td>
+    <td class="tg-0pky">El display se enciende bajo la presencia de un usuario.</td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">3.1 ⚫ El servicio web tiene usuario y contraseña.</td>
+    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
+  </tr>
+  <tr>
+    <td class="tg-bw5o">3.2 :green_circle: El servicio web puede ser accedido desde un browser.</td>
+    <td class="tg-0pky">Se implementó un servicio web con un home desde donde se pueden acceder a algunas acciones del tacho de basura.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.3 :green_circle: El servicio web ofrece un menú de acciones para controlar el contenedor.</td>
+    <td class="tg-0pky">Con el servicio web se puede controlar la tapa.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.4 :green_circle: El servicio web ofrece una api web para controlar el contenedor de forma programable.</td>
+    <td class="tg-0pky">Se agregó la posibilidad de realizar acciones sobre el contenedor mediante una api web que actualmente incluye control sobre la tapa.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">3.5 :green_circle: El servicio web ofrece métricas del estado del contenedor.</td>
+    <td class="tg-0pky">El servicio web ofrece la temperatura.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">4.1 ⚫ La alimentación es por medio de una batería de 5 V.</td>
+    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
+  </tr>
+  <tr>
+    <td class="tg-hrbo">4.2 ⚫ La carga de la batería es por medio de un panel solar.</td>
+    <td class="tg-0pky">Este punto se descartó para reducir el alcance del trabajo final.</td>
+  </tr>
+</tbody></table>
 
 <p align="center"><em>Tabla 4.1: Estado de requisitos.</em></p>
 
@@ -805,12 +814,16 @@ Si bien el sistema ha demostrado un buen funcionamiento, se identificaron oportu
 
     
 ## Bibliografı́a
-[1]  WORLD FAMOUS ELECTRONICS llc. [HW-827 Datasheet.](https://media.digikey.com/pdf/Data%20Sheets/Pulse%20Sensor%20PDFs/Pulse_Sensor.pdf)
 
-[2] SOLOMON SYSTECH SEMICONDUCTOR TECHNICAL DATA. [SSD1306 Datasheet.](https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf)
+
+[1] MBED OS API reference. [Mbed OS Api reference](https://os.mbed.com/docs/mbed-os/v6.16/apis/index.html)
+
+[2] At command set. [ESP8266 At Commands.](https://docs.espressif.com/projects/esp-at/en/release-v2.2.0.0_esp8266/AT_Command_Set/TCP-IP_AT_Commands.html) 
 
 [3] Espressif Systems. [ESP8266 Datasheet.](https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf) 
 
-[4] Lexus2k.[Bibliotecas y drivers de Displays.](https://github.com/lexus2k/ssd1306)
+[4] Agustín Ruiz. Repositorio de proyecto. [Sistema de monitoreo de basura.](https://github.com/agustin58ruiz/SE_TP1_Sistema-de-monitoreo-de-contenedores-de-basura)
 
-<a id="ref5">[5]</a>. Sergio Aguirre. Repositorio de proyecto. [Sistema de monitoreo de frecuencia cardiaca.](https://github.com/seragu9/SE_1c2025_TP1/tree/TPFinal/)
+[5] A. Lutenberg, P. Gómez, and E. Pernia, A Beginner’s Guide to Designing Embedded System Applications – M Cortex® Microcontrollers, ARM Education Media, 2002, ISBN: 978-1-911531-41-8 (print), 978-1-911531-42-5 (ePDF).
+
+[6] P. Marwedel, Embedded System Design: Embedded Systems Foundations of Cyber-Physical Systems, and the Internet of Things, 4th ed. Cham, Switzerland: Springer, 2021. [Online]. Available: https://doi.org/10.1007/978-3-030-60910-8
